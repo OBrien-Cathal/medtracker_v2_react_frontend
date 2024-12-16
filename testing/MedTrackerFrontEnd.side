@@ -90,6 +90,189 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "8283f3a0-1319-4e60-bc74-a798685508af",
+    "name": "failed login (wrong password)",
+    "commands": [{
+      "id": "c2d9a30e-e4bc-4ef2-a718-df34fa87eb71",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "acee7174-8f2e-4301-b8f5-f0a6532afe1a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "2332x1442",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "20ed96ed-2999-4718-b958-81b41bb86898",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputButton",
+      "targets": [
+        ["css=.inputButton", "css:finder"],
+        ["xpath=//input[@value='Log in']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div[3]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b607472d-fc65-4d01-b8fc-4d2d2af18643",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.inputButton",
+      "targets": [
+        ["css=.inputButton", "css:finder"],
+        ["xpath=//input[@value='Log in']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div[3]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08a77069-1883-4e15-9942-0905566b1f65",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputContainer:nth-child(3) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(3) > .inputBox", "css:finder"],
+        ["xpath=//div[@id='app']/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc409f48-7e44-45ec-abbf-4929db58d4f1",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputContainer:nth-child(3) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(3) > .inputBox", "css:finder"],
+        ["xpath=//div[@id='app']/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "patient1@pat.com"
+    }, {
+      "id": "86753ea9-7955-439d-bcbc-13c3d9779c43",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputContainer:nth-child(5) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(5) > .inputBox", "css:finder"],
+        ["xpath=//div[@id='app']/div/div/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "123"
+    }, {
+      "id": "da9b43cc-b84d-4c39-a7cf-c71223174abe",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputButton",
+      "targets": [
+        ["css=.inputButton", "css:finder"],
+        ["xpath=//input[@value='Log in']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ec6e40f3-7de3-4c85-9b2e-65abce16838b",
+    "name": "failed login (unknown user)",
+    "commands": [{
+      "id": "b3967262-938f-4eb0-8494-3718fa9c4a39",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4a835b33-fecc-4305-8129-1f81f389c55c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "2332x1442",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "28080668-32e8-45d1-ba32-f5a21c857c2a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputButton",
+      "targets": [
+        ["css=.inputButton", "css:finder"],
+        ["xpath=//input[@value='Log in']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div[3]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b8d6450-e427-4b46-9a62-007aca3ce980",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputContainer:nth-child(3) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(3) > .inputBox", "css:finder"],
+        ["xpath=//div[@id='app']/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4f08e65-11ae-4cdb-bf91-fba0dee03692",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputContainer:nth-child(3) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(3) > .inputBox", "css:finder"],
+        ["xpath=//div[@id='app']/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "blah@blah.com"
+    }, {
+      "id": "17af2f94-763f-4a07-a825-9aa08d83958f",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputContainer:nth-child(5) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(5) > .inputBox", "css:finder"],
+        ["xpath=//div[@id='app']/div/div/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "abc"
+    }, {
+      "id": "cdc82fee-e95f-47a0-b6fd-a93a894d5517",
+      "comment": "",
+      "command": "chooseCancelOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2d6953ce-d074-4c41-82c3-40bce9609d1b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputButton",
+      "targets": [
+        ["css=.inputButton", "css:finder"],
+        ["xpath=//input[@value='Log in']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div/div/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "50fde5e2-1976-4094-82eb-0ad1d832ba09",
+      "comment": "",
+      "command": "assertConfirmation",
+      "target": "An account does not exist with this username: blah@blah.com. Do you want to create a new account?",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "835ed1ee-401b-42e6-b0c5-d217037cd771",
+      "comment": "",
+      "command": "webdriverChooseCancelOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "5317705c-7dfd-4a0a-a9ba-ded70e40e8f6",
