@@ -80,7 +80,7 @@ const Login = (props: any) => {
 
         // Authentication calls will be made here...
 
-        signIn()
+
         checkAccountExists((accountExists: any) => {
             // If yes, log in
             if (accountExists) signIn()
