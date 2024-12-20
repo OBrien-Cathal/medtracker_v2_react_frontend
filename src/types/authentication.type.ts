@@ -1,6 +1,7 @@
 export interface IAuthenticationResponse {
     token: string
     message: string
+    currentUserRole: string;
 }
 
 export interface IAccountVerificationResponse {
@@ -23,7 +24,10 @@ export interface IAuthenticationRequest {
 export interface IAuthenticatedUser {
     username: string
     token: string
+    currentUserRole: string;
 }
+
+
 
 
 

@@ -10,9 +10,11 @@
     "start": "tsx src/axios-example.tsx"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.20.6",
     "axios": "^1.7.9",
     "preact": "^10.25.0",
     "react-router-dom": "^7.0.2",
+    "sweetalert2": "^11.15.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2"
   },

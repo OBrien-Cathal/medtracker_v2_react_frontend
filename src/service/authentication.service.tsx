@@ -3,7 +3,7 @@ import {
     IAuthenticationResponse,
     IAuthenticationRequest,
     IAuthenticationVerificationRequest, IAccountVerificationResponse, IAuthenticationVerificationResponse
-} from "../types/authentication.type";
+} from "../types/authentication.type.ts";
 
 class AuthenticationDataService {
     private _authPath: string = "/auth";

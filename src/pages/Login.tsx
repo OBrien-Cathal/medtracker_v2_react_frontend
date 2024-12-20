@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import authenticationDataService from "./service/authentication.service"
+import authenticationDataService from "../service/authentication.service.tsx"
+import authenticationManager from "../auth/authenticationManager.tsx";
 
-const Login = (props: any) => {
+const Login = (props:any) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [usernameError, setUsernameError] = useState('')
@@ -14,7 +15,6 @@ const Login = (props: any) => {
     const checkAccountExists = (callback: any) => {
         authenticationDataService.checkAccountExists({username: username, password: ""})
             .then((r) => {
-                console.log(r)
                 callback(r.data?.accountExists)
             }).catch((r) => {
             window.alert(r.error.message)
@@ -25,31 +25,29 @@ const Login = (props: any) => {
     const signIn = () => {
         authenticationDataService.signIn({username: username, password: password})
             .then((r) => {
-                console.log(r)
-                if ('success' === r.data.message) {
-                    localStorage.setItem('user', JSON.stringify({username, token: r.data.token}))
-                    props.setLoggedIn(true)
-                    props.setUsername(username)
-                    navigate('/')
+                if (authenticationManager.handleAndValidateIAuthenticationResponse(r.data, username)) {
+                    props.setIsLoggedIn(true)
+                    navigate('/home')
                 } else {
                     window.alert('Wrong email or password')
                 }
-            }).catch(reason => {console.log(reason.message)})
+            }).catch(reason => {
+            console.log(reason.message)
+        })
     }
 
     const signUp = () => {
         authenticationDataService.signUp({username: username, password: password})
             .then((r) => {
-                console.log(r)
-                if ('success' === r.data.message) {
-                    localStorage.setItem('user', JSON.stringify({username, token: r.data.token}))
-                    props.setLoggedIn(true)
-                    props.setUsername(username)
-                    navigate('/')
+                if (authenticationManager.handleAndValidateIAuthenticationResponse(r.data, username)) {
+                    props.setIsLoggedIn(true)
+                    navigate('/home')
                 } else {
                     window.alert('Sign Up Failed!')
                 }
-            }).catch(reason => {console.log(reason.message)})
+            }).catch(reason => {
+            console.log(reason.message)
+        })
     }
 
     const onButtonClick = () => {
@@ -81,7 +79,7 @@ const Login = (props: any) => {
         // Authentication calls will be made here...
 
 
-        checkAccountExists((accountExists: any) => {
+        checkAccountExists((accountExists: boolean) => {
             // If yes, log in
             if (accountExists) signIn()
             // Else, ask user if they want to create a new account and if yes, then log in
