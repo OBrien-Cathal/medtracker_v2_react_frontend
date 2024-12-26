@@ -11,6 +11,23 @@ body {
 }
 
 
+input[type='button'] {
+    border: none;
+    background: orange;
+    color: white;
+    padding: 12px 24px;
+    margin: 8px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+input:disabled[type='button'] {
+    background: #808080;
+    cursor: default;
+}
+
+
+
 /*Styles for Header and Nav elements*/
 .HeaderContainer {
     background-color: orange;
@@ -85,6 +102,7 @@ Styling for reusable components
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+
 .styled-table thead tr {
     background-color: orange;
     color: #ffffff;
@@ -114,11 +132,15 @@ Styling for reusable components
     font-weight: bold;
     color: #009879;
 }
-
-
-
-
-
+.styled-table input[type='button'] {
+    border: none;
+    background: orange;
+    color: white;
+    padding: 3px 10px 3px 10px;
+    margin: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
 
 /*Styles for basic page elements*/
 .mainContainer {
@@ -136,6 +158,15 @@ Styling for reusable components
     font-weight: bolder;
     align-items: center;
     justify-content: center;
+}
+
+
+/*Account management*/
+.RoleChange {
+    display: flex;
+    flex-direction: row;
+   column-gap: 50px;
+    margin-bottom: 50px;
 }
 
 /*login fields*/

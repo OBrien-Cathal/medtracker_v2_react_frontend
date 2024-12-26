@@ -15,14 +15,13 @@ import {allRoles_routes} from "./AllRolesRoutes.tsx";
 import {auth_routes} from "./AuthRoutes.tsx";
 import * as React from "preact/compat";
 import HeaderContainer from "../components/HeaderContainer"
+import {patient_routes} from "./PatientRoutes.tsx";
+import {practitioner_routes} from "./PractitionerRoutes.tsx";
 
 const AppRoutes = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        if (!authenticationManager.isLoggedIn()) {
-            return
-        }
         authenticationDataService.verifyAuthentication({token: authenticationManager.getToken()})
             .then(value => {
                 console.log(value)
@@ -37,8 +36,10 @@ const AppRoutes = () => {
         });
     })
     const protectedRoutes = [
-        ...admin_routes,
         ...user_routes,
+        ...patient_routes,
+        ...practitioner_routes,
+        ...admin_routes,
         ...allRoles_routes,
         ...public_routes
 
