@@ -1,11 +1,11 @@
 import userDataService, {UserDataService} from "../service/user.service.tsx";
-import authenticationManager from "../auth/authenticationManager.tsx";
 import {useEffect, useState,} from "preact/compat";
 import {ReactTable} from "../components/table/ReactTable.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {IUserModel} from "../types/user.type.ts";
 import {useMemo} from "preact/compat";
 import Swal from "sweetalert2";
+import {useAuth} from "../auth/AuthProvider.tsx";
 
 type UserList = IUserModel[];
 
@@ -14,16 +14,11 @@ const UserManagement = () => {
     const uds: UserDataService = userDataService
 
     const fetchUnapprovedRoleChanges = (fetchedUsers: IUserModel[]): void => {
-        console.log("REQUEST UNAPPROVED OUTGOING")
         for (const fetchedUser of fetchedUsers) {
             fetchedUser.roleChange = []
         }
         uds.getUnapprovedRoleChanges()
             .then(value => {
-                    console.log("unapproved then")
-                    console.log(value.data)
-
-
                     const roleChanges = value.data
                     for (const roleChangeElement of roleChanges) {
                         const found = fetchedUsers.find(value1 => value1.id == roleChangeElement.userModelId);
@@ -31,21 +26,16 @@ const UserManagement = () => {
                             found.roleChange = found.roleChange.concat(roleChangeElement)
                         }
                     }
-                    console.log("NeUSersList")
-                    console.log(fetchedUsers)
                     setUserList(fetchedUsers)
                 }
             )
             .catch(reason => console.log(reason))
     }
 
-
     function getUsers() {
-        console.log("GETUSERS OUTGOING")
+
         uds.getUsers()
             .then(r => {
-                console.log("getUsersthen")
-                console.log(r.data)
                 fetchUnapprovedRoleChanges(r.data)
             }).catch((reason) => {
             console.log(reason.errors)
@@ -54,18 +44,19 @@ const UserManagement = () => {
 
     function onClick(roleChangeId: bigint) {
         uds.approveRoleChange(roleChangeId).then(r => {
-            console.log("approve returned")
+
             if (r.data.requestSucceeded) {
                 Swal.fire(r.data.message).then(getUsers)
             } else {
                 Swal.fire("ERROR", r.data.errors.join("\n"), "error").then(getUsers)
             }
         }).catch(e => console.log(e.error))
-        console.log("CLICKED" + roleChangeId)
+
     }
 
+    const {token} = useAuth()
     useEffect(() => {
-        uds.setToken(authenticationManager.getToken())
+        uds.setToken(token)
         getUsers();
 
     }, [])

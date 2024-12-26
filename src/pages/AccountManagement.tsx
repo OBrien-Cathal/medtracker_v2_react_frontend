@@ -1,8 +1,8 @@
 import {useState, useEffect} from "preact/compat";
-import authenticationManager from "../auth/authenticationManager.tsx";
 import {IRoleChange} from "../types/user.type.ts";
 import userDataService, {UserDataService} from "../service/user.service.tsx";
-// import authenticationDataService from "../service/authentication.service.tsx";
+import {useAuth} from "../auth/AuthProvider.tsx";
+import Swal from "sweetalert2";
 
 const AccountManagement = () => {
     const [adminRoleChange, setAdminRoleChange] = useState<IRoleChange>({
@@ -30,8 +30,9 @@ const AccountManagement = () => {
             .catch(reason => console.log(reason))
 
     }
+    const {token} = useAuth()
     useEffect(() => {
-        userDataService.setToken(authenticationManager.getToken())
+        userDataService.setToken(token)
         requestStatus()
 
     }, [])
@@ -69,12 +70,13 @@ const RoleRequest = (
         requestStatus: Function
 
     }) => {
-    console.log("Render "+ roleChangeStatus.userRole)
+
     const disableButton: boolean = roleChangeStatus.id > 1
 
     const onRequestButtonClick = () => {
         service.requestRoleChange(roleChangeStatus.userRole).then(r => {
-                console.log('Request submitted for: ' + roleChangeStatus.userRole + ': ' + r.data.message)
+                Swal.fire({title: r.data.message})
+                // console.log('Request submitted for: ' + roleChangeStatus.userRole + ': ' + r.data.message)
                 requestStatus()
             }
         ).catch(reason => console.log(reason.error))

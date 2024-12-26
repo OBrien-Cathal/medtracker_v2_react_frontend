@@ -50,17 +50,32 @@ input:disabled[type='button'] {
 
 .UserStatus {
     float: right;
+    display: flex;
+    justify-self: center;
 }
 
 .UserStatus a {
-    color: #f2f2f2;
+    color: black;
     font-weight: bold;
     text-decoration: none;
+    margin-right: 20px;
+    padding: 5px;
+
 }
 
 .UserStatus a:hover {
     color: black;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 20px rgba(255,255,255, 0.3);
+}
+
+
+.UserStatus img{
+    justify-self: center;
+    cursor: pointer;
+}
+.UserStatus img:hover{
+
+    box-shadow: 0 0 20px rgba(255,255,255, 0.3);
 }
 
 .Navigation {

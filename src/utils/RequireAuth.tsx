@@ -1,23 +1,16 @@
-import {Navigate} from "react-router-dom"
-import {useLocation} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import Swal from 'sweetalert2';
-import authenticationManager from "../auth/authenticationManager";
+import {useAuth} from "../auth/AuthProvider.tsx";
 
 const RequireAuth = (children: any) => {
-    let currentUserRole
     const location = useLocation();
+    const {isLoggedIn,currentRole} = useAuth()
 
-    if (!authenticationManager.isLoggedIn()) {
+    if (!isLoggedIn) {
         return <Navigate to="/login" state={{path: location.pathname}}/>
     }
-
-    let user = authenticationManager.getLoggedInUser()
-    currentUserRole = user.currentUserRole
-
-    if (currentUserRole) {
-
         if (children.userroles) {
-            if (children.userroles.includes(currentUserRole)) {
+            if (children.userroles.includes(currentRole)) {
                 return children.children
             } else {
                 Swal.fire('Access Denied !', "", 'warning')
@@ -26,8 +19,5 @@ const RequireAuth = (children: any) => {
         } else {
             return children.children
         }
-    } else {
-        return <Navigate to="/login" state={{path: location.pathname}}/>
-    }
 }
 export default RequireAuth

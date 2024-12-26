@@ -1,8 +1,10 @@
-import { Navigate } from "react-router-dom";
-import authenticationManager from "../auth/authenticationManager.tsx";
+import {Navigate} from "react-router-dom";
+import {useAuth} from "../auth/AuthProvider.tsx";
+
 
 const RedirectIfLoggedIn = (children:any)=>{
-    if (authenticationManager.isLoggedIn()) {
+    const {isLoggedIn} = useAuth()
+    if (isLoggedIn) {
         return <Navigate to="/home" />
     }
     return children.children;

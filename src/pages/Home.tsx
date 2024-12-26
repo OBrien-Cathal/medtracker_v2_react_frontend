@@ -1,28 +1,20 @@
 import {useNavigate} from 'react-router-dom'
 import {useState} from "preact/compat";
+import {useAuth} from "../auth/AuthProvider.tsx";
 
-import authenticationManager from "../auth/authenticationManager";
-
-const Home = (props:any) => {
-    const [loggedIn, setLoggedIn] = useState(props.isLoggedIn)
+const Home = () => {
     const [username, setUsername] = useState('')
     const navigate = useNavigate()
+    const {user, isLoggedIn,logout} = useAuth()
 
-    let currentUser = authenticationManager.getLoggedInUser()
-
-    if (authenticationManager.isLoggedIn()) {
-
-        setUsername(currentUser.username)
-        setLoggedIn(true)
+    if (isLoggedIn) {
+        setUsername(user ? user : '')
     }
 
     const onButtonClick = () => {
-        if (loggedIn) {
-            authenticationManager.removeLogin()
-            props.setIsLoggedIn(false)
-            setLoggedIn(false)
+        if (isLoggedIn) {
+            logout()
             setUsername('')
-
         } else {
             navigate('/login')
         }
@@ -39,9 +31,9 @@ const Home = (props:any) => {
                     className={'inputButton'}
                     type="button"
                     onClick={onButtonClick}
-                    value={loggedIn ? 'Log out' : 'Log in'}
+                    value={isLoggedIn ? 'Log out' : 'Log in'}
                 />
-                {loggedIn ? <div>Your email address is {username}</div> : <div/>}
+                {isLoggedIn ? <div>Your email address is {username}</div> : <div/>}
             </div>
         </div>
     )
