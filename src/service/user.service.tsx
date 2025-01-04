@@ -1,74 +1,47 @@
-import http from "../service/http-client";
 import {IRoleChange, IRoleChangeStatus, IUserModel} from "../types/user.type.ts";
 import {IGenericResponse} from "../types/generic.type.ts";
+import AuthenticatedService from "./authenticatedService.tsx";
 
-
-export class UserDataService {
-    private _users: string = "/users";
-    private _token: string = ""
-
-    public setToken(token: string) {
-        this._token = token
+export class UserDataService extends AuthenticatedService {
+    constructor(token: string) {
+        super(token, "/users");
     }
 
     getUsers() {
-        return http.get<IUserModel[]>(this._users, {
-            headers: {
-                'Authorization': 'Bearer ' + this._token,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
+        console.log("getUSers")
+        return this._client.get<IUserModel[]>("");
+    }
+    getPractitionerUsers() {
+        console.log("getPractUSers")
+        return this._client.get<IUserModel[]>("/practitioners");
     }
 
     requestRoleChange(roleName: string) {
-        return http.post<IGenericResponse>(
-            this._users + "/role-requests/submit",
+        return this._client.post<IGenericResponse>(
+            "/role-requests/submit",
             {newRole: roleName},
-            {
-                headers: {
-                    'Authorization': 'Bearer ' + this._token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            });
+        );
     }
+
     approveRoleChange(roleChangeId: bigint) {
-        return http.post<IGenericResponse>(
-            this._users + "/role-requests/approve",
+        return this._client.post<IGenericResponse>(
+            "/role-requests/approve",
             {roleChangeRequestId: roleChangeId},
-            {
-                headers: {
-                    'Authorization': 'Bearer ' + this._token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            });
+        );
     }
 
     getRoleChangeStatus() {
-        return http.get<IRoleChangeStatus>(
-            this._users + "/role-requests/status",
-            {
-                headers: {
-                    'Authorization': 'Bearer ' + this._token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            });
+        return this._client.get<IRoleChangeStatus>(
+            "/role-requests/status",
+        );
     }
+
     getUnapprovedRoleChanges() {
-        return http.get<IRoleChange[]>(
-            this._users + "/role-requests/unapproved",
-            {
-                headers: {
-                    'Authorization': 'Bearer ' + this._token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            });
+        return this._client.get<IRoleChange[]>(
+            "/role-requests/unapproved",
+        );
     }
 }
 
 
-export default new UserDataService();
+export default UserDataService;

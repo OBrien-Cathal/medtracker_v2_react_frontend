@@ -1,10 +1,12 @@
 import {useState, useEffect} from "preact/compat";
 import {IRoleChange} from "../types/user.type.ts";
-import userDataService, {UserDataService} from "../service/user.service.tsx";
+import  {UserDataService} from "../service/user.service.tsx";
 import {useAuth} from "../auth/AuthProvider.tsx";
 import Swal from "sweetalert2";
 
 const AccountManagement = () => {
+    const {token} = useAuth()
+    const userDataService: UserDataService  = new UserDataService(token )
     const [adminRoleChange, setAdminRoleChange] = useState<IRoleChange>({
         id: -1n,
         status: "Loading",
@@ -28,14 +30,12 @@ const AccountManagement = () => {
                 }
             )
             .catch(reason => console.log(reason))
-
     }
-    const {token} = useAuth()
-    useEffect(() => {
-        userDataService.setToken(token)
-        requestStatus()
 
+    useEffect(() => {
+        requestStatus()
     }, [])
+
     return (
         <div className="mainContainer">
             <div className={'titleContainer'}>
