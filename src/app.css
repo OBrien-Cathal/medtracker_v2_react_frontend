@@ -152,7 +152,10 @@ Styling for reusable components
     font-size: 14px;
     cursor: pointer;
 }
-
+.styled-table input:disabled[type='button'] {
+    background: #808080;
+    cursor: default;
+}
 /*Styles for basic page elements*/
 .mainContainer {
     flex-direction: column;

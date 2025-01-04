@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev-open": "vite --host",
+    "dev-open": "vite --host --port:5173",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "start": "tsx src/axios-example.tsx"

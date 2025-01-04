@@ -8,11 +8,9 @@ export class UserDataService extends AuthenticatedService {
     }
 
     getUsers() {
-        console.log("getUSers")
         return this._client.get<IUserModel[]>("");
     }
     getPractitionerUsers() {
-        console.log("getPractUSers")
         return this._client.get<IUserModel[]>("/practitioners");
     }
 
@@ -42,6 +40,3 @@ export class UserDataService extends AuthenticatedService {
         );
     }
 }
-
-
-export default UserDataService;
