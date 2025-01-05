@@ -42,12 +42,11 @@ const PatientRegistration = () => {
                             registrationRows = registrationRows.concat({
                                 practitionerId: fetchedPractitionerUser.id,
                                 practitionerUsername: fetchedPractitionerUser.username,
-                                status: '',
+                                status: '-',
                                 patientRegistrationId: -1n
                             })
                         }
                     }
-                    console.log(registrationRows)
                     setPractitionerList(registrationRows)
                 }
             )
@@ -99,7 +98,6 @@ const PatientRegistration = () => {
             cell: ({cell}) => {
                 const id = cell.row.original.practitionerId
                 const disableButton = cell.row.original.patientRegistrationId > 0
-                console.log(disableButton)
                 return (
                     <input type={"button"} value="Register"
                            onClick={() => onClick(id)} disabled={disableButton}>

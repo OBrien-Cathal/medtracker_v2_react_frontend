@@ -621,14 +621,37 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "8f2c0061-02e4-4991-a3b5-70ab2331030a",
+    "name": "CREATE_USER to_become_admin@selenium.com",
+    "commands": []
+  }, {
+    "id": "ef0256f6-e4e6-4773-ac91-204638b758c2",
+    "name": "CREATE_USER to_become_practitioner@selenium.com",
+    "commands": []
+  }, {
+    "id": "3d12bdd3-0f01-454d-8373-ec6541cb4d13",
+    "name": "CREATE_USER to_become_patient@selenium.com",
+    "commands": []
+  }, {
+    "id": "9e0ff84c-f226-4d1f-96db-82c72dba1c26",
+    "name": "CREATE_USER to_stay_user@selenium.com",
+    "commands": []
   }],
   "suites": [{
-    "id": "5317705c-7dfd-4a0a-a9ba-ded70e40e8f6",
-    "name": "Default Suite",
+    "id": "876c5010-d3d7-4a40-ab99-e42f4f5b5db0",
+    "name": "Create Users",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["ffc1cdf5-ac11-4bcb-b7bc-bf48c1d7ef7a"]
+    "tests": ["8f2c0061-02e4-4991-a3b5-70ab2331030a", "3d12bdd3-0f01-454d-8373-ec6541cb4d13", "ef0256f6-e4e6-4773-ac91-204638b758c2", "9e0ff84c-f226-4d1f-96db-82c72dba1c26"]
+  }, {
+    "id": "7a6d7092-6ca5-4885-af03-9c4161fd7af0",
+    "name": "Login Users",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["7ec4f67b-b5f2-46f9-9f90-610228b0145a", "e399bd29-2d85-4594-b929-7d1b55e9b9c9", "ec9b58d4-e000-4bde-ada1-5a784e6d72ad", "8692b688-2650-425c-90b5-c2b819a59be1", "ec6e40f3-7de3-4c85-9b2e-65abce16838b", "8283f3a0-1319-4e60-bc74-a798685508af"]
   }],
   "urls": ["http://localhost:5173/"],
   "plugins": []
