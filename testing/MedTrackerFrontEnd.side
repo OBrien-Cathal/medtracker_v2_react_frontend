@@ -422,7 +422,7 @@
         ["xpath=//div[@id='app']/div/div/div[2]/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "doc@doc.com"
+      "value": "doc1@doc.com"
     }, {
       "id": "0ef06cb1-d832-425d-ab4a-b59d37014340",
       "comment": "",
@@ -647,7 +647,7 @@
     "tests": ["8f2c0061-02e4-4991-a3b5-70ab2331030a", "3d12bdd3-0f01-454d-8373-ec6541cb4d13", "ef0256f6-e4e6-4773-ac91-204638b758c2", "9e0ff84c-f226-4d1f-96db-82c72dba1c26"]
   }, {
     "id": "7a6d7092-6ca5-4885-af03-9c4161fd7af0",
-    "name": "Login Users",
+    "name": "Login Users Base Data",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,

@@ -31,12 +31,11 @@ const PatientRegistration = () => {
                         const foundPatientData = value.data.find(value1 => value1.practitionerId == fetchedPractitionerUser.id);
 
                         if (foundPatientData) {
-
                             registrationRows = registrationRows.concat({
                                 practitionerId: foundPatientData.id,
                                 practitionerUsername: fetchedPractitionerUser.username,
                                 status: foundPatientData.approved ? 'Registered' : 'Pending',
-                                patientRegistrationId: fetchedPractitionerUser.id
+                                patientRegistrationId: foundPatientData.id
                             })
                         } else {
                             registrationRows = registrationRows.concat({

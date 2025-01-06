@@ -1,5 +1,6 @@
 import AuthenticatedService from "./authenticatedService.tsx";
 import {IPatientRegistrationData, IPatientRegistrationResponse} from "../types/patient.type.ts";
+import {IUserModel} from "../types/user.type.ts";
 
 export class PatientDataService extends AuthenticatedService {
     constructor(token: string) {
@@ -11,16 +12,20 @@ export class PatientDataService extends AuthenticatedService {
     getPatientRegistrations() {
         return this._client.get<IPatientRegistrationData[]>(this._registrationsPath);
     }
+    getPatientUsers() {
+        return this._client.get<IUserModel[]>("");
+    }
 
     submitPatientRegistration(practitionerId: bigint) {
         return this._client.post<IPatientRegistrationResponse>(
             this._registrationsPath + "/submit",
             {practitionerId});
     }
-    approvePatientRegistration(practitionerId: bigint) {
+    approvePatientRegistration(patientRegistrationId: bigint) {
+        console.log(patientRegistrationId)
         return this._client.post<IPatientRegistrationResponse>(
             this._registrationsPath + "/approve",
-            {practitionerId});
+            {patientRegistrationId: patientRegistrationId});
     }
 
 

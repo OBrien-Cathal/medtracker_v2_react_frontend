@@ -6,6 +6,7 @@ export interface IPatientRegistrationData{
 }
 
 export interface IPatientRegistrationResponse{
+    successful: boolean
     message: string
     errors: string[]
     data: IPatientRegistrationData
