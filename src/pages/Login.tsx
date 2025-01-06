@@ -51,7 +51,8 @@ const Login = () => {
         })
     }
 
-    const onButtonClick = () => {
+    const onButtonClick = (e:any) => {
+        e.preventDefault()
         // Set initial error values to empty
         setUsernameError('')
         setPasswordError('')
@@ -100,32 +101,39 @@ const Login = () => {
     return (
         <div className={'mainContainer'}>
             <div className={'titleContainer'}>
-                <div>Login</div>
+                <div>
+                    Sign In
+                </div>
             </div>
+            <p>Sign in or register a new account here</p>
             <br/>
-            <div className={'inputContainer'}>
-                <input
-                    value={username}
-                    placeholder="Enter your email here"
-                    onChange={(ev) => setUsername(ev.currentTarget.value)}
-                    className={'inputBox'}
-                />
-                <label className="errorLabel">{usernameError}</label>
-            </div>
-            <br/>
-            <div className={'inputContainer'}>
-                <input
-                    value={password}
-                    placeholder="Enter your password here"
-                    onChange={(ev) => setPassword(ev.currentTarget.value)}
-                    className={'inputBox'}
-                />
-                <label className="errorLabel">{passwordError}</label>
-            </div>
-            <br/>
-            <div className={'inputContainer'}>
-                <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'}/>
-            </div>
+            <form onSubmit={onButtonClick}>
+                <div className={'inputContainer'}>
+                    <input
+                        value={username}
+                        placeholder="Enter your email here"
+                        onChange={(ev) => setUsername(ev.currentTarget.value)}
+                        className={'inputBox'}
+                    />
+                    <label className="errorLabel">{usernameError}</label>
+                </div>
+                <br/>
+                <div className={'inputContainer'}>
+                    <input
+                        type="password"
+                        autocomplete="off"
+                        value={password}
+                        placeholder="Enter your password here"
+                        onChange={(ev) => setPassword(ev.currentTarget.value)}
+                        className={'inputBox'}
+                    />
+                    <label className="errorLabel">{passwordError}</label>
+                </div>
+                <br/>
+                <div className={'buttonContainer'}>
+                    <input className={'inputButton'} type='submit' value={'Log in'}/>
+                </div>
+            </form>
         </div>
     )
 }

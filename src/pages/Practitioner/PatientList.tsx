@@ -19,15 +19,12 @@ type PatientList = IPatientRow[];
 const PatientRegistration = () => {
     const {token} = useAuth()
     const [patientList, setPatientList] = useState<PatientList>([])
-
     const patientDataService = new PatientDataService(token)
 
     const fetchPatientRegistrations = (fetchedUsers: IUserModel[]): void => {
         patientDataService.getPatientRegistrations()
             .then(value => {
                     let registrationRows: PatientList = []
-                console.log("getPatientsRegistratione")
-                console.log(value.data)
                     for (const fetchedPatientUser of fetchedUsers) {
 
                         const foundPatientData = value.data.find(value1 => value1.userModelId == fetchedPatientUser.id);
@@ -56,11 +53,9 @@ const PatientRegistration = () => {
     }
 
     function getPatients() {
-        console.log("getPatients")
         patientDataService.getPatientUsers()
             .then(r => {
-                console.log("getPatients then")
-                console.log(r.data)
+
                 fetchPatientRegistrations(r.data)
             }).catch((reason) => {
             console.log(reason.errors)

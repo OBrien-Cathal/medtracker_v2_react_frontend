@@ -8,7 +8,7 @@ body {
 }
 
 
-input[type='button'] {
+input[type='button'],input[type='submit'] {
     border: none;
     background: orange;
     color: white;
@@ -18,7 +18,7 @@ input[type='button'] {
     cursor: pointer;
 }
 
-input:disabled[type='button'] {
+input:disabled[type='button'],input:disabled[type='submit'] {
     background: #808080;
     cursor: default;
 }
