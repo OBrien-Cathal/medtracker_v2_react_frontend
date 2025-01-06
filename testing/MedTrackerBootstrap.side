@@ -1,0 +1,55 @@
+{
+  "id": "0240850c-138e-4df5-ac9c-b51783a2d4e3",
+  "version": "2.0",
+  "name": "Bootstrap",
+  "url": "http://localhost:5173",
+  "tests": [{
+    "id": "8283f3a0-1319-4e60-bc74-a798685508af",
+    "name": "failed login (wrong password)",
+    "commands": [{
+      "id": "c2d9a30e-e4bc-4ef2-a718-df34fa87eb71",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "ec6e40f3-7de3-4c85-9b2e-65abce16838b",
+    "name": "failed login (unknown user)",
+    "commands": []
+  }, {
+    "id": "8f2c0061-02e4-4991-a3b5-70ab2331030a",
+    "name": "CREATE_USER to_become_admin@selenium.com",
+    "commands": []
+  }, {
+    "id": "ef0256f6-e4e6-4773-ac91-204638b758c2",
+    "name": "CREATE_USER to_become_practitioner@selenium.com",
+    "commands": []
+  }, {
+    "id": "3d12bdd3-0f01-454d-8373-ec6541cb4d13",
+    "name": "CREATE_USER to_become_patient@selenium.com",
+    "commands": []
+  }, {
+    "id": "9e0ff84c-f226-4d1f-96db-82c72dba1c26",
+    "name": "CREATE_USER to_stay_user@selenium.com",
+    "commands": []
+  }],
+  "suites": [{
+    "id": "876c5010-d3d7-4a40-ab99-e42f4f5b5db0",
+    "name": "Create Users",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["8f2c0061-02e4-4991-a3b5-70ab2331030a", "3d12bdd3-0f01-454d-8373-ec6541cb4d13", "ef0256f6-e4e6-4773-ac91-204638b758c2", "9e0ff84c-f226-4d1f-96db-82c72dba1c26"]
+  }, {
+    "id": "7a6d7092-6ca5-4885-af03-9c4161fd7af0",
+    "name": "Login Users Base Data",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["ec6e40f3-7de3-4c85-9b2e-65abce16838b", "8283f3a0-1319-4e60-bc74-a798685508af"]
+  }],
+  "urls": ["http://localhost:5173/"],
+  "plugins": []
+}

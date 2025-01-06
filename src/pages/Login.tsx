@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import authenticationDataService from "../service/authentication.service.tsx"
 import {useAuth} from "../auth/AuthProvider.tsx";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const [username, setUsername] = useState('')
@@ -33,7 +34,11 @@ const Login = () => {
                     window.alert('Wrong email or password')
                 }
             }).catch(reason => {
-            console.log(reason.message)
+            Swal.fire({
+                title: "Sign In failed",
+                text: reason.response.data.message,
+                icon: "error"
+            }).then();
         })
     }
 
@@ -47,11 +52,17 @@ const Login = () => {
                     window.alert('Sign Up Failed!')
                 }
             }).catch(reason => {
-            console.log(reason.message)
+            console.log(reason)
+            Swal.fire({
+                title: "Sign up failed",
+                text: reason.response.data.message,
+                icon: "error"
+            }).then();
+
         })
     }
 
-    const onButtonClick = (e:any) => {
+    const onButtonClick = (e: any) => {
         e.preventDefault()
         // Set initial error values to empty
         setUsernameError('')
@@ -85,14 +96,20 @@ const Login = () => {
             // If yes, log in
             if (accountExists) signIn()
             // Else, ask user if they want to create a new account and if yes, then log in
-            else if (
-                window.confirm(
-                    'An account does not exist with this username: ' +
-                    username +
-                    '. Do you want to create a new account?',
-                )
-            ) {
-                signUp()
+            else {
+                Swal.fire({
+                    title: "Sign in failed!",
+                    text: "The submitted combination of username and password is not valid, would you like to create a new account?",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "Create new account",
+                    denyButtonText: `Cancel`
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        signUp()
+                    }
+                });
             }
         })
     }
