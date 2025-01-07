@@ -45,14 +45,14 @@ const UserManagement = () => {
 
     function onClick(roleChangeId: bigint) {
         uds.approveRoleChange(roleChangeId).then(r => {
-
             if (r.data.requestSucceeded) {
-                Swal.fire(r.data.message).then(getUsers)
+                Swal.fire(r.data.message).then()
             } else {
                 console.log(r.data.message)
                 console.log(r.data.errors)
-                Swal.fire("ERRO!R", r.data.errors.join("\n"), "error").then(getUsers)
+                Swal.fire("ERROR!", r.data.errors.join("\n"), "error").then()
             }
+            getUsers()
         }).catch(e => console.log(e.error))
 
     }
