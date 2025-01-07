@@ -1,5 +1,5 @@
 import { userRoles as ur } from "../data/userRoles.ts";
-import UserManagement from "../pages/UserManagement.tsx";
+import UserManagement from "../pages/admin/UserManagement.tsx";
 export const admin_routes = [
     { 
         path: "/userManagement",

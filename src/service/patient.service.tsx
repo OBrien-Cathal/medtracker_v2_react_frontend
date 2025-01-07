@@ -1,6 +1,7 @@
 import AuthenticatedService from "./authenticatedService.tsx";
 import {IPatientRegistrationData, IPatientRegistrationResponse} from "../types/patient.type.ts";
 import {IUserModel} from "../types/user.type.ts";
+import {IGenericResponse} from "../types/generic.type.ts";
 
 export class PatientDataService extends AuthenticatedService {
     constructor(token: string) {
@@ -8,10 +9,12 @@ export class PatientDataService extends AuthenticatedService {
     }
 
     private _registrationsPath: string = "registrations"
+    private _uploadPath: string = "upload"
 
     getPatientRegistrations() {
         return this._client.get<IPatientRegistrationData[]>(this._registrationsPath);
     }
+
     getPatientUsers() {
         return this._client.get<IUserModel[]>("");
     }
@@ -21,13 +24,39 @@ export class PatientDataService extends AuthenticatedService {
             this._registrationsPath + "/submit",
             {practitionerId});
     }
+
     approvePatientRegistration(patientRegistrationId: bigint) {
-        console.log(patientRegistrationId)
         return this._client.post<IPatientRegistrationResponse>(
             this._registrationsPath + "/approve",
             {patientRegistrationId: patientRegistrationId});
     }
 
+    uploadDoseFile(file: FormData) {
+
+        return this._client.post<IGenericResponse>(
+            this._uploadPath + "/dose-upload",
+            file,
+            {
+                headers: {
+                    "Authorization": 'Bearer ' + this._token,
+                    "Content-type": "multipart/form-data",
+                },
+            }
+        );
+    }
+
+    uploadBloodPressureFile(file: FormData) {
+        return this._client.post<IGenericResponse>(
+            this._uploadPath + "/blood-pressure-upload",
+            file,
+            {
+                headers: {
+                    "Authorization": 'Bearer ' + this._token,
+                    "Content-type": "multipart/form-data",
+                },
+            }
+        );
+    }
 
 
 }

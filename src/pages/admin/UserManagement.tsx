@@ -1,11 +1,11 @@
-import {UserDataService} from "../service/user.service.tsx";
+import {UserDataService} from "../../service/user.service.tsx";
 import {useEffect, useState,} from "preact/compat";
-import {ReactTable} from "../components/table/ReactTable.tsx";
+import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {ColumnDef} from "@tanstack/react-table";
-import {IUserModel} from "../types/user.type.ts";
+import {IUserModel} from "../../types/user.type.ts";
 import {useMemo} from "preact/compat";
 import Swal from "sweetalert2";
-import {useAuth} from "../auth/AuthProvider.tsx";
+import {useAuth} from "../../auth/AuthProvider.tsx";
 
 type UserList = IUserModel[];
 

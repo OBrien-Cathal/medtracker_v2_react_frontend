@@ -8,21 +8,48 @@ body {
 }
 
 
-input[type='button'],input[type='submit'] {
+input[type='button'], input[type='submit'] {
     border: none;
     background: orange;
     color: white;
-    padding: 12px 24px;
+    padding: 3px 10px 3px 10px;
     margin: 8px;
-    font-size: 24px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+}
+
+input[type='button']:hover, input[type='submit']:hover {
+    background-color: #FFAC1C;
+    color: black;
     cursor: pointer;
 }
 
-input:disabled[type='button'],input:disabled[type='submit'] {
+input:disabled[type='button'], input:disabled[type='submit'] {
     background: #808080;
     cursor: default;
 }
 
+input[type=file]:hover {
+    cursor: pointer;
+}
+
+input[type=file]::file-selector-button {
+    border: none;
+    background: #808080;
+    color: white;
+    padding: 3px 10px 3px 10px;
+    margin: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+    background-color: #ddd;
+    color: black;
+    cursor: pointer;
+}
 
 
 /*Styles for Header and Nav elements*/
@@ -61,17 +88,18 @@ input:disabled[type='button'],input:disabled[type='submit'] {
 
 .UserStatus a:hover {
     color: black;
-    box-shadow: 0 0 20px rgba(255,255,255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 
-.UserStatus img{
+.UserStatus img {
     justify-self: center;
     cursor: pointer;
 }
-.UserStatus img:hover{
 
-    box-shadow: 0 0 20px rgba(255,255,255, 0.3);
+.UserStatus img:hover {
+
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .Navigation {
@@ -143,6 +171,7 @@ Styling for reusable components
     font-weight: bold;
     color: #009879;
 }
+
 .styled-table input[type='button'] {
     border: none;
     background: orange;
@@ -152,10 +181,12 @@ Styling for reusable components
     font-size: 14px;
     cursor: pointer;
 }
+
 .styled-table input:disabled[type='button'] {
     background: #808080;
     cursor: default;
 }
+
 /*Styles for basic page elements*/
 .mainContainer {
     flex-direction: column;
@@ -174,12 +205,37 @@ Styling for reusable components
     justify-content: center;
 }
 
+/*Uploads*/
+.uploadsContainer {
+}
+
+.uploadContainer {
+    margin-bottom: 30px;
+    border: 10px #808080;
+}
+
+.uploadContainerSubmitBox {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.uploadContainer-header {
+    height: 40%;
+    width: 100%;
+    background-color: #808080;
+    color: white
+}
+
+.upload-header {
+    padding: 5px;
+    font-weight: bold;
+}
 
 /*Account management*/
 .RoleChange {
     display: flex;
     flex-direction: row;
-   column-gap: 50px;
+    column-gap: 50px;
     margin-bottom: 50px;
 }
 
@@ -191,6 +247,14 @@ Styling for reusable components
     justify-content: center;
     height: 260px;
 }
+
+
+.buttonContainer input[type='button'], .buttonContainer input[type='submit'] {
+    padding: 12px 24px;
+    margin: 8px;
+    font-size: 24px;
+}
+
 
 .inputContainer {
     display: flex;

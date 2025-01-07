@@ -1,11 +1,12 @@
-import { userRoles as ur } from "../data/userRoles.ts";
-import PatientRegistration from "../pages/PatientRegistration.tsx";
+import {userRoles as ur} from "../data/userRoles.ts";
+import Upload from "../pages/patient/Upload.tsx";
+
 export const patient_routes = [
-    {
-        path: "/practitioner-registration",
-        ele: <PatientRegistration />,
+   {
+        path: "/upload",
+        ele: <Upload/>,
         availability: [ur.patient],
-        title: "Practitioners",
+        title: "Upload",
         showInNav: true
-    }
+    },
 ]

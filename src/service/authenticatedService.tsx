@@ -1,7 +1,7 @@
 import axios, {AxiosInstance} from 'axios';
 
 class AuthenticatedService {
-    private readonly _token: string = ""
+    protected readonly _token: string = ""
     protected _client: AxiosInstance
 
     constructor(token: string, path: string) {
