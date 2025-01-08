@@ -1,5 +1,5 @@
-export interface IGenericResponse {
-    requestSucceeded: boolean
+export interface IResponse {
+    successful: boolean
     message: string
     errors: string[]
 }

@@ -1,5 +1,5 @@
 import {IRoleChange, IRoleChangeStatus, IUserModel} from "../types/user.type.ts";
-import {IGenericResponse} from "../types/generic.type.ts";
+import {IResponse} from "../types/generic.type.ts";
 import AuthenticatedService from "./authenticatedService.tsx";
 
 export class UserDataService extends AuthenticatedService {
@@ -15,14 +15,14 @@ export class UserDataService extends AuthenticatedService {
     }
 
     requestRoleChange(roleName: string) {
-        return this._client.post<IGenericResponse>(
+        return this._client.post<IResponse>(
             "/role-requests/submit",
             {newRole: roleName},
         );
     }
 
     approveRoleChange(roleChangeId: bigint) {
-        return this._client.post<IGenericResponse>(
+        return this._client.post<IResponse>(
             "/role-requests/approve",
             {roleChangeRequestId: roleChangeId},
         );

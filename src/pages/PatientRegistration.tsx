@@ -32,7 +32,7 @@ const PatientRegistration = () => {
 
                         if (foundPatientData) {
                             registrationRows = registrationRows.concat({
-                                practitionerId: foundPatientData.id,
+                                practitionerId: fetchedPractitionerUser.id,
                                 practitionerUsername: fetchedPractitionerUser.username,
                                 status: foundPatientData.approved ? 'Registered' : 'Pending',
                                 patientRegistrationId: foundPatientData.id
@@ -63,14 +63,20 @@ const PatientRegistration = () => {
 
     function onClick(roleChangeId: bigint) {
         patientDataService.submitPatientRegistration(roleChangeId).then(r => {
-            if (r.data.data) {
-                Swal.fire(r.data.message).then(getPractitioners)
-            } else {
-                console.log(r.data.message)
-                console.log(r.data.errors)
-                Swal.fire("ERROR", r.data.errors.join("\n"), "error").then(getPractitioners)
+                if (r.data.successful) {
+                    Swal.fire({
+                        title: "Registration Successful",
+                        text: "Request pending with id: " + r.data.data.id,
+                        icon: "success"
+                    }).then()
+                } else {
+                    console.log(r.data.message)
+                    console.log(r.data.errors)
+                    Swal.fire("ERROR", r.data.errors.join("\n"), "error").then()
+                }
+                getPractitioners()
             }
-        }).catch(e => console.log(e.error))
+        ).catch(e => console.log(e.error))
 
     }
 

@@ -1,6 +1,5 @@
 import {useAuth} from "../../auth/AuthProvider.tsx";
 import {useEffect, useMemo, useState} from "preact/compat";
-
 import Swal from "sweetalert2";
 import {ColumnDef} from "@tanstack/react-table";
 import {MedicationService} from "../../service/medication.service.tsx";
@@ -32,7 +31,7 @@ const Medications = () => {
     function onClickAddMedication() {
         medicationService.addMedication(medName).then(r => {
 
-            if (r.data.requestSucceeded) {
+            if (r.data.successful) {
                 Swal.fire(r.data.message).then()
             } else {
                 console.log(r.data.message)

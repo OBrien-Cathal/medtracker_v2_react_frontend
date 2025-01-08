@@ -1,5 +1,5 @@
 import AuthenticatedService from "./authenticatedService.tsx";
-import {IGenericResponse} from "../types/generic.type.ts";
+import {IResponse} from "../types/generic.type.ts";
 import {IPrescriptionType} from "../types/prescription.type.ts";
 
 export class PrescriptionService extends AuthenticatedService {
@@ -16,7 +16,7 @@ export class PrescriptionService extends AuthenticatedService {
     }
 
     addPresctiption(medName: string) {
-        return this._client.post<IGenericResponse>(
+        return this._client.post<IResponse>(
             "add",
             {
                 id: null,

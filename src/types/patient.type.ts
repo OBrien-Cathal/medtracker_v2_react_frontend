@@ -1,3 +1,5 @@
+import {IResponse} from "./generic.type.ts";
+
 export interface IPatientRegistrationData{
     id: bigint
     userModelId: bigint
@@ -5,10 +7,7 @@ export interface IPatientRegistrationData{
     approved: boolean
 }
 
-export interface IPatientRegistrationResponse{
-    successful: boolean
-    message: string
-    errors: string[]
+export interface IPatientRegistrationResponse extends IResponse{
     data: IPatientRegistrationData
 }
 
