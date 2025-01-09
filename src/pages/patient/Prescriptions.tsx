@@ -14,7 +14,7 @@ const Prescriptions = () => {
     const [prescriptionList, setPrescriptionList] = useState<IPrescriptionType[]>([])
 
     function getPrescriptions() {
-        prescriptionService.getPrescriptionsByPatient()
+        prescriptionService.getPrescriptions()
             .then(r => {
                 console.log(r.data)
                 setPrescriptionList(r.data)

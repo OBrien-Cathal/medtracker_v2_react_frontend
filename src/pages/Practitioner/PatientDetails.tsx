@@ -19,7 +19,7 @@ const PatientDetails = () => {
 
 
     function getPrescriptions() {
-        prescriptionService.getPrescriptionsByPatient()
+        prescriptionService.getPrescriptionsForPractitionerPatient()
             .then(r => {
                 console.log(r.data)
                 setPrescriptionList(r.data)
