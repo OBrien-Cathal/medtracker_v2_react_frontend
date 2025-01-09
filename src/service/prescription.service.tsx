@@ -7,8 +7,8 @@ export class PrescriptionService extends AuthenticatedService {
         super(token, "/prescriptions");
     }
 
-    getPrescriptionsForPractitionerPatient() {
-        return this._client.get<IPrescriptionType[]>("");
+    getPrescriptionsForPractitionerPatient(patientId: string | undefined) {
+        return this._client.get<IPrescriptionType[]>("/patient?id=" + patientId);
     }
 
     getPrescriptions() {
