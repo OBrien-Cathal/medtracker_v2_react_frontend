@@ -5,6 +5,7 @@ import {useAuth} from "../../auth/AuthProvider.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {PatientDataService} from "../../service/patient.service.tsx";
+import {useNavigate} from "react-router-dom";
 
 
 type IPatientRow = {
@@ -20,6 +21,7 @@ const PatientRegistration = () => {
     const {token} = useAuth()
     const [patientList, setPatientList] = useState<PatientList>([])
     const patientDataService = new PatientDataService(token)
+    const navigate = useNavigate()
 
     const fetchPatientRegistrations = (fetchedUsers: IUserModel[]): void => {
         patientDataService.getPatientRegistrations()
@@ -62,7 +64,7 @@ const PatientRegistration = () => {
         });
     }
 
-    function onClick(patientRegId: bigint) {
+    function onClickApprove(patientRegId: bigint) {
         patientDataService.approvePatientRegistration(patientRegId).then(r => {
 
             if (r.data.successful) {
@@ -76,6 +78,9 @@ const PatientRegistration = () => {
             }
         }).catch(e => console.log(e.data))
 
+    } function onClickViewDetails(id: bigint) {
+        console.log('clicked view details: ' + id)
+        navigate('/patient-details/' + id)
     }
 
 
@@ -104,10 +109,21 @@ const PatientRegistration = () => {
                 if(!cell.row.original.approved){
                     return (
                         <input type={"button"} value="Approve"
-                               onClick={() => onClick(id)} disabled={disableButton}>
+                               onClick={() => onClickApprove(id)} disabled={disableButton}>
                             Approve
                         </input>)
                 }
+            }
+        },
+        {
+            header: "Details",
+            cell: ({cell}) => {
+                const id = cell.row.original.patientId
+                    return (
+                        <input type={"button"} value="View"
+                               onClick={() => onClickViewDetails(id)}>
+                            View
+                        </input>)
             }
         }
     ];
@@ -118,11 +134,10 @@ const PatientRegistration = () => {
     return (
         <div className="mainContainer">
             <div className={'titleContainer'}>
-                <div>Patient Registration</div>
+                <div>Patients</div>
             </div>
             <div>
-                <p>All available practitioners are listed below, it is possible to register with multiple
-                    practitioners.
+                <p>All registered patients and applying patients
                 </p>
                 <span/>
                 <p>

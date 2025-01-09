@@ -12,7 +12,7 @@ export class PrescriptionService extends AuthenticatedService {
     }
 
     getPrescriptionsByPatient() {
-        return this._client.get<IPrescriptionType[]>("/patient");
+        return this._client.get<IPrescriptionType[]>("");
     }
 
     addPresctiption(medName: string) {

@@ -16,7 +16,7 @@ type IPatientRegistrationRow = {
 }
 
 type RegList = IPatientRegistrationRow[];
-const PatientRegistration = () => {
+const Practitioners = () => {
     const {token} = useAuth()
     const [practitionerList, setPractitionerList] = useState<RegList>([])
     const uds = new UserDataService(token)
@@ -94,20 +94,22 @@ const PatientRegistration = () => {
             header: "Email",
             accessorKey: "practitionerUsername",
         },
+
         {
-            header: "Status",
-            accessorKey: "status",
-        },
-        {
-            header: "Register",
+            header: "Registration",
             cell: ({cell}) => {
                 const id = cell.row.original.practitionerId
                 const disableButton = cell.row.original.patientRegistrationId > 0
-                return (
-                    <input type={"button"} value="Register"
-                           onClick={() => onClick(id)} disabled={disableButton}>
-                        Register
-                    </input>)
+                const status = cell.row.original.status
+                if (status === '-') {
+                    return (
+                        <input type={"button"} value="Register"
+                               onClick={() => onClick(id)} disabled={disableButton}>
+                            Register
+                        </input>)
+                } else {
+                    return <text>{status}</text>
+                }
             }
         }
     ];
@@ -118,7 +120,7 @@ const PatientRegistration = () => {
     return (
         <div className="mainContainer">
             <div className={'titleContainer'}>
-                <div>Patient Registration</div>
+                <div>Practitioners</div>
             </div>
             <div>
                 <p>All available practitioners are listed below, it is possible to register with multiple
@@ -126,7 +128,7 @@ const PatientRegistration = () => {
                 </p>
                 <span/>
                 <p>
-                    The status of current registrations is also visible
+                    New Registrations will be reviewed and approved by the practitioner.
                 </p>
             </div>
             <ReactTable<IPatientRegistrationRow> data={practitionerList} columns={columns}/>
@@ -134,4 +136,4 @@ const PatientRegistration = () => {
     )
 }
 
-export default PatientRegistration
+export default Practitioners

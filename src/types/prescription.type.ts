@@ -1,4 +1,11 @@
+import {IMedicationType} from "./medication.type.ts";
+
 export interface IPrescriptionType {
     id: bigint
-    name: string
+    doseMg: number
+    medication: IMedicationType
+    patientUsername: string
+    practitionerUsername:string
+    beginTime: string
+    endTime:string
 }

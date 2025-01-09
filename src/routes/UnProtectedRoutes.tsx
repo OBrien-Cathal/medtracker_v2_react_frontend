@@ -2,7 +2,7 @@ import Home from "../pages/Home.tsx";
 import {userRoles as ur} from "../data/userRoles.ts";
 import AboutPage from "../pages/About.tsx";
 
-const availableToAll =[ur.user, ur.admin, ur.practitioner, ur.anonymous]
+const availableToAll = [ur.anonymous, ur.user, ur.patient, ur.practitioner, ur.admin,]
 
 export const public_routes = [
     {

@@ -15,6 +15,8 @@ import * as React from "preact/compat";
 import {patient_routes} from "./PatientRoutes.tsx";
 import {practitioner_routes} from "./PractitionerRoutes.tsx";
 import {Route, Routes} from "react-router-dom";
+import {patient_practitioner_routes} from "./PatientAndPractitionerRoutes.tsx";
+import {user_patient_routes} from "./UserAndPatientRoutes.tsx";
 
 
 const AppRoutes = () => {
@@ -22,12 +24,12 @@ const AppRoutes = () => {
 
     const protectedRoutes = [
         ...user_routes,
+        ...user_patient_routes,
         ...patient_routes,
         ...practitioner_routes,
+        ...patient_practitioner_routes,
         ...admin_routes,
-        ...allRoles_routes,
-        ...public_routes
-
+        ...allRoles_routes
     ];
     const unprotectedRoutes = [...public_routes];
 
@@ -63,6 +65,7 @@ const AppRoutes = () => {
 
                 {
                     protectedRoutes.map((e) => {
+                        console.log(e.path)
                         return (
                             <Route
                                 key={e.path}

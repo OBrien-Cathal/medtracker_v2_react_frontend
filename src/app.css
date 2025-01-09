@@ -205,6 +205,13 @@ Styling for reusable components
     justify-content: center;
 }
 
+.componentContainer{
+
+}
+.componentContainer .titleContainer{
+    font-size: 24px;
+    font-weight: bold;
+}
 /*Uploads*/
 .uploadsContainer {
 }
@@ -222,7 +229,7 @@ Styling for reusable components
 .uploadContainer-header {
     height: 40%;
     width: 100%;
-    background-color: #808080;
+    background-color: orange;
     color: white
 }
 
@@ -247,8 +254,18 @@ Styling for reusable components
     justify-content: center;
     height: 260px;
 }
+/*Home page*/
+.explanationContainer{
 
+}
+.explanationContainer .clickable {
+    cursor: pointer;
+    font-weight: bold;
 
+}
+.explanationContainer .clickable:hover {
+    color: orange;
+}
 .buttonContainer input[type='button'], .buttonContainer input[type='submit'] {
     padding: 12px 24px;
     margin: 8px;

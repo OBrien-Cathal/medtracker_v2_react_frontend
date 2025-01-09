@@ -8,14 +8,18 @@ import {auth_routes} from "../routes/AuthRoutes.tsx";
 import {patient_routes} from "../routes/PatientRoutes.tsx";
 import {practitioner_routes} from "../routes/PractitionerRoutes.tsx";
 import {useAuth} from "../auth/AuthProvider.tsx";
+import {user_patient_routes} from "../routes/UserAndPatientRoutes.tsx";
+import {patient_practitioner_routes} from "../routes/PatientAndPractitionerRoutes.tsx";
 
 
 export default function Navigation() {
 
     const protectedRoutes = [
         ...user_routes,
+        ...user_patient_routes,
         ...patient_routes,
         ...practitioner_routes,
+        ...patient_practitioner_routes,
         ...admin_routes,
         ...allRoles_routes,
     ];

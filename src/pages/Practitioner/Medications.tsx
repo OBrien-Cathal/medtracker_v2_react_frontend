@@ -25,7 +25,7 @@ const Medications = () => {
     }
 
     function onClickViewDetails(id: bigint) {
-        navigate('medicationDetails?' + id)
+        navigate('/medication-details/' + id)
     }
 
     function onClickAddMedication() {

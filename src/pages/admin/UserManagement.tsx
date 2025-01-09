@@ -45,7 +45,7 @@ const UserManagement = () => {
 
     function onClick(roleChangeId: bigint) {
         uds.approveRoleChange(roleChangeId).then(r => {
-            if (r.data.requestSucceeded) {
+            if (r.data.successful) {
                 Swal.fire(r.data.message).then()
             } else {
                 console.log(r.data.message)
