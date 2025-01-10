@@ -7,6 +7,7 @@ import {PrescriptionService} from "../../service/prescription.service.tsx";
 import {IPrescriptionType} from "../../types/prescription.type.ts";
 import UserDetails from "../components/UserDetails.tsx";
 import {IParams} from "../../types/params.type.ts";
+import PatientDataVis from "./PatientDataVis.tsx";
 
 const PatientDetails = () => {
     const {token} = useAuth()
@@ -21,6 +22,7 @@ const PatientDetails = () => {
     function getPrescriptions() {
         prescriptionService.getPrescriptionsForPractitionerPatient(id)
             .then(r => {
+                console.log("Received prescriptions")
                 console.log(r.data)
                 setPrescriptionList(r.data)
             }).catch((reason) => {
@@ -29,8 +31,8 @@ const PatientDetails = () => {
     }
 
     function onClickViewDetails(id: bigint) {
-        console.log('clicked view details')
-        navigate('/medications?' + id)
+        console.log('clicked view details: ' + id)
+        navigate('/prescription-details/' + id)
     }
 
 
@@ -44,7 +46,7 @@ const PatientDetails = () => {
             accessorKey: "id",
         },
         {
-            header: "Name",
+            header: "Medication",
             accessorKey: "medication.name",
         },
         {
@@ -86,14 +88,15 @@ const PatientDetails = () => {
                 </div>
                 <div>Private medical info about a user, get from server.</div>
             </div>
+            <br/>
             <div className="componentContainer">
                 <div className={'titleContainer'}>
                     <div>Prescriptions</div>
                 </div>
-                <div>List of current prescriptions,restrict this to only for the current patient</div>
-
+                <div><ReactTable<IPrescriptionType> data={prescriptionList} columns={columns}/></div>
             </div>
-            <div><ReactTable<IPrescriptionType> data={prescriptionList} columns={columns}/></div>
+            <br/>
+            <PatientDataVis patientId={(params.id as unknown as bigint)}/>
         </div>
     )
 }

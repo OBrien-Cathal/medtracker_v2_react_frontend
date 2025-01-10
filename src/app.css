@@ -220,6 +220,23 @@ Styling for reusable components
     margin-bottom: 30px;
     border: 10px #808080;
 }
+.graphsContainer{
+    width: 100%;
+}
+.graphContainer{
+
+}
+.lineGraphContainer{
+
+}
+
+.graphsContainer .graphContainer{
+
+}
+
+.graphContainer .lineGraphContainer{
+
+}
 
 .uploadContainerSubmitBox {
     display: flex;

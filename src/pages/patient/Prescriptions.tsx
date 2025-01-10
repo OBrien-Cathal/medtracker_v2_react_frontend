@@ -38,7 +38,7 @@ const Prescriptions = () => {
             accessorKey: "id",
         },
         {
-            header: "Name",
+            header: "Medication",
             accessorKey: "medication.name",
         },
         {

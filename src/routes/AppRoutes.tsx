@@ -65,7 +65,6 @@ const AppRoutes = () => {
 
                 {
                     protectedRoutes.map((e) => {
-                        console.log(e.path)
                         return (
                             <Route
                                 key={e.path}

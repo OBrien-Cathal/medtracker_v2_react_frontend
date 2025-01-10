@@ -10,11 +10,9 @@ export class BloodPressureService extends AuthenticatedService {
         return this._client.get<ITimeSeriesDataResponse>("/systole-graph-data");
     }
 
+    getPractitionerPatientSystoleGraphData(patientId: bigint) {
+        return this._client.get<ITimeSeriesDataResponse>("/systole-graph-data/patient?id=" + patientId);
+    }
 
-    // submitPatientRegistration(practitionerId: bigint) {
-    //     return this._client.post<IPatientRegistrationResponse>(
-    //         this._registrationsPath + "/submit",
-    //         {practitionerId});
-    // }
 
 }
