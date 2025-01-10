@@ -12,7 +12,6 @@ const PatientDataVis = ({patientId}:PropsType) => {
 
     return (
         <div className="graphsContainer">
-
             <SystoleGraph patientIdOrNegative={patientId} bloodPressureService={bloodPressureService}/>
         </div>
     )

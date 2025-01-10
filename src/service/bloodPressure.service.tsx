@@ -14,5 +14,11 @@ export class BloodPressureService extends AuthenticatedService {
         return this._client.get<ITimeSeriesDataResponse>("/systole-graph-data/patient?id=" + patientId);
     }
 
+    getSystoleGraphDataForId(patientId: bigint) {
+        if (patientId > 0) {
+            return this.getPractitionerPatientSystoleGraphData(patientId)
+        } else return this.getSystoleGraphData()
+    }
+
 
 }
