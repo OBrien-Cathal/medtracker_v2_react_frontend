@@ -37,7 +37,7 @@ const UploadPage = () => {
         let data = new FormData();
         data.append('dosesFile', doseFile as Blob);
         patientDataService.uploadDoseFile(data).then(r => {
-            if (r.data.requestSucceeded) {
+            if (r.data.successful) {
                 console.log(r.data.message)
             } else {
                 console.log(r.data.errors)
@@ -51,7 +51,7 @@ const UploadPage = () => {
         let data = new FormData();
         data.append('bloodPressureFile', bpFile as Blob);
         patientDataService.uploadBloodPressureFile(data).then(r => {
-            if (r.data.requestSucceeded) {
+            if (r.data.successful) {
                 console.log(r.data.message)
             } else {
                 console.log(r.data.errors)

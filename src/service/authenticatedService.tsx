@@ -1,4 +1,5 @@
 import axios, {AxiosInstance} from 'axios';
+import {baseUrl} from "./http-client.tsx";
 
 class AuthenticatedService {
     protected readonly _token: string = ""
@@ -21,7 +22,7 @@ class AuthenticatedService {
 
     createClient(path: string): AxiosInstance {
         return this._client = axios.create(
-            this.getConfig('http://192.168.1.162:3100/api/v1' + path)
+            this.getConfig(baseUrl() + path)
         );
     }
 }

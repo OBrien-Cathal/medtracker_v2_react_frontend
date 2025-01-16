@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build:
+      context: .
+    container_name: medtracker-frontend
+    ports:
+      - "80:80"
+    networks:
+      - proxy-network
+networks:
+  proxy-network:
+    external:
+      name: medtracker-network
