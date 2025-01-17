@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "stage-build": "NODE_ENV=development tsc -b && vite build --mode development",
+    "stage-build": "tsc -b && vite build --mode stage",
+    "dev-build": "tsc -b && vite build --mode development",
     "preview": "vite preview"
   },
   "dependencies": {
