@@ -3,8 +3,8 @@ import {IRoleChange} from "../types/user.type.ts";
 import {UserDataService} from "../service/user.service.tsx";
 import {useAuth} from "../auth/AuthProvider.tsx";
 import Swal from "sweetalert2";
-import {List} from "../components/List.tsx";
 import SectionComponentWithDescription from "../components/SectionComponentWithDescription.tsx";
+import React from "react";
 
 const AccountManagement = () => {
     return (
@@ -15,7 +15,7 @@ const AccountManagement = () => {
             <br/>
             <SectionComponentWithDescription
                 heading={'Role Requests'}
-                description={'Available roles can be requested below, these requests will be reviewed by a system admin'}
+                description={'Available roles can be requested below, any role requests will be reviewed by a system admin'}
                 content={<RoleRequests/>}
             />
         </div>
@@ -29,29 +29,26 @@ const RoleRequests = () => {
     const canMakeRoleRequests = currentRole === 'USER'
     const userDataService: UserDataService = new UserDataService(token)
 
-    const adminRoleChange = {
+    const [adminRoleChange, setAdminRoleChange] = useState<IRoleChange>({
         id: -1n,
         status: "Loading",
         userRole: "ADMIN",
-        userModelId: -1n,
-        description: 'The Admin role is responsible for managing permissions and users within the Med Tracker system '
-    }
-    const practitionerRoleChange = {
+        userModelId: -1n
+
+    })
+    const [practitionerRoleChange, setPractitionerRoleChange] = useState<IRoleChange>({
         id: -1n,
         status: "Loading",
         userRole: "PRACTITIONER",
-        userModelId: -1n, description: 'The Practitioner role allows users to register patients, review patient data, and view patient records'
-    }
+        userModelId: -1n
+    })
 
-    const [roleChanges, setRoleChanges] = useState<IRoleChange[]>([adminRoleChange, practitionerRoleChange])
 
     const requestRoleChangeStatus = (): void => {
         userDataService.getRoleChangeStatus()
             .then(value => {
-                    value.data.adminRoleChange.description = adminRoleChange.description
-                    value.data.practitionerRoleChange.description = practitionerRoleChange.description
-
-                    setRoleChanges([value.data.adminRoleChange, value.data.practitionerRoleChange])
+                    setAdminRoleChange(value.data.adminRoleChange)
+                    setPractitionerRoleChange(value.data.practitionerRoleChange)
                 }
             )
             .catch(reason => console.log(reason))
@@ -73,28 +70,38 @@ const RoleRequests = () => {
     if (canMakeRoleRequests) {
         return (
             <section className={"RoleChanges"}>
-                <br/>
-                <List items={roleChanges} renderItem={(roleChange) => (
-                    <li>
-                        <RoleChange roleChangeStatus={roleChange} makeRoleRequest={requestRoleChange}/>
-                    </li>
-                )}/>
+                <RoleChange roleChangeStatus={adminRoleChange} makeRoleRequest={requestRoleChange}
+                            roleDescription={
+                                <p>
+                                    The Admin role is responsible for managing permissions and users within
+                                    the Med Tracker system
+                                </p>
+                            }/>
+                <RoleChange roleChangeStatus={practitionerRoleChange} makeRoleRequest={requestRoleChange}
+                            roleDescription={
+                                <p>
+                                    The Practitioner role allows users to register patients, review patient data, and
+                                    view patient records
+                                </p>
+                            }/>
             </section>
         )
-    } else return (<div>Current Role can not be adjusted</div>)
+    } else return (<div>Current role can not be adjusted</div>)
 }
 
 
 const RoleChange = (
-    {roleChangeStatus, makeRoleRequest}: {
+    {roleChangeStatus, makeRoleRequest, roleDescription}: {
         roleChangeStatus: IRoleChange,
-        makeRoleRequest: Function
+        makeRoleRequest: Function,
+        roleDescription: React.ReactNode
     }) => {
 
     const disableButton: boolean = roleChangeStatus.id > 1
     const buttonText: string = (disableButton ? (roleChangeStatus.status) : 'Request')
     const prettyRoleName: string = roleChangeStatus.userRole.substring(0, 1).toUpperCase()
         .concat(roleChangeStatus.userRole.substring(1, roleChangeStatus.userRole.length).toLowerCase())
+
 
     const onRequestButtonClick = () => {
         makeRoleRequest(roleChangeStatus.userRole)
@@ -103,19 +110,19 @@ const RoleChange = (
     return (
         <SectionComponentWithDescription
             heading={prettyRoleName}
-            description={roleChangeStatus.description}
+            description={roleDescription}
             content={
 
-                    <div className="RoleChange">
-                        <div>
-                            <input className={'inputButton'} type="button" onClick={onRequestButtonClick}
-                                   value={buttonText}
-                                   disabled={disableButton}/>
-                            Request {prettyRoleName} role
-                        </div>
-
+                <div className="RoleChange">
+                    <div>
+                        <input className={'inputButton'} type="button" onClick={onRequestButtonClick}
+                               value={buttonText}
+                               disabled={disableButton}/>
+                        Request {prettyRoleName} role
                     </div>
-                }/>
+
+                </div>
+            }/>
 
     )
 }

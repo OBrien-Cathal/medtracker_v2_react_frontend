@@ -5,6 +5,8 @@ import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {useNavigate} from "react-router-dom";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
 import {IPrescriptionType} from "../../types/prescription.type.ts";
+import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import MaxWidthSection from "../../components/MaxWidthSection.tsx";
 
 const Prescriptions = () => {
     const {token} = useAuth()
@@ -73,8 +75,37 @@ const Prescriptions = () => {
             <div className={'titleContainer'}>
                 <div>Prescriptions</div>
             </div>
-            <div>All Prescriptions</div>
-            <ReactTable<IPrescriptionType> data={prescriptionList} columns={columns}/>
+
+            <MaxWidthSection content={
+                <div>
+                    <SectionComponentWithDescription
+                        heading={'Current Prescriptions'}
+                        description={
+                            <div>
+                                <p>Prescriptions that are currently valid, (Work in progress still includes old prescriptions)</p>
+                            </div>
+                        }
+                        content={
+                            <div className={'center-section-body'}>
+                                <ReactTable<IPrescriptionType> data={prescriptionList} columns={columns}/>
+                            </div>
+                        }/>
+                    <SectionComponentWithDescription
+                        heading={'Expired Prescriptions'}
+                        description={
+                            <div>
+                                <p>Prescriptions that are no longer valid, this section is under construction </p>
+                            </div>
+                        }
+                        content={
+                            <div className={'center-section-body'}>
+                            </div>
+                        }/>
+                </div>
+
+            }/>
+
+
         </div>
     )
 }

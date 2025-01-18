@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = {
     heading: string;
-    description: string;
+    description: React.ReactNode;
     content: React.ReactNode;
 }
 

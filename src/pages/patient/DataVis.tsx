@@ -3,6 +3,7 @@ import {BloodPressureService} from "../../service/bloodPressure.service.tsx";
 import SystoleGraph from "../components/graphs/SystoleGraph.tsx";
 import {DosesService} from "../../service/dosesService.tsx";
 import DoseGraph from "../components/graphs/DoseGraph.tsx";
+import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 
 const DataVis = () => {
     const {token} = useAuth()
@@ -15,9 +16,15 @@ const DataVis = () => {
                 <div>Data</div>
             </div>
             <div className="graphsContainer">
-                <div>Systole</div>
-                <SystoleGraph patientIdOrNegative={patientId} bloodPressureService={bloodPressureService}/>
-                <DoseGraph patientIdOrNegative={patientId} dosesService={dosesService}/>
+                <SectionComponentWithDescription
+                    heading={'Graph data views'}
+                    description={<p>Graphs based on accumulated data</p>}
+                    content={
+                        <div>
+                            <SystoleGraph patientIdOrNegative={patientId} bloodPressureService={bloodPressureService}/>
+                            <DoseGraph patientIdOrNegative={patientId} dosesService={dosesService}/>
+                        </div>
+                    }/>
             </div>
         </div>
     )

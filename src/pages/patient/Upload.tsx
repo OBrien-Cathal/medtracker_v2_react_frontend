@@ -3,6 +3,8 @@ import {useAuth} from "../../auth/AuthProvider.tsx";
 import {PatientDataService} from "../../service/patient.service.tsx";
 import {useState} from "preact/compat";
 import * as React from "preact/compat";
+import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import Swal from "sweetalert2";
 
 const UploadPage = () => {
     const {token} = useAuth()
@@ -38,11 +40,27 @@ const UploadPage = () => {
         data.append('dosesFile', doseFile as Blob);
         patientDataService.uploadDoseFile(data).then(r => {
             if (r.data.successful) {
-                console.log(r.data.message)
+                handleSuccessfulUpload(r.data.message);
             } else {
-                console.log(r.data.errors)
+                handleFailedUpload(r.data.message, r.data.errors)
             }
         }).catch(e => console.log(e.error))
+
+    }
+
+    function handleSuccessfulUpload(message: string) {
+        console.log(message)
+        Swal.fire({
+            title: "Upload Successful",
+            text: message,
+            icon: "success"
+        }).then()
+    }
+
+    function handleFailedUpload(message: string, errors: string[]) {
+        console.log(message)
+
+        Swal.fire("ERROR", errors.join("\n"), "error").then()
 
     }
 
@@ -52,9 +70,10 @@ const UploadPage = () => {
         data.append('bloodPressureFile', bpFile as Blob);
         patientDataService.uploadBloodPressureFile(data).then(r => {
             if (r.data.successful) {
-                console.log(r.data.message)
+                handleSuccessfulUpload(r.data.message);
             } else {
-                console.log(r.data.errors)
+                handleFailedUpload(r.data.message, r.data.errors)
+
             }
         }).catch(e => console.log(e.error))
 
@@ -67,70 +86,76 @@ const UploadPage = () => {
                 <div>Upload</div>
             </div>
             <br/>
-            <div>Upload files here</div>
             <br/>
-            <div className="uploadsContainer">
-                <div className={'uploadContainer'}>
-                    <div className={'uploadContainer-header'}>
-                        <div className={'upload-header'}>Dose</div>
-                    </div>
-                    <div className="input-group">
-                        <input id="doseFile" type="file" onChange={handleDoseFileChange}/>
-                    </div>
-                    <br/>
-                    {doseFile && (
-                        <section>
-                            File details:
-                            <ul>
-                                <li>Name: {doseFile.name}</li>
-                                <li>Type: {doseFile.type}</li>
-                                <li>Size: {doseFile.size} bytes</li>
-                            </ul>
-                        </section>
-                    )}
-                    <div className={'uploadContainerSubmitBox'}>
-                        {doseFile && (
-                            <input
-                                type={'submit'}
-                                onClick={onUploadDoseFileClick}
-                                className="submitDose">
-                                Upload a file
-                            </input>
-                        )}
-                    </div>
-                </div>
+            <div className={'max-width-section'}>
+                <SectionComponentWithDescription
+                    heading={'Data Uploads'}
+                    description={<p>Bulk data for different metrics can be uploaded below, the expect file format is
+                        Excel
+                        (.xlsx)</p>}
+                    content={
+                        <div className="uploadsContainer">
+                            <div className={'uploadContainer'}>
+                                <div className={'uploadContainer-header'}>
+                                    <div className={'upload-header'}>Dose</div>
+                                </div>
+                                <div className="input-group">
+                                    <input id="doseFile" type="file" onChange={handleDoseFileChange}/>
+                                </div>
+                                <br/>
+                                {doseFile && (
+                                    <section>
+                                        File details:
+                                        <ul>
+                                            <li>Name: {doseFile.name}</li>
+                                            <li>Type: {doseFile.type}</li>
+                                            <li>Size: {doseFile.size} bytes</li>
+                                        </ul>
+                                    </section>
+                                )}
+                                <div className={'uploadContainerSubmitBox'}>
+                                    {doseFile && (
+                                        <input
+                                            type={'submit'}
+                                            onClick={onUploadDoseFileClick}
+                                            className="submitDose">
+                                            Upload a file
+                                        </input>
+                                    )}
+                                </div>
+                            </div>
 
-                <div className={'uploadContainer'}>
-                    <div className={'uploadContainer-header'}>
-                        <div className={'upload-header'}>Blood Pressure</div>
-                    </div>
-                    <div className="input-group">
-                        <input id="bpfile" type="file" onChange={handleBpFileChange}/>
-                    </div>
-                    <br/>
-                    {bpFile && (
-                        <section>
-                            File details:
-                            <ul>
-                                <li>Name: {bpFile.name}</li>
-                                <li>Type: {bpFile.type}</li>
-                                <li>Size: {bpFile.size} bytes</li>
-                            </ul>
-                        </section>
-                    )}
+                            <div className={'uploadContainer'}>
+                                <div className={'uploadContainer-header'}>
+                                    <div className={'upload-header'}>Blood Pressure</div>
+                                </div>
+                                <div className="input-group">
+                                    <input id="bpfile" type="file" onChange={handleBpFileChange}/>
+                                </div>
+                                <br/>
+                                {bpFile && (
+                                    <section>
+                                        File details:
+                                        <ul>
+                                            <li>Name: {bpFile.name}</li>
+                                            <li>Type: {bpFile.type}</li>
+                                            <li>Size: {bpFile.size} bytes</li>
+                                        </ul>
+                                    </section>
+                                )}
 
-                    <div className={'uploadContainerSubmitBox'}>
-                        {bpFile && (
-                            <input
-                                type={'submit'}
-                                onClick={onUploadBpFileClick}
-                                className="submitBp">
-                                Upload a file
-                            </input>
-                        )}
-                    </div>
-                </div>
-            </div>
+                                <div className={'uploadContainerSubmitBox'}>
+                                    {bpFile && (
+                                        <input
+                                            type={'submit'}
+                                            onClick={onUploadBpFileClick}
+                                            className="submitBp">
+                                            Upload a file
+                                        </input>
+                                    )}
+                                </div>
+                            </div>
+                        </div>}/></div>
         </div>
     )
 }

@@ -2,6 +2,7 @@ import {useEffect, useState} from "preact/compat";
 import {IGraphData} from "../../../types/generic-graph-data.type.ts";
 import LineGraph from "./LineGraph.tsx";
 import {DosesService} from "../../../service/dosesService.tsx";
+import SectionComponentWithDescription from "../../../components/SectionComponentWithDescription.tsx";
 
 type PropsType = {
     patientIdOrNegative: bigint
@@ -31,7 +32,14 @@ const DoseGraph = ({patientIdOrNegative, dosesService}: PropsType) => {
         <div>
             {
                 data &&
-                <LineGraph {...data}/>
+                <SectionComponentWithDescription
+                    heading={'Dose'}
+                    description={<p>Shows the dose(mg) of medication based on active prescriptions at a point in
+                        time.</p>}
+                    content={
+                        <LineGraph {...data}/>
+                    }/>
+
             }
         </div>
     )

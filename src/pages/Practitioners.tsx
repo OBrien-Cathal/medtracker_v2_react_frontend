@@ -6,6 +6,8 @@ import {useAuth} from "../auth/AuthProvider.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../components/table/ReactTable.tsx";
 import {PatientDataService} from "../service/patient.service.tsx";
+import SectionComponentWithDescription from "../components/SectionComponentWithDescription.tsx";
+import MaxWidthSection from "../components/MaxWidthSection.tsx";
 
 
 type IPatientRegistrationRow = {
@@ -122,16 +124,25 @@ const Practitioners = () => {
             <div className={'titleContainer'}>
                 <div>Practitioners</div>
             </div>
-            <div>
-                <p>All available practitioners are listed below, it is possible to register with multiple
-                    practitioners.
-                </p>
-                <span/>
-                <p>
-                    New Registrations will be reviewed and approved by the practitioner.
-                </p>
-            </div>
-            <ReactTable<IPatientRegistrationRow> data={practitionerList} columns={columns}/>
+            <br/>
+            <MaxWidthSection content={
+                <SectionComponentWithDescription
+                    heading={'Practitioner Overview'}
+                    description={
+                        <div>
+                            <p>All available practitioners are listed below, it is possible to register with
+                                multiple
+                                practitioners.</p>
+                            <p>
+                                New Registrations will be reviewed and approved by the practitioner.
+                            </p>
+                        </div>
+                    }
+                    content={
+                        <div className={'center-section-body'}><ReactTable<IPatientRegistrationRow>
+                            data={practitionerList} columns={columns}/></div>
+                    }/>
+            }/>
         </div>
     )
 }
