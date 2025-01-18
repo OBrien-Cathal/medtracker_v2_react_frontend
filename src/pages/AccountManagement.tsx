@@ -1,12 +1,30 @@
 import {useState, useEffect} from "preact/compat";
 import {IRoleChange} from "../types/user.type.ts";
-import  {UserDataService} from "../service/user.service.tsx";
+import {UserDataService} from "../service/user.service.tsx";
 import {useAuth} from "../auth/AuthProvider.tsx";
 import Swal from "sweetalert2";
 
 const AccountManagement = () => {
-    const {token} = useAuth()
-    const userDataService: UserDataService  = new UserDataService(token )
+    return (
+        <div className="mainContainer">
+            <div className={'titleContainer'}>
+                <div>Account management</div>
+            </div>
+            <div>Users can manage own account here</div>
+            <RoleRequests/>
+
+        </div>
+    )
+}
+export default AccountManagement
+
+
+const RoleRequests = () => {
+
+    const {token, currentRole} = useAuth()
+    const canMakeRoleRequests = currentRole === 'USER'
+
+    const userDataService: UserDataService = new UserDataService(token)
     const [adminRoleChange, setAdminRoleChange] = useState<IRoleChange>({
         id: -1n,
         status: "Loading",
@@ -22,7 +40,7 @@ const AccountManagement = () => {
     })
 
 
-    const requestStatus = (): void => {
+    const requestChanges = (): void => {
         userDataService.getRoleChangeStatus()
             .then(value => {
                     setAdminRoleChange(value.data.adminRoleChange)
@@ -33,37 +51,31 @@ const AccountManagement = () => {
     }
 
     useEffect(() => {
-        requestStatus()
+        requestChanges()
     }, [])
-
-    return (
-        <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>Account management</div>
-            </div>
-            <div>Users can manage own account here</div>
-            <ul>
-                <li>
-                    <RoleRequest roleChangeStatus={practitionerRoleChange}
-                                 service={userDataService}
-                                 requestStatus={requestStatus}>
-                    </RoleRequest>
-                </li>
-                <li><RoleRequest roleChangeStatus={adminRoleChange}
-                                 service={userDataService}
-                                 requestStatus={requestStatus}>
-                </RoleRequest>
-                </li>
-            </ul>
-
-        </div>
-    )
+    if (canMakeRoleRequests) {
+        return (
+            <section className={"RoleChanges"}>
+                <ul>
+                    <li>
+                        <RoleChange roleChangeStatus={practitionerRoleChange}
+                                    service={userDataService}
+                                    requestStatus={requestChanges}>
+                        </RoleChange>
+                    </li>
+                    <li><RoleChange roleChangeStatus={adminRoleChange}
+                                    service={userDataService}
+                                    requestStatus={requestChanges}>
+                    </RoleChange>
+                    </li>
+                </ul>
+            </section>
+        )
+    } else return (<div>Current Role can not be adjusted</div>)
 }
 
-export default AccountManagement
 
-
-const RoleRequest = (
+const RoleChange = (
     {roleChangeStatus, service, requestStatus}: {
         roleChangeStatus: IRoleChange,
         service: UserDataService,
@@ -72,6 +84,10 @@ const RoleRequest = (
     }) => {
 
     const disableButton: boolean = roleChangeStatus.id > 1
+    const buttonText: string = (disableButton ? (roleChangeStatus.status) : 'Request')
+
+    const prettyRoleName: string = roleChangeStatus.userRole.substring(0, 1).toUpperCase()
+        .concat(roleChangeStatus.userRole.substring(1, roleChangeStatus.userRole.length).toLowerCase())
 
     const onRequestButtonClick = () => {
         service.requestRoleChange(roleChangeStatus.userRole).then(r => {
@@ -80,15 +96,13 @@ const RoleRequest = (
                 requestStatus()
             }
         ).catch(reason => console.log(reason.error))
-
     }
 
     return (
         <div className="RoleChange">
-            <div><h3>Role</h3>: {roleChangeStatus.userRole}</div>
-            <div><h3>Status</h3>: {roleChangeStatus.status}</div>
-            <div><input className={'inputButton'} type="button" onClick={onRequestButtonClick} value={'Request'}
+            <div><input className={'inputButton'} type="button" onClick={onRequestButtonClick} value={buttonText}
                         disabled={disableButton}/></div>
+            <div>Request {prettyRoleName} role</div>
         </div>
     )
 }

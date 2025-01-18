@@ -50,7 +50,10 @@ input[type=file]::file-selector-button:hover {
     color: black;
     cursor: pointer;
 }
-
+ul
+{
+    list-style-type: none;
+}
 
 /*Styles for Header and Nav elements*/
 .HeaderContainer {
@@ -212,6 +215,11 @@ Styling for reusable components
     font-size: 24px;
     font-weight: bold;
 }
+
+
+/*Account Management*/
+
+
 /*Uploads*/
 .uploadsContainer {
 }
@@ -256,11 +264,16 @@ Styling for reusable components
 }
 
 /*Account management*/
+
+.RoleChanges{
+    border: orange solid 1px;
+}
 .RoleChange {
     display: flex;
     flex-direction: row;
     column-gap: 50px;
     margin-bottom: 50px;
+    margin-right: 20px;
 }
 
 /*login fields*/
