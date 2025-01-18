@@ -50,10 +50,8 @@ input[type=file]::file-selector-button:hover {
     color: black;
     cursor: pointer;
 }
-ul
-{
-    list-style-type: none;
-}
+
+
 
 /*Styles for Header and Nav elements*/
 .HeaderContainer {
@@ -208,12 +206,35 @@ Styling for reusable components
     justify-content: center;
 }
 
-.componentContainer{
+.componentContainer {
 
 }
-.componentContainer .titleContainer{
+
+.componentContainer .titleContainer {
     font-size: 24px;
     font-weight: bold;
+}
+
+.SectionComponentWithDescription {
+
+}
+
+.section-header {
+    background-color: orange;
+    color: white;
+    font-size: 18px;
+    padding: 5px;
+
+}
+
+.section-description {
+    background-color: #dddddd;
+    padding: 10px
+}
+
+.section-body {
+    padding: 10px;
+    background-color: #d3d3d3 ;
 }
 
 
@@ -228,21 +249,24 @@ Styling for reusable components
     margin-bottom: 30px;
     border: 10px #808080;
 }
-.graphsContainer{
+
+.graphsContainer {
     width: 100%;
 }
-.graphContainer{
 
-}
-.lineGraphContainer{
-
-}
-
-.graphsContainer .graphContainer{
+.graphContainer {
 
 }
 
-.graphContainer .lineGraphContainer{
+.lineGraphContainer {
+
+}
+
+.graphsContainer .graphContainer {
+
+}
+
+.graphContainer .lineGraphContainer {
 
 }
 
@@ -265,8 +289,13 @@ Styling for reusable components
 
 /*Account management*/
 
-.RoleChanges{
-    border: orange solid 1px;
+.RoleChanges {
+
+}
+.RoleChanges ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
 }
 .RoleChange {
     display: flex;
@@ -284,18 +313,22 @@ Styling for reusable components
     justify-content: center;
     height: 260px;
 }
+
 /*Home page*/
-.explanationContainer{
+.explanationContainer {
 
 }
+
 .explanationContainer .clickable {
     cursor: pointer;
     font-weight: bold;
 
 }
+
 .explanationContainer .clickable:hover {
     color: orange;
 }
+
 .buttonContainer input[type='button'], .buttonContainer input[type='submit'] {
     padding: 12px 24px;
     margin: 8px;

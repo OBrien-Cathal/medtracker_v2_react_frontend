@@ -16,5 +16,6 @@ export interface IRoleChange {
     status: string
     userRole: string
     userModelId: bigint
+    description: string
 
 }
