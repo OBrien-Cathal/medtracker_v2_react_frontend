@@ -171,7 +171,7 @@ Styling for reusable components
 }
 
 .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #ddd;
 }
 
 .styled-table tbody tr:last-of-type {
@@ -247,7 +247,7 @@ Styling for reusable components
 }
 
 .section-body {
-    background-color: #dddddd;
+    background-color: #f3f3f3;
     padding: 10px;
 }
 .center-section-body{
