@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-    heading: string;
+    heading: React.ReactNode;
     description: React.ReactNode;
     content: React.ReactNode;
 }

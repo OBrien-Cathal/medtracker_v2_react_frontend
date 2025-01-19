@@ -8,6 +8,8 @@ import {IPrescriptionType} from "../../types/prescription.type.ts";
 import UserDetails from "../components/UserDetails.tsx";
 import {IParams} from "../../types/params.type.ts";
 import PatientDataVis from "./PatientDataVis.tsx";
+import MaxWidthSection from "../../components/MaxWidthSection.tsx";
+import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 
 const PatientDetails = () => {
     const {token} = useAuth()
@@ -79,22 +81,70 @@ const PatientDetails = () => {
         <div className="mainContainer">
 
             <div className={'titleContainer'}>
-                <div>Patient: {id} Details</div>
+                <div>Patient: {id}</div>
             </div>
-            <UserDetails></UserDetails>
-            <div className="componentContainer">
-                <div className={'titleContainer'}>
-                    <div>Medical details</div>
-                </div>
-                <div>Private medical info about a user, get from server.</div>
-            </div>
+
+
             <br/>
-            <div className="componentContainer">
-                <div className={'titleContainer'}>
-                    <div>Prescriptions</div>
+            <MaxWidthSection content={
+                <div>
+                    <SectionComponentWithDescription
+                        heading={<div>
+                            Patient: {id} Details
+                        </div>}
+                        description={
+                            <div>
+                                <p>Basic details about a patient</p>
+                            </div>
+                        }
+                        content={
+                            <div className={'center-section-body'}>
+                                <UserDetails></UserDetails>
+                            </div>
+                        }/>
+                    <br/>
+                    <SectionComponentWithDescription
+                        heading={'Medical Records'}
+                        description={
+                            <div>
+                                <p>Details about a patients medical records</p>
+                            </div>
+                        }
+                        content={
+                            <div className={'center-section-body'}>
+                                Patient Detail here
+                            </div>
+                        }/>
+                    <br/>
+                    <SectionComponentWithDescription
+                        heading={'Current Prescriptions'}
+                        description={
+                            <div>
+                                <p>Prescriptions that are currently valid, (Work in progress still includes old
+                                    prescriptions)</p>
+                            </div>
+                        }
+                        content={
+                            <div className={'center-section-body'}>
+                                <ReactTable<IPrescriptionType> data={prescriptionList} columns={columns}/>
+                            </div>
+                        }/>
+                    <br/>
+                    <SectionComponentWithDescription
+                        heading={'Expired Prescriptions'}
+                        description={
+                            <div>
+                                <p>Prescriptions that are no longer valid, this section is under construction </p>
+                            </div>
+                        }
+                        content={
+                            <div className={'center-section-body'}>
+                            </div>
+                        }/>
                 </div>
-                <div><ReactTable<IPrescriptionType> data={prescriptionList} columns={columns}/></div>
-            </div>
+
+            }/>
+
             <br/>
             <PatientDataVis patientId={(params.id as unknown as bigint)}/>
         </div>
