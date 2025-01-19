@@ -1,4 +1,3 @@
-
 import RequireAuth from "../utils/RequireAuth";
 import RedirectIfLoggedIn from "../utils/RedirectIfLoggedIn";
 
@@ -34,6 +33,7 @@ const AppRoutes = () => {
     const unprotectedRoutes = [...public_routes];
 
     return (
+        <div className={'route-container'}>
             <Routes>
                 {
                     unprotectedRoutes.map((e) => {
@@ -79,7 +79,7 @@ const AppRoutes = () => {
                         );
                     })
                 }
-            </Routes>
+            </Routes></div>
 
 
     );

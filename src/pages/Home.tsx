@@ -6,7 +6,7 @@ const Home = () => {
     const [username, setUsername] = useState('')
     const navigate = useNavigate()
     const {user, isLoggedIn, logout, currentRole} = useAuth()
-    // const [viewInstructions, setViewInstrictions]
+
     const needsExplanation = currentRole === "USER"
     if (isLoggedIn) {
         setUsername(user ? user : '')
@@ -36,7 +36,23 @@ const Home = () => {
                 <div>Welcome to Medtracker!</div>
             </div>
             <br/>
-            <div>This is the home page.</div>
+            <div>
+                <p>This app was developed by Cathal O'Brien as a playground and demo project while learning the Spring
+                    Boot
+                    and React Frameworks.</p>
+                <p>The app registers users and allows for tracking of prescribed medications and biometric measurements to track the effects.</p>
+                <br/>
+                <div>
+
+                    <p>Users can sign up and request a role to unlock different sets of functionality</p>
+                    <p>The available roles are</p>
+                    <ul>
+                        <li>Patient</li>
+                        <li>Practitioner</li>
+                        <li>Admin</li>
+                    </ul>
+                </div>
+            </div>
             <br/>
             {needsExplanation && (<div className={'explanationContainer'}>
                 <p>

@@ -50,7 +50,11 @@ input[type=file]::file-selector-button:hover {
     color: black;
     cursor: pointer;
 }
-
+/*Routes*/
+.route-container{
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 /*Styles for Header and Nav elements*/
 .HeaderContainer {
