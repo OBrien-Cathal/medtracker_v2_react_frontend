@@ -27,7 +27,7 @@ const Prescriptions = () => {
 
     function onClickViewDetails(id: bigint) {
         console.log('clicked view details: ' + id)
-        navigate('/prescription-details/' + id)
+        navigate(`/patient-prescription-details/${id}`)
     }
 
     useEffect(() => {

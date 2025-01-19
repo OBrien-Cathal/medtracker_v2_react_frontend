@@ -18,11 +18,11 @@ const PatientDetails = () => {
     const prescriptionService = new PrescriptionService(token)
     const [prescriptionList, setPrescriptionList] = useState<IPrescriptionType[]>([])
     const params = useParams<IParams>()
-    const id = params.id
+    const patientId = params.id
 
 
     function getPrescriptions() {
-        prescriptionService.getPrescriptionsForPractitionerPatient(id)
+        prescriptionService.getPrescriptionsForPractitionerPatient(patientId)
             .then(r => {
                 console.log("Received prescriptions")
                 console.log(r.data)
@@ -32,9 +32,11 @@ const PatientDetails = () => {
         });
     }
 
-    function onClickViewDetails(id: bigint) {
+    function onClickViewPrescriptionDetails(id: bigint) {
         console.log('clicked view details: ' + id)
-        navigate('/prescription-details/' + id)
+        navigate(`/full-prescription-details/${id}/${patientId}`,
+
+            )
     }
 
 
@@ -69,7 +71,7 @@ const PatientDetails = () => {
             cell: ({cell}) => {
                 const prescriptionId = cell.row.original.id
                 return (
-                    <input type={"button"} value="View" onClick={() => onClickViewDetails(prescriptionId)}>
+                    <input type={"button"} value="View" onClick={() => onClickViewPrescriptionDetails(prescriptionId)}>
                         View Details
                     </input>)
             }
@@ -81,7 +83,7 @@ const PatientDetails = () => {
         <div className="mainContainer">
 
             <div className={'titleContainer'}>
-                <div>Patient: {id}</div>
+                <div>Patient: {patientId}</div>
             </div>
 
 
@@ -90,7 +92,7 @@ const PatientDetails = () => {
                 <div>
                     <SectionComponentWithDescription
                         heading={<div>
-                            Patient: {id} Details
+                            Patient: {patientId} Details
                         </div>}
                         description={
                             <div>

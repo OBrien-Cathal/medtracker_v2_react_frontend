@@ -2,6 +2,7 @@ import {userRoles as ur} from "../data/userRoles.ts";
 import Upload from "../pages/patient/Upload.tsx";
 import Prescriptions from "../pages/patient/Prescriptions.tsx";
 import DataVis from "../pages/patient/DataVis.tsx";
+import PatientPrescriptionDetails from "../pages/patient/PatientPrescriptionDetails.tsx";
 
 
 export const patient_routes = [
@@ -25,6 +26,12 @@ export const patient_routes = [
         availability: [ur.patient],
         title: "Data Visualizations",
         showInNav: true
+    },   {
+        path: "/patient-prescription-details/:id",
+        ele: <PatientPrescriptionDetails/>,
+        availability: [ur.patient],
+        title: "Prescription Details",
+        showInNav: false
     }
 
 ]
