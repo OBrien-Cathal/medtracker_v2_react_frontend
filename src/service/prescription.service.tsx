@@ -1,6 +1,6 @@
 import AuthenticatedService from "./authenticatedService.tsx";
 import {IResponse} from "../types/generic.type.ts";
-import {IPrescriptionType} from "../types/prescription.type.ts";
+import {IPrescriptionDetailsType, IPrescriptionOverviewType} from "../types/prescription.type.ts";
 
 export class PrescriptionService extends AuthenticatedService {
     constructor(token: string) {
@@ -8,20 +8,23 @@ export class PrescriptionService extends AuthenticatedService {
     }
 
     getPrescriptionsForPractitionerPatient(patientId: string | undefined) {
-        return this._client.get<IPrescriptionType[]>("/patient?id=" + patientId);
+        return this._client.get<IPrescriptionOverviewType[]>("/patient?id=" + patientId);
     }
 
     getPrescriptions() {
-        return this._client.get<IPrescriptionType[]>("");
+        return this._client.get<IPrescriptionOverviewType[]>("");
     }
 
-    addPrescription(medName: string) {
+    updatePrescription(details: IPrescriptionDetailsType) {
+        return this._client.post<IResponse>(
+            "update",
+            details
+        )
+    }
+    addPrescription(details: IPrescriptionDetailsType) {
         return this._client.post<IResponse>(
             "add",
-            {
-                id: null,
-                name: medName
-            }
+            details
         )
     }
 }

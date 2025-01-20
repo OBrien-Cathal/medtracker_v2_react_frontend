@@ -1,7 +1,7 @@
 import {IMedicationType} from "./medication.type.ts";
 
 
-export interface IPrescriptionType {
+export interface IPrescriptionOverviewType {
     id: bigint
     doseMg: number
     medication: IMedicationType
@@ -12,8 +12,15 @@ export interface IPrescriptionType {
 }
 
 export interface IPrescriptionDetailsType {
-    patientId: bigint
-    baseDetails: IPrescriptionType
+    id: number
+    doseMg: number
+    medicationId: number
+    beginTime: string
+    endTime: string
+    patientId: number
+    patientUsername: string
+    practitionerId: number
+    practitionerUsername: string
     prescriptionScheduleEntries: []
 }
 
@@ -22,6 +29,10 @@ export interface IPrescriptionScheduleEntryType {
     dayStage: string
 }
 
-export interface IPrescriptionUpdateRequestType {
+export interface IAddPrescriptionRequest {
+    prescriptionDetails: IPrescriptionDetailsType
+}
+
+export interface IPrescriptionRequest {
     prescriptionDetails: IPrescriptionDetailsType
 }

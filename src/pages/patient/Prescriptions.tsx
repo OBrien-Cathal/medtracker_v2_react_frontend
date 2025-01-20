@@ -4,7 +4,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {useNavigate} from "react-router-dom";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
-import {IPrescriptionType} from "../../types/prescription.type.ts";
+import {IPrescriptionOverviewType} from "../../types/prescription.type.ts";
 import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 import MaxWidthSection from "../../components/MaxWidthSection.tsx";
 
@@ -13,7 +13,7 @@ const Prescriptions = () => {
     const navigate = useNavigate()
 
     const prescriptionService = new PrescriptionService(token)
-    const [prescriptionList, setPrescriptionList] = useState<IPrescriptionType[]>([])
+    const [prescriptionList, setPrescriptionList] = useState<IPrescriptionOverviewType[]>([])
 
     function getPrescriptions() {
         prescriptionService.getPrescriptions()
@@ -34,7 +34,7 @@ const Prescriptions = () => {
         getPrescriptions();
     }, [])
 
-    const Columns: ColumnDef<IPrescriptionType>[] = [
+    const Columns: ColumnDef<IPrescriptionOverviewType>[] = [
         {
             header: "ID",
             accessorKey: "id",
@@ -87,7 +87,7 @@ const Prescriptions = () => {
                         }
                         content={
                             <div className={'center-section-body'}>
-                                <ReactTable<IPrescriptionType> data={prescriptionList} columns={columns}/>
+                                <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
                             </div>
                         }/>
                     <SectionComponentWithDescription

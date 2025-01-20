@@ -4,7 +4,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
-import {IPrescriptionType} from "../../types/prescription.type.ts";
+import {IPrescriptionOverviewType} from "../../types/prescription.type.ts";
 import UserDetails from "../components/UserDetails.tsx";
 import {IParams} from "../../types/params.type.ts";
 import PatientDataVis from "./PatientDataVis.tsx";
@@ -16,7 +16,7 @@ const PatientDetails = () => {
     const navigate = useNavigate()
 
     const prescriptionService = new PrescriptionService(token)
-    const [prescriptionList, setPrescriptionList] = useState<IPrescriptionType[]>([])
+    const [prescriptionList, setPrescriptionList] = useState<IPrescriptionOverviewType[]>([])
     const params = useParams<IParams>()
     const patientId = params.id
 
@@ -44,7 +44,7 @@ const PatientDetails = () => {
         getPrescriptions();
     }, [])
 
-    const Columns: ColumnDef<IPrescriptionType>[] = [
+    const Columns: ColumnDef<IPrescriptionOverviewType>[] = [
         {
             header: "ID",
             accessorKey: "id",
@@ -128,7 +128,7 @@ const PatientDetails = () => {
                         }
                         content={
                             <div className={'center-section-body'}>
-                                <ReactTable<IPrescriptionType> data={prescriptionList} columns={columns}/>
+                                <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
                             </div>
                         }/>
                     <br/>
