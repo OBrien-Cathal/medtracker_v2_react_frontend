@@ -18,9 +18,7 @@ export interface IPrescriptionDetailsType {
     beginTime: string
     endTime: string
     patientId: number
-    patientUsername: string
     practitionerId: number
-    practitionerUsername: string
     prescriptionScheduleEntries: []
 }
 

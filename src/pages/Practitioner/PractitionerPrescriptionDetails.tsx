@@ -1,60 +1,87 @@
 import {useParams} from "react-router-dom";
 import {IParams} from "../../types/params.type.ts";
-import {useState} from "preact/compat";
+import {TargetedEvent, useState} from "preact/compat";
 import {IPrescriptionDetailsType} from "../../types/prescription.type.ts";
 import {useEffect} from "react";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
 import {useAuth} from "../../auth/AuthProvider.tsx";
 import {List} from "../../components/List.tsx";
+import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+
+
+type EditorType = {
+    errors: string[]
+    prescriptionDetails: IPrescriptionDetailsType
+}
 
 const PractitionerPrescriptionDetails = () => {
     const {id, userId} = useParams<IParams>()
     const {token} = useAuth()
     const prescriptionService = new PrescriptionService(token)
 
+    console.log('Rerender')
+
     const prescriptionDetailsPlaceholder: IPrescriptionDetailsType = {
-        id: -1,
-        doseMg: -1,
-        medicationId: -1,
+        id: Number(userId),
+        doseMg: 0,
+        medicationId: 1,
         beginTime: '',
         endTime: '',
-        patientId: -1,
-        patientUsername: '',
-        practitionerId: -1,
-        practitionerUsername: '',
+        patientId: Number(id),
+        practitionerId: 2,
         prescriptionScheduleEntries: []
     }
-    console.log('Rerender')
-    const [prescription, setPrescription] = useState<IPrescriptionDetailsType>(prescriptionDetailsPlaceholder)
-    const [errors, setErrors] = useState<string[]>([])
-    const [doseMg, setDoseMg] = useState(prescriptionDetailsPlaceholder.doseMg)
+    const editorPlaceholder = {
+        errors: [],
+        prescriptionDetails: prescriptionDetailsPlaceholder
+    }
+    const [editorModel, setEditorModel] = useState<EditorType>(editorPlaceholder)
+
 
     function getPrescriptionDetails() {
         if (id && Number(id) < 0) return
         console.log(`Getting details for prescription ID: ${id}`)
+        setEditorModel(editorPlaceholder)
+    }
 
-        setPrescription(prescriptionDetailsPlaceholder)
+
+    function isEditModelValid(): boolean {
+        editorModel.errors = validatePrescriptionDetails(editorModel.prescriptionDetails)
+        return editorModel.errors.length === 0
 
     }
 
-    function validatePrescriptionDetails(): boolean {
+    function validatePrescriptionDetails(details: IPrescriptionDetailsType): string[] {
         console.log(`Validating details for prescription ID: ${id}`)
         let tmpErrors: string[] = []
-        if (doseMg < 0) {
+        console.log(`dose validation: ${details.doseMg}`)
+        if (details.doseMg < 0) {
+            console.log(`dose failed valid: ${details.doseMg}`)
             tmpErrors = tmpErrors.concat('Dose is less than 0')
         }
-        setErrors(tmpErrors)
-        console.log(`Dose: ${doseMg}`)
-        return false
+        return tmpErrors
+    }
+
+    function updateDoseMg(event:
+                          TargetedEvent<HTMLInputElement, Event>) {
+        const newPrescription: IPrescriptionDetailsType = {
+            ...
+                editorModel.prescriptionDetails, doseMg: Number(event.currentTarget.value)
+        }
+        let errors = validatePrescriptionDetails(newPrescription);
+        setEditorModel({
+            errors: errors,
+            prescriptionDetails: newPrescription
+        })
     }
 
 
     function savePrescriptionDetails() {
-        if (!validatePrescriptionDetails()) {
+        if (!isEditModelValid()) {
             return console.log(`Invalid details for prescription ID: ${id}`)
         }
         console.log(`Saving validated details for prescription ID: ${id}`)
-        prescriptionService.addPrescription(prescription).then(r => {
+        prescriptionService.addPrescription(editorModel.prescriptionDetails).then(r => {
                 if (r.data.successful) {
                     console.log(r.data.message)
                 } else {
@@ -62,8 +89,7 @@ const PractitionerPrescriptionDetails = () => {
                 }
             }
         )
-        setPrescription(prescriptionDetailsPlaceholder)
-
+        setEditorModel(editorPlaceholder)
     }
 
     useEffect(() => {
@@ -83,12 +109,11 @@ const PractitionerPrescriptionDetails = () => {
             <div> Patient ID: {userId}</div>
             <div>
                 <input
-                    value={doseMg}
+                    value={editorModel.prescriptionDetails.doseMg}
                     type={'number'}
                     placeholder='0'
                     onChange={(ev) => {
-                        setDoseMg(Number(ev.currentTarget.value))
-                        validatePrescriptionDetails()
+                        updateDoseMg(ev)
                     }
                     }
                 />
@@ -97,11 +122,16 @@ const PractitionerPrescriptionDetails = () => {
             <div>
                 <section className={"validation-errors"}>
                     <br/>
-                    <List items={errors} renderItem={(error) => (
-                        <li>
-                            <p>{error}</p>
-                        </li>
-                    )}/>
+                    <SectionComponentWithDescription heading={'Errors'}
+                                                     description={'Errors must be corrected before submission'}
+                                                     content={
+                                                         <List items={editorModel.errors} renderItem={(error) => (
+                                                             <li>
+                                                                 <p>{error}</p>
+                                                             </li>
+                                                         )}/>
+                                                     }>
+                    </SectionComponentWithDescription>
                 </section>
 
 
