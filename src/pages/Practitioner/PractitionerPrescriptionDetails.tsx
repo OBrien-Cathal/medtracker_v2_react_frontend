@@ -18,16 +18,18 @@ const PractitionerPrescriptionDetails = () => {
     const {id, userId} = useParams<IParams>()
     const {token} = useAuth()
     const prescriptionService = new PrescriptionService(token)
+    const prescriptionId = Number(id)
+    const patientId = Number(userId)
 
     console.log('Rerender')
 
     const prescriptionDetailsPlaceholder: IPrescriptionDetailsType = {
-        id: Number(userId),
+        id: prescriptionId,
         doseMg: 0,
         medicationId: 1,
         beginTime: '',
         endTime: '',
-        patientId: Number(id),
+        patientId: patientId,
         practitionerId: 2,
         prescriptionScheduleEntries: []
     }
@@ -37,10 +39,13 @@ const PractitionerPrescriptionDetails = () => {
     }
     const [editorModel, setEditorModel] = useState<EditorType>(editorPlaceholder)
 
+    function logForURLParameters(string: string) {
+        console.log(string + `prescription ID: ${prescriptionId} patient ID: ${patientId}`)
+    }
 
     function getPrescriptionDetails() {
-        if (id && Number(id) < 0) return
-        console.log(`Getting details for prescription ID: ${id}`)
+        if (prescriptionId < 0) return
+        logForURLParameters('Getting details..')
         setEditorModel(editorPlaceholder)
     }
 
@@ -52,11 +57,14 @@ const PractitionerPrescriptionDetails = () => {
     }
 
     function validatePrescriptionDetails(details: IPrescriptionDetailsType): string[] {
-        console.log(`Validating details for prescription ID: ${id}`)
+
+        logForURLParameters('Validating')
         let tmpErrors: string[] = []
-        console.log(`dose validation: ${details.doseMg}`)
+
+        logForURLParameters('Dose Validation')
         if (details.doseMg < 0) {
-            console.log(`dose failed valid: ${details.doseMg}`)
+
+            logForURLParameters('Dose validation failed')
             tmpErrors = tmpErrors.concat('Dose is less than 0')
         }
         return tmpErrors
@@ -78,9 +86,9 @@ const PractitionerPrescriptionDetails = () => {
 
     function savePrescriptionDetails() {
         if (!isEditModelValid()) {
-            return console.log(`Invalid details for prescription ID: ${id}`)
+            logForURLParameters('On Save validation failed')
         }
-        console.log(`Saving validated details for prescription ID: ${id}`)
+        logForURLParameters('About to submit save')
         prescriptionService.addPrescription(editorModel.prescriptionDetails).then(r => {
                 if (r.data.successful) {
                     console.log(r.data.message)
@@ -93,9 +101,6 @@ const PractitionerPrescriptionDetails = () => {
     }
 
     useEffect(() => {
-        if (userId) {
-            prescriptionDetailsPlaceholder.patientId = Number(userId)
-        }
         getPrescriptionDetails();
     }, [])
 
@@ -105,8 +110,8 @@ const PractitionerPrescriptionDetails = () => {
             <div className={'titleContainer'}>
                 <div>PRACTITIONER PrescriptionDetails</div>
             </div>
-            <div>Fill PrescriptionDetails here for ID: {id}</div>
-            <div> Patient ID: {userId}</div>
+            <div>Fill PrescriptionDetails here for ID: {prescriptionId}</div>
+            <div> Patient ID: {patientId}</div>
             <div>
                 <input
                     value={editorModel.prescriptionDetails.doseMg}

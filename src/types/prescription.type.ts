@@ -12,13 +12,13 @@ export interface IPrescriptionOverviewType {
 }
 
 export interface IPrescriptionDetailsType {
-    id: number
+    id: number | null
     doseMg: number
     medicationId: number
     beginTime: string
     endTime: string
-    patientId: number
-    practitionerId: number
+    patientId: number | null
+    practitionerId: number | null
     prescriptionScheduleEntries: []
 }
 
