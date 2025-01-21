@@ -43,10 +43,12 @@ const PractitionerPrescriptionDetails = () => {
         console.log(string + `prescription ID: ${prescriptionId} patient ID: ${patientId}`)
     }
 
-    function getPrescriptionDetails() {
-        if (prescriptionId < 0) return
+    function getPrescriptionDetails(idOrNull: number | null) {
+        if (!idOrNull) return
         logForURLParameters('Getting details..')
-        setEditorModel(editorPlaceholder)
+        let newModel = newEditorModel()
+        newModel.prescriptionDetails = editorPlaceholder.prescriptionDetails
+        setEditorModel(newModel)
     }
 
 
@@ -81,6 +83,19 @@ const PractitionerPrescriptionDetails = () => {
             errors: errors,
             prescriptionDetails: newPrescription
         })
+
+    }
+
+    function newEditorModel(): EditorType {
+        const newPrescription: IPrescriptionDetailsType = {
+            ...
+                editorModel.prescriptionDetails
+        }
+        return {
+            errors: editorModel.errors,
+            prescriptionDetails: newPrescription
+        }
+
     }
 
 
@@ -90,10 +105,14 @@ const PractitionerPrescriptionDetails = () => {
         }
         logForURLParameters('About to submit save')
         prescriptionService.addPrescription(editorModel.prescriptionDetails).then(r => {
-                if (r.data.successful) {
-                    console.log(r.data.message)
+            console.log(r.data)
+            if (r.data.responseInfo.successful) {
+
+                    console.log(r.data.responseInfo.message)
+                    getPrescriptionDetails(Number(r.data.prescriptionId))
                 } else {
-                    console.log(r.data.errors)
+                    console.log(r.data.responseInfo.message)
+                    console.log(r.data.responseInfo.message)
                 }
             }
         )
@@ -101,7 +120,7 @@ const PractitionerPrescriptionDetails = () => {
     }
 
     useEffect(() => {
-        getPrescriptionDetails();
+        getPrescriptionDetails(editorModel.prescriptionDetails.id);
     }, [])
 
 

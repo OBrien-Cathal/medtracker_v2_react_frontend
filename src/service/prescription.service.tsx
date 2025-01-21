@@ -1,6 +1,10 @@
 import AuthenticatedService from "./authenticatedService.tsx";
 import {IResponse} from "../types/generic.type.ts";
-import {IPrescriptionDetailsType, IPrescriptionOverviewType} from "../types/prescription.type.ts";
+import {
+    IAddPrescriptionResponse,
+    IPrescriptionDetailsType,
+    IPrescriptionOverviewType
+} from "../types/prescription.type.ts";
 
 export class PrescriptionService extends AuthenticatedService {
     constructor(token: string) {
@@ -22,7 +26,7 @@ export class PrescriptionService extends AuthenticatedService {
         )
     }
     addPrescription(details: IPrescriptionDetailsType) {
-        return this._client.post<IResponse>(
+        return this._client.post<IAddPrescriptionResponse>(
             "add",
             details
         )
