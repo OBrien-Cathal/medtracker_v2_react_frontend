@@ -8,39 +8,34 @@ import {useAuth} from "../../auth/AuthProvider.tsx";
 import {List} from "../../components/List.tsx";
 import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 
-
 type EditorType = {
     errors: string[]
     prescriptionDetails: IPrescriptionDetailsType
 }
 
 const PractitionerPrescriptionDetails = () => {
-    const {id, userId} = useParams<IParams>()
     const {token} = useAuth()
     const prescriptionService = new PrescriptionService(token)
-    const prescriptionId =   Number(id) > 0 ? Number(id) : null
-    const patientId = Number(userId)
 
-    console.log('Rerender')
-
-    const prescriptionDetailsPlaceholder: IPrescriptionDetailsType = {
-        id: prescriptionId,
-        doseMg: 0,
-        medicationId: 1,
-        beginTime: '',
-        endTime: '',
-        patientId: patientId,
-        practitionerId: 2,
-        prescriptionScheduleEntries: []
-    }
+    const {id, userId} = useParams<IParams>()
     const editorPlaceholder = {
         errors: [],
-        prescriptionDetails: prescriptionDetailsPlaceholder
+        prescriptionDetails: {
+            id: Number(id) > 0 ? Number(id) : null,
+            doseMg: 0,
+            medicationId: 1,
+            beginTime: '',
+            endTime: '',
+            patientId:  Number(userId),
+            practitionerId: 2,
+            prescriptionScheduleEntries: []
+        }
     }
     const [editorModel, setEditorModel] = useState<EditorType>(editorPlaceholder)
 
+
     function logForURLParameters(string: string) {
-        console.log(string + `prescription ID: ${prescriptionId} patient ID: ${patientId}`)
+        console.log(string + `prescription ID: ${editorModel.prescriptionDetails.id} patient ID: ${editorModel.prescriptionDetails.patientId}`)
     }
 
     function getPrescriptionDetails(idOrNull: number | null) {
@@ -52,39 +47,25 @@ const PractitionerPrescriptionDetails = () => {
             console.log(r.data)
             if (r.data.responseInfo.successful) {
                 console.log(r.data.responseInfo.message)
-                let newModel = newEditorModel()
-                newModel.prescriptionDetails = r.data.prescriptionDetails
-                console.log(newModel)
-                setEditorModel(newModel)
-
+                setEditorModelPrescriptionDetails(r.data.prescriptionDetails)
             } else {
                 console.log(r.data.responseInfo.message)
                 console.log(r.data.responseInfo.errors)
-                let newModel = newEditorModel()
-                newModel.errors = r.data.responseInfo.errors
-                console.log(newModel)
-                setEditorModel(newModel)
+                setEditorModelErrors(r.data.responseInfo.errors)
             }
-
-
         })
-
     }
 
-
     function isEditModelValid(): boolean {
-        editorModel.errors = validatePrescriptionDetails(editorModel.prescriptionDetails)
-        return editorModel.errors.length === 0
+        return (validatePrescriptionDetails(editorModel.prescriptionDetails).length === 0)
 
     }
 
     function validatePrescriptionDetails(details: IPrescriptionDetailsType): string[] {
-
         logForURLParameters('Validating')
         console.log(editorModel)
-        let tmpErrors: string[] = []
 
-        logForURLParameters('Dose Validation')
+        let tmpErrors: string[] = []
         if (details.doseMg < 0) {
             tmpErrors = tmpErrors.concat('Dose is less than 0')
         }
@@ -93,28 +74,32 @@ const PractitionerPrescriptionDetails = () => {
 
     function updateDoseMg(event:
                           TargetedEvent<HTMLInputElement, Event>) {
-        const newPrescription: IPrescriptionDetailsType = {
-            ...
-                editorModel.prescriptionDetails, doseMg: Number(event.currentTarget.value)
-        }
-        let errors = validatePrescriptionDetails(newPrescription);
-        setEditorModel({
-            errors: errors,
-            prescriptionDetails: newPrescription
-        })
 
+        let prescriptionDetails = prescriptionDetailsToUpdate();
+        prescriptionDetails.doseMg = Number(event.currentTarget.value)
+
+        setEditorModelPrescriptionDetails(prescriptionDetails)
     }
 
-    function newEditorModel(): EditorType {
-        const newPrescription: IPrescriptionDetailsType = {
+    function setEditorModelPrescriptionDetails(p: IPrescriptionDetailsType) {
+        setEditorModel({
+            errors: validatePrescriptionDetails(p),
+            prescriptionDetails: p
+        })
+    }
+
+    function setEditorModelErrors(e: string[]) {
+        setEditorModel({
+            errors: e,
+            prescriptionDetails: prescriptionDetailsToUpdate()
+        })
+    }
+
+    function prescriptionDetailsToUpdate(): IPrescriptionDetailsType {
+        return {
             ...
                 editorModel.prescriptionDetails
         }
-        return {
-            errors: editorModel.errors,
-            prescriptionDetails: newPrescription
-        }
-
     }
 
 
@@ -133,7 +118,7 @@ const PractitionerPrescriptionDetails = () => {
                 } else {
                     console.log(r.data.responseInfo.message)
                     console.log(r.data.responseInfo.message)
-                    getPrescriptionDetails(prescriptionId)
+                    getPrescriptionDetails(editorModel.prescriptionDetails.id)
                 }
             }
         )
@@ -142,7 +127,6 @@ const PractitionerPrescriptionDetails = () => {
     }
 
     useEffect(() => {
-        console.log('useeffect')
         getPrescriptionDetails(editorModel.prescriptionDetails.id);
     }, [])
 
@@ -152,8 +136,8 @@ const PractitionerPrescriptionDetails = () => {
             <div className={'titleContainer'}>
                 <div>PRACTITIONER PrescriptionDetails</div>
             </div>
-            <div>Fill PrescriptionDetails here for ID: {prescriptionId}</div>
-            <div> Patient ID: {patientId}</div>
+            <div>Fill PrescriptionDetails here for ID: {editorModel.prescriptionDetails.id}</div>
+            <div> Patient ID: {editorModel.prescriptionDetails.patientId}</div>
             <div>
                 <input
                     value={editorModel.prescriptionDetails.doseMg}

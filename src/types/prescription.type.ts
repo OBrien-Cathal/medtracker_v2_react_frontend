@@ -20,7 +20,7 @@ export interface IPrescriptionDetailsType {
     endTime: string
     patientId: number | null
     practitionerId: number | null
-    prescriptionScheduleEntries: []
+    prescriptionScheduleEntries: string[]
 }
 
 export interface IPrescriptionScheduleEntryType {
