@@ -37,6 +37,11 @@ const PatientDetails = () => {
         navigate(`/full-prescription-details/${id}/${patientId}`,
 
             )
+    } function onClickAddPrescription() {
+        console.log('clicked new prescription')
+        navigate(`/full-prescription-details/-1/${patientId}`,
+
+            )
     }
 
 
@@ -129,6 +134,10 @@ const PatientDetails = () => {
                         content={
                             <div className={'center-section-body'}>
                                 <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
+                                <div>
+                                    <input className={'inputButton'} type='submit' value={'New Prescription'}
+                                           onClick={onClickAddPrescription}/>
+                                </div>
                             </div>
                         }/>
                     <br/>

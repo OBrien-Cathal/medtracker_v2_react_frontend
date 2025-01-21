@@ -18,7 +18,7 @@ const PractitionerPrescriptionDetails = () => {
     const {id, userId} = useParams<IParams>()
     const {token} = useAuth()
     const prescriptionService = new PrescriptionService(token)
-    const prescriptionId = Number(id)
+    const prescriptionId =   Number(id) > 0 ? Number(id) : null
     const patientId = Number(userId)
 
     console.log('Rerender')
@@ -46,9 +46,29 @@ const PractitionerPrescriptionDetails = () => {
     function getPrescriptionDetails(idOrNull: number | null) {
         if (!idOrNull) return
         logForURLParameters('Getting details..')
-        let newModel = newEditorModel()
-        newModel.prescriptionDetails = editorPlaceholder.prescriptionDetails
-        setEditorModel(newModel)
+
+        prescriptionService.getPrescriptionDetails(idOrNull).then(r => {
+            console.log('Get presc Then ')
+            console.log(r.data)
+            if (r.data.responseInfo.successful) {
+                console.log(r.data.responseInfo.message)
+                let newModel = newEditorModel()
+                newModel.prescriptionDetails = r.data.prescriptionDetails
+                console.log(newModel)
+                setEditorModel(newModel)
+
+            } else {
+                console.log(r.data.responseInfo.message)
+                console.log(r.data.responseInfo.errors)
+                let newModel = newEditorModel()
+                newModel.errors = r.data.responseInfo.errors
+                console.log(newModel)
+                setEditorModel(newModel)
+            }
+
+
+        })
+
     }
 
 
@@ -61,12 +81,11 @@ const PractitionerPrescriptionDetails = () => {
     function validatePrescriptionDetails(details: IPrescriptionDetailsType): string[] {
 
         logForURLParameters('Validating')
+        console.log(editorModel)
         let tmpErrors: string[] = []
 
         logForURLParameters('Dose Validation')
         if (details.doseMg < 0) {
-
-            logForURLParameters('Dose validation failed')
             tmpErrors = tmpErrors.concat('Dose is less than 0')
         }
         return tmpErrors
@@ -104,22 +123,26 @@ const PractitionerPrescriptionDetails = () => {
             logForURLParameters('On Save validation failed')
         }
         logForURLParameters('About to submit save')
+        console.log(editorModel)
         prescriptionService.addPrescription(editorModel.prescriptionDetails).then(r => {
-            console.log(r.data)
-            if (r.data.responseInfo.successful) {
+                console.log(r.data)
+                if (r.data.responseInfo.successful) {
 
                     console.log(r.data.responseInfo.message)
                     getPrescriptionDetails(Number(r.data.prescriptionId))
                 } else {
                     console.log(r.data.responseInfo.message)
                     console.log(r.data.responseInfo.message)
+                    getPrescriptionDetails(prescriptionId)
                 }
             }
         )
-        setEditorModel(editorPlaceholder)
+
+
     }
 
     useEffect(() => {
+        console.log('useeffect')
         getPrescriptionDetails(editorModel.prescriptionDetails.id);
     }, [])
 

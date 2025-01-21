@@ -32,6 +32,10 @@ export interface IAddPrescriptionResponse extends IResponse2 {
     prescriptionId: bigint
 }
 
+export interface IGetPrescriptionDetailsResponse extends IResponse2 {
+    prescriptionDetails: IPrescriptionDetailsType
+}
+
 export interface IPrescriptionRequest {
     prescriptionDetails: IPrescriptionDetailsType
 }
