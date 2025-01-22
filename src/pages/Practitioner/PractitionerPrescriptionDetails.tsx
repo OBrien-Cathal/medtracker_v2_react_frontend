@@ -10,6 +10,7 @@ import SectionComponentWithDescription from "../../components/SectionComponentWi
 
 type EditorType = {
     errors: string[]
+    serverErrors: string[]
     prescriptionDetails: IPrescriptionDetailsType
 }
 
@@ -22,6 +23,7 @@ const PractitionerPrescriptionDetails = () => {
     const isAdd = Number(id) < 0
     const editorPlaceholder = {
         errors: [],
+        serverErrors: [],
         prescriptionDetails: {
             id: isAdd ? null : Number(id),
             doseMg: 0,
@@ -49,11 +51,11 @@ const PractitionerPrescriptionDetails = () => {
             console.log(r.data)
             if (r.data.responseInfo.successful) {
                 console.log(r.data.responseInfo.message)
-                setEditorModelPrescriptionDetails(r.data.prescriptionDetails)
+                resetEditorModel(r.data.prescriptionDetails)
             } else {
                 console.log(r.data.responseInfo.message)
                 console.log(r.data.responseInfo.errors)
-                setEditorModelErrors(r.data.responseInfo.errors)
+                setEditorModelServerErrors(r.data.responseInfo.errors)
             }
         })
     }
@@ -76,27 +78,37 @@ const PractitionerPrescriptionDetails = () => {
     function updateDoseMg(event:
                           TargetedEvent<HTMLInputElement, Event>) {
 
-        let prescriptionDetails = prescriptionDetailsToUpdate();
+        let prescriptionDetails = prescriptionDetailsEditCopy();
         prescriptionDetails.doseMg = Number(event.currentTarget.value)
 
-        setEditorModelPrescriptionDetails(prescriptionDetails)
+        validateAndSetPrescriptionDetails(prescriptionDetails)
     }
 
-    function setEditorModelPrescriptionDetails(p: IPrescriptionDetailsType) {
+    function resetEditorModel(p: IPrescriptionDetailsType) {
         setEditorModel({
-            errors: validatePrescriptionDetails(p),
+            errors: [],
+            serverErrors: [],
             prescriptionDetails: p
         })
     }
 
-    function setEditorModelErrors(e: string[]) {
+    function validateAndSetPrescriptionDetails(p: IPrescriptionDetailsType) {
         setEditorModel({
-            errors: e,
-            prescriptionDetails: prescriptionDetailsToUpdate()
+            errors: validatePrescriptionDetails(p),
+            serverErrors: editorModel.serverErrors,
+            prescriptionDetails: p
         })
     }
 
-    function prescriptionDetailsToUpdate(): IPrescriptionDetailsType {
+    function setEditorModelServerErrors(e: string[]) {
+        setEditorModel({
+            errors: editorModel.errors,
+            serverErrors: e,
+            prescriptionDetails: prescriptionDetailsEditCopy()
+        })
+    }
+
+    function prescriptionDetailsEditCopy(): IPrescriptionDetailsType {
         return {
             ...
                 editorModel.prescriptionDetails
@@ -130,8 +142,8 @@ const PractitionerPrescriptionDetails = () => {
                     getPrescriptionDetails(Number(r.data.prescriptionId))
                 } else {
                     console.log(r.data.responseInfo.message)
-                    console.log(r.data.responseInfo.message)
-                    getPrescriptionDetails(editorModel.prescriptionDetails.id)
+                    console.log(r.data.responseInfo.errors)
+                    setEditorModelServerErrors(r.data.responseInfo.errors)
                 }
             }
         )
@@ -164,16 +176,33 @@ const PractitionerPrescriptionDetails = () => {
             <div>
                 <section className={"validation-errors"}>
                     <br/>
-                    <SectionComponentWithDescription heading={'Errors'}
-                                                     description={'Errors must be corrected before submission'}
-                                                     content={
-                                                         <List items={editorModel.errors} renderItem={(error) => (
-                                                             <li>
-                                                                 <p>{error}</p>
-                                                             </li>
-                                                         )}/>
-                                                     }>
-                    </SectionComponentWithDescription>
+                    {
+                        editorModel.errors.length > 0 &&
+                        <SectionComponentWithDescription heading={'Errors'}
+                                                         description={'Errors must be corrected before submission'}
+                                                         content={
+                                                             <List items={editorModel.errors} renderItem={(error) => (
+                                                                 <li>
+                                                                     <p>{error}</p>
+                                                                 </li>
+                                                             )}/>
+                                                         }>
+                        </SectionComponentWithDescription>
+                    }
+                    {
+                        editorModel.serverErrors.length > 0 &&
+                        <SectionComponentWithDescription heading={'Server Errors'}
+                                                         description={'Server errors will be cleared after successful submission'}
+                                                         content={
+                                                             <List
+                                                                 items={editorModel.serverErrors}
+                                                                 renderItem={(error) => (
+                                                                     <li>
+                                                                         <p>{error}</p>
+                                                                     </li>
+                                                                 )}/>
+                                                         }>
+                        </SectionComponentWithDescription>}
                 </section>
 
 
