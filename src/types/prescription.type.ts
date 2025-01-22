@@ -28,7 +28,7 @@ export interface IPrescriptionScheduleEntryType {
     dayStage: string
 }
 
-export interface IAddPrescriptionResponse extends IResponse2 {
+export interface ISubmitPrescriptionDetailsResponse extends IResponse2 {
     prescriptionId: bigint
 }
 
