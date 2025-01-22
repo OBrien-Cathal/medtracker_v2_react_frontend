@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {IParams} from "../../types/params.type.ts";
 import {TargetedEvent, useState} from "preact/compat";
 import {IPrescriptionDetailsType} from "../../types/prescription.type.ts";
@@ -15,18 +15,20 @@ type EditorType = {
 
 const PractitionerPrescriptionDetails = () => {
     const {token} = useAuth()
+    const navigate = useNavigate()
     const prescriptionService = new PrescriptionService(token)
 
     const {id, userId} = useParams<IParams>()
+    const isAdd = Number(id) < 0
     const editorPlaceholder = {
         errors: [],
         prescriptionDetails: {
-            id: Number(id) > 0 ? Number(id) : null,
+            id: isAdd ? null : Number(id),
             doseMg: 0,
             medicationId: 1,
             beginTime: '',
             endTime: '',
-            patientId:  Number(userId),
+            patientId: Number(userId),
             practitionerId: 2,
             prescriptionScheduleEntries: []
         }
@@ -58,7 +60,6 @@ const PractitionerPrescriptionDetails = () => {
 
     function isEditModelValid(): boolean {
         return (validatePrescriptionDetails(editorModel.prescriptionDetails).length === 0)
-
     }
 
     function validatePrescriptionDetails(details: IPrescriptionDetailsType): string[] {
@@ -102,6 +103,13 @@ const PractitionerPrescriptionDetails = () => {
         }
     }
 
+    function submitPrescriptionDetails(details: IPrescriptionDetailsType) {
+        if (isAdd) {
+            return prescriptionService.addPrescription(details)
+        } else {
+            return prescriptionService.updatePrescription(details)
+        }
+    }
 
     function savePrescriptionDetails() {
         if (!isEditModelValid()) {
@@ -109,11 +117,16 @@ const PractitionerPrescriptionDetails = () => {
         }
         logForURLParameters('About to submit save')
         console.log(editorModel)
-        prescriptionService.addPrescription(editorModel.prescriptionDetails).then(r => {
+        submitPrescriptionDetails(editorModel.prescriptionDetails).then(r => {
                 console.log(r.data)
                 if (r.data.responseInfo.successful) {
-
                     console.log(r.data.responseInfo.message)
+                    if (isAdd) {
+                        console.log('isAdd')
+                        console.log(r.data.prescriptionId)
+                        navigate(`/full-prescription-details/${r.data.prescriptionId}/${userId}`)
+                        return
+                    }
                     getPrescriptionDetails(Number(r.data.prescriptionId))
                 } else {
                     console.log(r.data.responseInfo.message)
@@ -122,8 +135,6 @@ const PractitionerPrescriptionDetails = () => {
                 }
             }
         )
-
-
     }
 
     useEffect(() => {

@@ -1,5 +1,4 @@
 import AuthenticatedService from "./authenticatedService.tsx";
-import {IResponse} from "../types/generic.type.ts";
 import {
     IAddPrescriptionResponse, IGetPrescriptionDetailsResponse,
     IPrescriptionDetailsType,
@@ -24,7 +23,7 @@ export class PrescriptionService extends AuthenticatedService {
     }
 
     updatePrescription(details: IPrescriptionDetailsType) {
-        return this._client.post<IResponse>(
+        return this._client.post<IAddPrescriptionResponse>(
             "update",
             details
         )

@@ -36,6 +36,3 @@ export interface IGetPrescriptionDetailsResponse extends IResponse2 {
     prescriptionDetails: IPrescriptionDetailsType
 }
 
-export interface IPrescriptionRequest {
-    prescriptionDetails: IPrescriptionDetailsType
-}
