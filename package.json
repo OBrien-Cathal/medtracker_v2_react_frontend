@@ -16,6 +16,7 @@
     "preact": "^10.25.0",
     "react-google-charts": "^5.2.1",
     "react-router-dom": "^7.0.2",
+    "react-select": "^5.9.0",
     "sweetalert2": "^11.15.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2"

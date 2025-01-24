@@ -10,15 +10,18 @@ export class PrescriptionService extends AuthenticatedService {
         super(token, "/prescriptions");
     }
 
-    getPrescriptionsForPractitionerPatient(patientId: string | undefined) {
+    getPrescriptionsForPractitionerPatient(patientId: number) {
         return this._client.get<IPrescriptionOverviewType[]>("/patient?id=" + patientId);
     }
 
     getPrescriptions() {
         return this._client.get<IPrescriptionOverviewType[]>("");
     }
+    getDayStages() {
+        return this._client.get<string[]>("/day-stages");
+    }
 
-    getPrescriptionDetails(prescriptionId: number | null) {
+    getPrescriptionDetails(prescriptionId: bigint) {
         return this._client.get<IGetPrescriptionDetailsResponse>("/prescription-details?id=" + prescriptionId);
     }
 

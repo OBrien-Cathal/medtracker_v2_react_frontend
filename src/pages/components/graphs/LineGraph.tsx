@@ -3,7 +3,7 @@ import {IGraphData} from "../../../types/generic-graph-data.type.ts";
 
 
 const LineGraph = (graphData: IGraphData) => {
-    console.log("render line graph")
+    // console.log("render line graph")
     function combinedData(myGraphData: IGraphData): any[][] {
         let tempArray: any[][] = []
         tempArray = tempArray.concat([myGraphData.columnNames])
@@ -12,7 +12,7 @@ const LineGraph = (graphData: IGraphData) => {
     }
 
     const data: any[][] = combinedData(graphData)
-    console.log(data)
+    // console.log(data)
 
     return (
         <div className="lineGraphContainer">

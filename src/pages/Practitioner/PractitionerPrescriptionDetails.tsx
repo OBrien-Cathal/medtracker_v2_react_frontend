@@ -1,221 +1,371 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {IParams} from "../../types/params.type.ts";
 import {TargetedEvent, useState} from "preact/compat";
-import {IPrescriptionDetailsType} from "../../types/prescription.type.ts";
-import {useEffect} from "react";
+import {IPrescriptionDetailsType, IPrescriptionScheduleEntryType} from "../../types/prescription.type.ts";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
-import {useAuth} from "../../auth/AuthProvider.tsx";
 import {List} from "../../components/List.tsx";
 import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import {useEffect} from "react";
+import Select from "react-select"
+import {IMedicationType} from "../../types/medication.type.ts";
+import {MedicationService} from "../../service/medication.service.tsx";
 
-type EditorType = {
+
+type Props = {
+    token: string
+    patientId: number
+    prescriptionDetails: IPrescriptionDetailsType
+    setPrescriptionDetailsId: Function
+}
+
+type EditorModel = {
     errors: string[]
     serverErrors: string[]
-    prescriptionDetails: IPrescriptionDetailsType
+    editCopy: IPrescriptionDetailsType
+
 }
 
-const PractitionerPrescriptionDetails = () => {
-    const {token} = useAuth()
-    const navigate = useNavigate()
-    const prescriptionService = new PrescriptionService(token)
+type DayStageSelector = {
+    id: number | null
+    dayStage: string
+    included: boolean
+}
 
-    const {id, userId} = useParams<IParams>()
-    const isAdd = Number(id) < 0
-    const editorPlaceholder = {
-        errors: [],
-        serverErrors: [],
-        prescriptionDetails: {
-            id: isAdd ? null : Number(id),
-            doseMg: 0,
-            medicationId: 1,
-            beginTime: '',
-            endTime: '',
-            patientId: Number(userId),
-            practitionerId: 2,
-            prescriptionScheduleEntries: []
-        }
-    }
-    const [editorModel, setEditorModel] = useState<EditorType>(editorPlaceholder)
-
-
-    function logForURLParameters(string: string) {
-        console.log(string + `prescription ID: ${editorModel.prescriptionDetails.id} patient ID: ${editorModel.prescriptionDetails.patientId}`)
-    }
-
-    function getPrescriptionDetails(idOrNull: number | null) {
-        if (!idOrNull) return
-        logForURLParameters('Getting details..')
-
-        prescriptionService.getPrescriptionDetails(idOrNull).then(r => {
-            console.log('Get presc Then ')
-            console.log(r.data)
-            if (r.data.responseInfo.successful) {
-                console.log(r.data.responseInfo.message)
-                resetEditorModel(r.data.prescriptionDetails)
-            } else {
-                console.log(r.data.responseInfo.message)
-                console.log(r.data.responseInfo.errors)
-                setEditorModelServerErrors(r.data.responseInfo.errors)
-            }
-        })
-    }
-
-    function isEditModelValid(): boolean {
-        return (validatePrescriptionDetails(editorModel.prescriptionDetails).length === 0)
-    }
-
-    function validatePrescriptionDetails(details: IPrescriptionDetailsType): string[] {
-        logForURLParameters('Validating')
-        console.log(editorModel)
-
-        let tmpErrors: string[] = []
-        if (details.doseMg < 0) {
-            tmpErrors = tmpErrors.concat('Dose is less than 0')
-        }
-        return tmpErrors
-    }
-
-    function updateDoseMg(event:
-                          TargetedEvent<HTMLInputElement, Event>) {
-
-        let prescriptionDetails = prescriptionDetailsEditCopy();
-        prescriptionDetails.doseMg = Number(event.currentTarget.value)
-
-        validateAndSetPrescriptionDetails(prescriptionDetails)
-    }
-
-    function resetEditorModel(p: IPrescriptionDetailsType) {
-        setEditorModel({
+const PractitionerPrescriptionDetails =
+    ({token, prescriptionDetails, setPrescriptionDetailsId}: Props) => {
+        console.log('render details')
+        const editModelPlaceholder: EditorModel = {
             errors: [],
             serverErrors: [],
-            prescriptionDetails: p
-        })
-    }
-
-    function validateAndSetPrescriptionDetails(p: IPrescriptionDetailsType) {
-        setEditorModel({
-            errors: validatePrescriptionDetails(p),
-            serverErrors: editorModel.serverErrors,
-            prescriptionDetails: p
-        })
-    }
-
-    function setEditorModelServerErrors(e: string[]) {
-        setEditorModel({
-            errors: editorModel.errors,
-            serverErrors: e,
-            prescriptionDetails: prescriptionDetailsEditCopy()
-        })
-    }
-
-    function prescriptionDetailsEditCopy(): IPrescriptionDetailsType {
-        return {
-            ...
-                editorModel.prescriptionDetails
+            editCopy: prescriptionDetails
         }
-    }
+        const prescriptionService = new PrescriptionService(token)
 
-    function submitPrescriptionDetails(details: IPrescriptionDetailsType) {
-        if (isAdd) {
-            return prescriptionService.addPrescription(details)
-        } else {
-            return prescriptionService.updatePrescription(details)
-        }
-    }
+        const [editModel, setEditModel] = useState<EditorModel>({
+            ...editModelPlaceholder,
+            editCopy: prescriptionDetails
+        })
+        const [medications, setMedications] = useState<IMedicationType[]>([])
+        const medicationService = new MedicationService(token)
+        const [dayStageSelectors, setDayStageSelectors] = useState<DayStageSelector[]>([])
 
-    function savePrescriptionDetails() {
-        if (!isEditModelValid()) {
-            logForURLParameters('On Save validation failed')
+        function getMedications() {
+            console.log('Recieved medications')
+            medicationService.getMedicationsByPractitioner()
+                .then(r => {
+                    setMedications(r.data)
+                }).catch((reason) => {
+                console.log(reason.errors)
+            });
         }
-        logForURLParameters('About to submit save')
-        console.log(editorModel)
-        submitPrescriptionDetails(editorModel.prescriptionDetails).then(r => {
-                console.log(r.data)
-                if (r.data.responseInfo.successful) {
-                    console.log(r.data.responseInfo.message)
-                    if (isAdd) {
-                        console.log('isAdd')
-                        console.log(r.data.prescriptionId)
-                        navigate(`/full-prescription-details/${r.data.prescriptionId}/${userId}`)
-                        return
-                    }
-                    getPrescriptionDetails(Number(r.data.prescriptionId))
-                } else {
-                    console.log(r.data.responseInfo.message)
-                    console.log(r.data.responseInfo.errors)
-                    setEditorModelServerErrors(r.data.responseInfo.errors)
+
+        function getDayStages() {
+            prescriptionService.getDayStages()
+                .then(r => {
+                    console.log('Recieved daystages')
+                    let selectors = r.data.map((v) => {
+                        return asDayStageSelector(v, prescriptionDetails.prescriptionScheduleEntries)
+                    });
+                    console.log(selectors)
+                    setDayStageSelectors(selectors)
+                }).catch((reason) => {
+                console.log(reason.errors)
+            });
+        }
+
+
+        function getPrescriptionScheduleEntries(): IPrescriptionScheduleEntryType[] {
+            let included = dayStageSelectors.filter((v) => {
+                return v.included
+            });
+            console.log(included)
+            return included.map((dss) => {
+                return {
+                    id: dss.id ? (dss.id) : null,
+                    dayStage: dss.dayStage
                 }
+            })
+        }
+
+        function asDayStageSelector(ds: string, entries: IPrescriptionScheduleEntryType[]): DayStageSelector {
+            let existing = entries.find((ps) => ps.dayStage === ds);
+            let id = existing ? Number(existing.id) : null
+
+            return {id: id, included: !!existing, dayStage: ds}
+        }
+
+        function logForURLParameters(string: string) {
+            console.log(string + `prescription ID: ${prescriptionDetails.id} patient ID: ${prescriptionDetails.patientId}`)
+        }
+
+        function getValidationErrorsFor(ec: IPrescriptionDetailsType): string[] {
+            logForURLParameters('Validating')
+            let tmpErrors: string[] = []
+
+            if (ec.doseMg < 0) {
+                tmpErrors = tmpErrors.concat('Dose is less than 0')
             }
+            return tmpErrors
+        }
+
+        function setEditModelEditCopy(ec: IPrescriptionDetailsType) {
+            setEditModel({...editModel, errors: getValidationErrorsFor(ec), editCopy: ec})
+        }
+
+        function setEditModelServerErrors(serverErrors: string[]) {
+            setEditModel({...editModel, serverErrors: serverErrors})
+        }
+
+        function updateDoseMg(event:
+                              TargetedEvent<HTMLInputElement, Event>) {
+            console.log('updateDose')
+            setEditModelEditCopy({
+                    ...editModel.editCopy,
+                    doseMg: Number(event.currentTarget.value)
+                }
+            )
+        }
+
+        function updateBeginTime(event:
+                                 TargetedEvent<HTMLInputElement, Event>) {
+            console.log('updateBegin')
+            setEditModelEditCopy({
+                    ...editModel.editCopy,
+                    beginTime: (
+                        (event.currentTarget.value))
+                }
+            )
+        }
+
+        function updateEndTime(event:
+                               TargetedEvent<HTMLInputElement, Event>) {
+            console.log('updateEnd')
+            setEditModelEditCopy({
+                    ...editModel.editCopy,
+                    endTime: ((event.currentTarget.value))
+                }
+            )
+        }
+
+        function updateDayStage(event:
+                                TargetedEvent<HTMLInputElement, Event>) {
+            console.log('updateDayStage')
+
+            let name = event.currentTarget.name;
+            let id = Number(event.currentTarget.id);
+            let checked = event.currentTarget.checked;
+
+            console.log(`checked: ${checked} name: ${name} id: ${id}`)
+
+            let newSelectors = dayStageSelectors.map((dss) => {
+                return {
+                    ...dss,
+                    included: dss.dayStage === name ? checked : dss.included
+                }
+            });
+            console.log(newSelectors)
+            setDayStageSelectors(newSelectors)
+
+
+            //
+            // let dayStageNamesFromEditCopy = editModel.editCopy.prescriptionScheduleEntries.map(value => value.dayStage)
+            //
+            // let includedInEditCopy = dayStageNamesFromEditCopy.includes(name)
+            // if (checked && !includedInEditCopy) {
+            //     console.log(`adding ${name}`)
+            //     setEditModelEditCopy({
+            //         ...editModel.editCopy,
+            //         prescriptionScheduleEntries: editModel.editCopy.prescriptionScheduleEntries.concat({
+            //             id: null,
+            //             dayStage: name
+            //         })
+            //     })
+            // } else if (!checked && includedInEditCopy) {
+            //     console.log(`removing ${name}`)
+            //
+            //     setEditModelEditCopy({
+            //         ...editModel.editCopy,
+            //         prescriptionScheduleEntries: editModel.editCopy.prescriptionScheduleEntries.filter((v) => {
+            //             return v.dayStage === name
+            //         })
+            //     })
+            //
+            // }
+
+
+        }
+
+        function updateMedication(med: IMedicationType | null) {
+            console.log('updateMed')
+
+            setEditModelEditCopy({
+                    ...editModel.editCopy,
+                    medication: med ? med : null
+                }
+            )
+        }
+
+        function submitPrescriptionDetails(toSave: IPrescriptionDetailsType) {
+            if (toSave.id === null) {
+                console.log('add')
+                return prescriptionService.addPrescription(toSave)
+            } else {
+                console.log('update')
+                return prescriptionService.updatePrescription(toSave)
+            }
+        }
+
+        function savePrescriptionDetails() {
+            let validationErrors = getValidationErrorsFor(editModel.editCopy);
+            if (validationErrors.length !== 0) {
+                logForURLParameters('On Save validation failed')
+                return
+            }
+            let toSave: IPrescriptionDetailsType = {
+                ...editModel.editCopy,
+                prescriptionScheduleEntries: getPrescriptionScheduleEntries()
+            }
+            logForURLParameters('About to submit save')
+            console.log(toSave)
+            submitPrescriptionDetails(toSave).then(r => {
+                    console.log(r.data)
+                    if (r.data.responseInfo.successful) {
+                        console.log(r.data.responseInfo.message)
+                        setPrescriptionDetailsId(r.data.prescriptionId)
+                    } else {
+                        console.log(r.data.responseInfo.message)
+                        console.log(r.data.responseInfo.errors)
+                        setEditModelServerErrors(r.data.responseInfo.errors)
+                    }
+                }
+            )
+        }
+
+        useEffect(() => {
+            console.log('useEffect details component')
+            getMedications()
+            getDayStages()
+            setEditModel({
+                errors: [], serverErrors: [], editCopy: prescriptionDetails,
+            })
+        }, [prescriptionDetails])
+
+
+        return (
+            <div className="PrescriptionDetails">
+                <div>
+                    <div className={'labeled-field'}>
+                        <label>Dose (mg)</label>
+                        <input
+                            value={
+                                editModel.editCopy.doseMg}
+                            type={'number'}
+                            placeholder='0'
+                            onChange={(ev) => updateDoseMg(ev)}/>
+                    </div>
+                    <br/>
+                    <div className={'labeled-field'}>
+                        <label>Start</label>
+                        <input aria-label="Date and time"
+                               value={
+                                   editModel.editCopy.beginTime.toString().substring(0, 16)}
+                               type="datetime-local"
+                               onChange={(ev) => updateBeginTime(ev)}
+                        />
+                    </div>
+                    <br/>
+                    <div className={'labeled-field'}>
+                        <label>End</label>
+                        <input aria-label="Date and time"
+                               value={
+                                   editModel.editCopy.endTime ?
+                                       editModel.editCopy.endTime.toString().substring(0, 16) : ''}
+                               type="datetime-local"
+                               onChange={(ev) => updateEndTime(ev)}
+                        />
+                    </div>
+                    <br/>
+                    <div className={'labeled-field'}>
+                        <label>Medication</label>
+                        <div className="medication-picker">
+                            <Select
+                                // If you don't need a state you can remove the two following lines value & onChange
+                                value={editModel.editCopy.medication}
+                                onChange={(option: IMedicationType | null) => {
+                                    updateMedication(option);
+                                }}
+                                getOptionLabel={(med: IMedicationType) => med.name}
+                                getOptionValue={(med: IMedicationType) => med.name}
+                                options={medications}
+                                isClearable={false}
+                                backspaceRemovesValue={true}
+                            />
+                        </div>
+
+                    </div>
+                    <br/>
+                    <div className={'labeled-field'}>
+                        <label>Day Stages</label>
+                        <div>
+                            {dayStageSelectors && dayStageSelectors.map((ds) => {
+                                return (
+                                    <div>
+                                        <input id={ds.dayStage} type={'checkbox'} name={ds.dayStage}
+                                               checked={ds.included}
+                                               onChange={(ev) => updateDayStage(ev)}>
+
+                                        </input>
+                                        <label for={ds.dayStage}>{ds.dayStage}</label>
+                                    </div>)
+                            })}
+
+                        </div>
+
+                    </div>
+                    <br/>
+                </div>
+                <div>
+                    <section className={"validation-errors"}>
+                        <br/>
+                        {
+                            editModel.errors.length > 0 &&
+                            <SectionComponentWithDescription heading={'Errors'}
+                                                             description={'Errors must be corrected before submission'}
+                                                             content={
+                                                                 <List items={editModel.errors}
+                                                                       renderItem={(error) => (
+                                                                           <li>
+                                                                               <p>{error}</p>
+                                                                           </li>
+                                                                       )}/>
+                                                             }>
+                            </SectionComponentWithDescription>
+                        }
+                        {
+                            editModel.serverErrors.length > 0 &&
+                            <SectionComponentWithDescription heading={'Server Errors'}
+                                                             description={'Server errors will be cleared after successful submission'}
+                                                             content={
+                                                                 <List
+                                                                     items={editModel.serverErrors}
+                                                                     renderItem={(error) => (
+                                                                         <li>
+                                                                             <p>{error}</p>
+                                                                         </li>
+                                                                     )}/>
+                                                             }>
+                            </SectionComponentWithDescription>}
+                    </section>
+
+
+                </div>
+                <div className={'prescription-actions'}>
+                    <input className={'inputButton'} type='submit' value={'Save'}
+                           onClick={savePrescriptionDetails}/>
+
+                </div>
+
+
+            </div>
         )
     }
-
-    useEffect(() => {
-        getPrescriptionDetails(editorModel.prescriptionDetails.id);
-    }, [])
-
-
-    return (
-        <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>PRACTITIONER PrescriptionDetails</div>
-            </div>
-            <div>Fill PrescriptionDetails here for ID: {editorModel.prescriptionDetails.id}</div>
-            <div> Patient ID: {editorModel.prescriptionDetails.patientId}</div>
-            <div>
-                <input
-                    value={editorModel.prescriptionDetails.doseMg}
-                    type={'number'}
-                    placeholder='0'
-                    onChange={(ev) => {
-                        updateDoseMg(ev)
-                    }
-                    }
-                />
-
-            </div>
-            <div>
-                <section className={"validation-errors"}>
-                    <br/>
-                    {
-                        editorModel.errors.length > 0 &&
-                        <SectionComponentWithDescription heading={'Errors'}
-                                                         description={'Errors must be corrected before submission'}
-                                                         content={
-                                                             <List items={editorModel.errors} renderItem={(error) => (
-                                                                 <li>
-                                                                     <p>{error}</p>
-                                                                 </li>
-                                                             )}/>
-                                                         }>
-                        </SectionComponentWithDescription>
-                    }
-                    {
-                        editorModel.serverErrors.length > 0 &&
-                        <SectionComponentWithDescription heading={'Server Errors'}
-                                                         description={'Server errors will be cleared after successful submission'}
-                                                         content={
-                                                             <List
-                                                                 items={editorModel.serverErrors}
-                                                                 renderItem={(error) => (
-                                                                     <li>
-                                                                         <p>{error}</p>
-                                                                     </li>
-                                                                 )}/>
-                                                         }>
-                        </SectionComponentWithDescription>}
-                </section>
-
-
-            </div>
-            <div className={'prescription-actions'}>
-                <input className={'inputButton'} type='submit' value={'Save Prescription'}
-                       onClick={savePrescriptionDetails}/>
-
-            </div>
-
-
-        </div>
-    )
-}
 
 export default PractitionerPrescriptionDetails

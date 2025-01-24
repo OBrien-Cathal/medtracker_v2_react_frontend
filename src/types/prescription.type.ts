@@ -3,7 +3,7 @@ import {IResponse2} from "./generic.type.ts";
 
 
 export interface IPrescriptionOverviewType {
-    id: bigint
+    id: bigint | null
     doseMg: number
     medication: IMedicationType
     patientUsername: string
@@ -15,16 +15,16 @@ export interface IPrescriptionOverviewType {
 export interface IPrescriptionDetailsType {
     id: number | null
     doseMg: number
-    medicationId: number
+    medication: IMedicationType | null,
     beginTime: string
     endTime: string
     patientId: number | null
     practitionerId: number | null
-    prescriptionScheduleEntries: string[]
+    prescriptionScheduleEntries: IPrescriptionScheduleEntryType[]
 }
 
 export interface IPrescriptionScheduleEntryType {
-    id: bigint
+    id: number | null
     dayStage: string
 }
 

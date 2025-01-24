@@ -13,11 +13,11 @@ const DoseGraph = ({patientIdOrNegative, dosesService}: PropsType) => {
     const [data, setData] = useState<IGraphData>()
 
     function getGraphData() {
-        console.log("Request PATIENT DOSE graph data ID: " + patientIdOrNegative)
+        // console.log("Request PATIENT DOSE graph data ID: " + patientIdOrNegative)
         dosesService.getDoseGraphDataForId(patientIdOrNegative)
             .then(r => {
-                console.log("Received PATIENT DOSE graph data ID: " + patientIdOrNegative)
-                console.log(data)
+                // console.log("Received PATIENT DOSE graph data ID: " + patientIdOrNegative)
+                // console.log(data)
                 setData(r.data.graphData)
             }).catch((reason) => {
             console.log(reason)

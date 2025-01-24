@@ -1,89 +1,19 @@
 import {useAuth} from "../../auth/AuthProvider.tsx";
-import {useEffect, useMemo, useState} from "preact/compat";
-import {ColumnDef} from "@tanstack/react-table";
-import {ReactTable} from "../../components/table/ReactTable.tsx";
-import {useNavigate, useParams} from "react-router-dom";
-import {PrescriptionService} from "../../service/prescription.service.tsx";
-import {IPrescriptionOverviewType} from "../../types/prescription.type.ts";
+import {useParams} from "react-router-dom";
 import UserDetails from "../components/UserDetails.tsx";
 import {IParams} from "../../types/params.type.ts";
 import PatientDataVis from "./PatientDataVis.tsx";
 import MaxWidthSection from "../../components/MaxWidthSection.tsx";
 import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import PrescriptionsComponent from "../patient_practitioner/PrescriptionsComponent.tsx";
 
 const PatientDetails = () => {
     const {token} = useAuth()
-    const navigate = useNavigate()
 
-    const prescriptionService = new PrescriptionService(token)
-    const [prescriptionList, setPrescriptionList] = useState<IPrescriptionOverviewType[]>([])
+
     const params = useParams<IParams>()
-    const patientId = params.id
+    const patientId = Number(params.id)
 
-
-    function getPrescriptions() {
-        prescriptionService.getPrescriptionsForPractitionerPatient(patientId)
-            .then(r => {
-                console.log("Received prescriptions")
-                console.log(r.data)
-                setPrescriptionList(r.data)
-            }).catch((reason) => {
-            console.log(reason.errors)
-        });
-    }
-
-    function onClickViewPrescriptionDetails(id: bigint) {
-        console.log('clicked view details: ' + id)
-        navigate(`/full-prescription-details/${id}/${patientId}`,
-
-            )
-    } function onClickAddPrescription() {
-        console.log('clicked new prescription')
-        navigate(`/full-prescription-details/-1/${patientId}`,
-
-            )
-    }
-
-
-    useEffect(() => {
-        getPrescriptions();
-    }, [])
-
-    const Columns: ColumnDef<IPrescriptionOverviewType>[] = [
-        {
-            header: "ID",
-            accessorKey: "id",
-        },
-        {
-            header: "Medication",
-            accessorKey: "medication.name",
-        },
-        {
-            header: "Patient",
-            accessorKey: "patientUsername",
-        },
-        {
-            header: "Start",
-            accessorKey: "beginTime",
-        },
-        {
-            header: "End",
-            accessorKey: "endTime",
-        },
-
-        {
-            header: "Details",
-            cell: ({cell}) => {
-                const prescriptionId = cell.row.original.id
-                return (
-                    <input type={"button"} value="View" onClick={() => onClickViewPrescriptionDetails(prescriptionId)}>
-                        View Details
-                    </input>)
-            }
-        },
-    ];
-
-    const columns = useMemo(() => Columns, []);
     return (
         <div className="mainContainer">
 
@@ -123,35 +53,7 @@ const PatientDetails = () => {
                             </div>
                         }/>
                     <br/>
-                    <SectionComponentWithDescription
-                        heading={'Current Prescriptions'}
-                        description={
-                            <div>
-                                <p>Prescriptions that are currently valid, (Work in progress still includes old
-                                    prescriptions)</p>
-                            </div>
-                        }
-                        content={
-                            <div className={'center-section-body'}>
-                                <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
-                                <div>
-                                    <input className={'inputButton'} type='submit' value={'New Prescription'}
-                                           onClick={onClickAddPrescription}/>
-                                </div>
-                            </div>
-                        }/>
-                    <br/>
-                    <SectionComponentWithDescription
-                        heading={'Expired Prescriptions'}
-                        description={
-                            <div>
-                                <p>Prescriptions that are no longer valid, this section is under construction </p>
-                            </div>
-                        }
-                        content={
-                            <div className={'center-section-body'}>
-                            </div>
-                        }/>
+                    <PrescriptionsComponent token={token} patientId={patientId}></PrescriptionsComponent>
                 </div>
 
             }/>
