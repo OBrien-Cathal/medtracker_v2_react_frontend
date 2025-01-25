@@ -1,5 +1,5 @@
 import {Navigate} from "react-router-dom";
-import {useAuth} from "../auth/AuthProvider.tsx";
+import {useAuth} from "../../auth/AuthProvider.tsx";
 
 
 const RedirectIfLoggedIn = (children:any)=>{

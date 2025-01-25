@@ -201,7 +201,6 @@ Styling for reusable components
 
 /*Styles for basic page elements*/
 .mainContainer {
-    overflow: auto;
     flex-direction: column;
     display: flex;
     align-items: center;

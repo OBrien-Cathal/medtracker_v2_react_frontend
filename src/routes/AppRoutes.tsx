@@ -1,5 +1,5 @@
-import RequireAuth from "../utils/RequireAuth";
-import RedirectIfLoggedIn from "../utils/RedirectIfLoggedIn";
+import RequireAuth from "./utils/RequireAuth";
+import RedirectIfLoggedIn from "./utils/RedirectIfLoggedIn";
 
 // unprotectedRoutes
 import {public_routes} from "./UnProtectedRoutes";

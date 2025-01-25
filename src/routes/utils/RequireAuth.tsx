@@ -1,6 +1,6 @@
 import {Navigate, useLocation} from "react-router-dom";
 import Swal from 'sweetalert2';
-import {useAuth} from "../auth/AuthProvider.tsx";
+import {useAuth} from "../../auth/AuthProvider.tsx";
 
 const RequireAuth = (children: any) => {
     const location = useLocation();
