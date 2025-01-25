@@ -65,16 +65,16 @@ const Practitioners = () => {
 
     function onClick(roleChangeId: bigint) {
         patientDataService.submitPatientRegistration(roleChangeId).then(r => {
-                if (r.data.successful) {
+                if (r.data.responseInfo.successful) {
                     Swal.fire({
                         title: "Registration Successful",
                         text: "Request pending with id: " + r.data.data.id,
                         icon: "success"
                     }).then()
                 } else {
-                    console.log(r.data.message)
-                    console.log(r.data.errors)
-                    Swal.fire("ERROR", r.data.errors.join("\n"), "error").then()
+                    console.log(r.data.responseInfo.message)
+                    console.log(r.data.responseInfo.errors)
+                    Swal.fire("ERROR", r.data.responseInfo.errors.join("\n"), "error").then()
                 }
                 getPractitioners()
             }

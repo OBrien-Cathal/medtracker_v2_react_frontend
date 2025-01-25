@@ -39,10 +39,10 @@ const UploadPage = () => {
         let data = new FormData();
         data.append('dosesFile', doseFile as Blob);
         patientDataService.uploadDoseFile(data).then(r => {
-            if (r.data.successful) {
-                handleSuccessfulUpload(r.data.message);
+            if (r.data.responseInfo.successful) {
+                handleSuccessfulUpload(r.data.responseInfo.message);
             } else {
-                handleFailedUpload(r.data.message, r.data.errors)
+                handleFailedUpload(r.data.responseInfo.message, r.data.responseInfo.errors)
             }
         }).catch(e => console.log(e.error))
 
@@ -69,10 +69,10 @@ const UploadPage = () => {
         let data = new FormData();
         data.append('bloodPressureFile', bpFile as Blob);
         patientDataService.uploadBloodPressureFile(data).then(r => {
-            if (r.data.successful) {
-                handleSuccessfulUpload(r.data.message);
+            if (r.data.responseInfo.successful) {
+                handleSuccessfulUpload(r.data.responseInfo.message);
             } else {
-                handleFailedUpload(r.data.message, r.data.errors)
+                handleFailedUpload(r.data.responseInfo.message, r.data.responseInfo.errors)
 
             }
         }).catch(e => console.log(e.error))

@@ -1,4 +1,4 @@
-import {IResponseInfo} from "./generic.type.ts";
+import {IResponse} from "./generic.type.ts";
 
 export interface IPatientRegistrationData{
     id: bigint
@@ -7,7 +7,7 @@ export interface IPatientRegistrationData{
     approved: boolean
 }
 
-export interface IPatientRegistrationResponse extends IResponseInfo{
+export interface IPatientRegistrationResponse extends IResponse{
     data: IPatientRegistrationData
 }
 

@@ -1,12 +1,11 @@
-import {IResponseInfo} from "./generic.type.ts";
+import {IResponse} from "./generic.type.ts";
 
 export interface ITimeSeriesDataRequest {
-    successful: boolean
-    message: string
-    errors: string[]
+    beginDate: string
+    endDate: string
 }
 
-export interface ITimeSeriesDataResponse extends IResponseInfo{
+export interface ITimeSeriesDataResponse extends IResponse{
     graphData: IGraphData
 }
 

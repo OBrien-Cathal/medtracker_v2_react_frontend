@@ -60,7 +60,7 @@ const RoleRequests = () => {
 
     const requestRoleChange = (requestedRoleName: string) => {
         userDataService.requestRoleChange(requestedRoleName).then(r => {
-                Swal.fire({title: r.data.message})
+                Swal.fire({title: r.data.responseInfo.message})
                 // console.log('Request submitted for: ' + roleChangeStatus.userRole + ': ' + r.data.message)
                 requestRoleChangeStatus()
             }

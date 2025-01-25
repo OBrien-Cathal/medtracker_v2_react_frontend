@@ -67,14 +67,14 @@ const PatientRegistration = () => {
     function onClickApprove(patientRegId: bigint) {
         patientDataService.approvePatientRegistration(patientRegId).then(r => {
 
-            if (r.data.successful) {
+            if (r.data.responseInfo.successful) {
                 getPatients()
-                Swal.fire(r.data.message).then()
+                Swal.fire(r.data.responseInfo.message).then()
             } else {
-                console.log(r.data.message)
-                console.log(r.data.errors)
+                console.log(r.data.responseInfo.message)
+                console.log(r.data.responseInfo.errors)
                 getPatients()
-                Swal.fire("ERROR", r.data.errors.join("\n"), "error").then()
+                Swal.fire("ERROR", r.data.responseInfo.errors.join("\n"), "error").then()
             }
         }).catch(e => console.log(e.data))
 
