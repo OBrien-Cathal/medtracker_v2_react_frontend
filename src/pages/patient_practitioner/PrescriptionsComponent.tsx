@@ -6,10 +6,12 @@ import {PrescriptionService} from "../../service/prescription.service.tsx";
 import {useEffect, useMemo, useState} from "react";
 import {ColumnDef} from "@tanstack/react-table";
 import MaxWidthSection from "../../components/MaxWidthSection.tsx";
+import PatientPrescriptionDetails from "../patient/PatientPrescriptionDetails.tsx";
 
 type Props = {
     token: string
-    patientId: number
+    patientId: number | null
+
 }
 
 const PrescriptionsComponent = ({token, patientId}: Props) => {
@@ -29,21 +31,8 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
     const [prescriptionList, setPrescriptionList] = useState<IPrescriptionOverviewType[]>([])
     const [prescriptionDetails, setPrescriptionDetails] = useState<IPrescriptionDetailsType>(prescriptionDetailsPlaceholder)
 
-
-    function onClickViewPrescriptionDetails(p: IPrescriptionOverviewType) {
-        getPrescriptionDetails(p.id)
-    }
-
-    function setPrescriptionDetailsId(p: bigint) {
-        getPrescriptionDetails(p)
-    }
-
-    function onClickResetSelectedPrescription() {
-        setPrescriptionDetails({...prescriptionDetailsPlaceholder, id: null})
-    }
-
     function getPrescriptions() {
-        prescriptionService.getPrescriptionsForPractitionerPatient(patientId)
+        getPrescriptionOverviews()
             .then(r => {
                 setPrescriptionList(r.data)
             }).catch((reason) => {
@@ -51,8 +40,19 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
         });
     }
 
+    function getPrescriptionOverviews() {
+        if (patientId) {
+            return prescriptionService.getPrescriptionsForPractitionerPatient(patientId)
+        } else {
+            return prescriptionService.getPrescriptions()
+        }
+    }
+
     function getPrescriptionDetails(id: bigint | null) {
-        if (!id) return
+        if (!id) {
+            setPrescriptionDetails({...prescriptionDetailsPlaceholder, id: null})
+            return
+        }
 
         prescriptionService.getPrescriptionDetails(id).then(r => {
             console.log('Received Get prescription details response  ')
@@ -89,6 +89,10 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
             accessorKey: "patientUsername",
         },
         {
+            header: "Prescriber",
+            accessorKey: "practitionerUsername",
+        },
+        {
             header: "Start",
             accessorFn: originalRow => {
                 let date = new Date(originalRow.beginTime);
@@ -106,10 +110,10 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
         {
             header: "Details",
             cell: ({cell}) => {
-                const prescription = cell.row.original
+                const prescriptionId = cell.row.original.id
                 return (
                     <input type={"button"} value="View Details"
-                           onClick={() => onClickViewPrescriptionDetails(prescription)}>
+                           onClick={() => getPrescriptionDetails(prescriptionId)}>
                         View Details
                     </input>)
             }
@@ -140,7 +144,7 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
                                 <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
                                 <MaxWidthSection content={
                                     <SectionComponentWithDescription
-                                        heading={`Prescription ${prescriptionDetails.id ? prescriptionDetails.id : '(New)'} Details`}
+                                        heading={`Prescription ${prescriptionDetails.id ? prescriptionDetails.id : (patientId ? '(New)' : '')} Details`}
                                         description={
                                             <div>
                                                 <p>Select a prescription from the above list to view details</p>
@@ -148,20 +152,22 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
                                         }
                                         content={
                                             <div>
-                                                <PractitionerPrescriptionDetails
-                                                    token={token}
-                                                    patientId={patientId}
-                                                    prescriptionDetails={prescriptionDetails}
-                                                    setPrescriptionDetailsId={setPrescriptionDetailsId}>
-                                                </PractitionerPrescriptionDetails>
-                                                <input className={'inputButton'} type='submit' value={'Reset Edits'}
-                                                       onClick={onClickResetSelectedPrescription}/>
-                                            </div>
+                                                {patientId &&
+                                                    <PractitionerPrescriptionDetails
+                                                        token={token}
+                                                        patientId={patientId}
+                                                        prescriptionDetails={prescriptionDetails}
+                                                        getPrescriptionDetails={getPrescriptionDetails}>
+                                                    </PractitionerPrescriptionDetails>}
 
+
+                                                {!patientId &&
+                                                    <PatientPrescriptionDetails
+                                                        prescriptionDetails={prescriptionDetails}></PatientPrescriptionDetails>}
+                                            </div>
                                         }/>
                                 }>
                                 </MaxWidthSection>
-
                             </div>
                         }/>
                     <br/>

@@ -11,9 +11,9 @@ import {MedicationService} from "../../service/medication.service.tsx";
 
 type Props = {
     token: string
-    patientId: number
+    patientId: number | null
     prescriptionDetails: IPrescriptionDetailsType
-    setPrescriptionDetailsId: Function
+    getPrescriptionDetails: Function
 }
 
 type EditorModel = {
@@ -30,7 +30,7 @@ type DayStageSelector = {
 }
 
 const PractitionerPrescriptionDetails =
-    ({token, prescriptionDetails, setPrescriptionDetailsId}: Props) => {
+    ({token, prescriptionDetails, getPrescriptionDetails}: Props) => {
         console.log('render details')
         const editModelPlaceholder: EditorModel = {
             errors: [],
@@ -163,34 +163,6 @@ const PractitionerPrescriptionDetails =
             });
             console.log(newSelectors)
             setDayStageSelectors(newSelectors)
-
-
-            //
-            // let dayStageNamesFromEditCopy = editModel.editCopy.prescriptionScheduleEntries.map(value => value.dayStage)
-            //
-            // let includedInEditCopy = dayStageNamesFromEditCopy.includes(name)
-            // if (checked && !includedInEditCopy) {
-            //     console.log(`adding ${name}`)
-            //     setEditModelEditCopy({
-            //         ...editModel.editCopy,
-            //         prescriptionScheduleEntries: editModel.editCopy.prescriptionScheduleEntries.concat({
-            //             id: null,
-            //             dayStage: name
-            //         })
-            //     })
-            // } else if (!checked && includedInEditCopy) {
-            //     console.log(`removing ${name}`)
-            //
-            //     setEditModelEditCopy({
-            //         ...editModel.editCopy,
-            //         prescriptionScheduleEntries: editModel.editCopy.prescriptionScheduleEntries.filter((v) => {
-            //             return v.dayStage === name
-            //         })
-            //     })
-            //
-            // }
-
-
         }
 
         function updateMedication(med: IMedicationType | null) {
@@ -229,7 +201,7 @@ const PractitionerPrescriptionDetails =
                     console.log(r.data)
                     if (r.data.responseInfo.successful) {
                         console.log(r.data.responseInfo.message)
-                        setPrescriptionDetailsId(r.data.prescriptionId)
+                        getPrescriptionDetails(r.data.prescriptionId)
                     } else {
                         console.log(r.data.responseInfo.message)
                         console.log(r.data.responseInfo.errors)
@@ -360,7 +332,10 @@ const PractitionerPrescriptionDetails =
                 <div className={'prescription-actions'}>
                     <input className={'inputButton'} type='submit' value={'Save'}
                            onClick={savePrescriptionDetails}/>
-
+                    <input className={'inputButton'} type='submit' value={'Reset Edits'}
+                           onClick={() => {
+                               getPrescriptionDetails(null)
+                           }}/>
                 </div>
 
 
