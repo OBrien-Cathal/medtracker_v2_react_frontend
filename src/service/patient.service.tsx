@@ -1,7 +1,7 @@
 import AuthenticatedService from "./authenticatedService.tsx";
 import {IPatientRegistrationData, IPatientRegistrationResponse} from "../types/patient.type.ts";
 import {IUserModel} from "../types/user.type.ts";
-import {IResponse} from "../types/generic.type.ts";
+import {IResponseInfo} from "../types/generic.type.ts";
 
 export class PatientDataService extends AuthenticatedService {
     constructor(token: string) {
@@ -33,7 +33,7 @@ export class PatientDataService extends AuthenticatedService {
 
     uploadDoseFile(file: FormData) {
 
-        return this._client.post<IResponse>(
+        return this._client.post<IResponseInfo>(
             this._uploadPath + "/dose-upload",
             file,
             {
@@ -46,7 +46,7 @@ export class PatientDataService extends AuthenticatedService {
     }
 
     uploadBloodPressureFile(file: FormData) {
-        return this._client.post<IResponse>(
+        return this._client.post<IResponseInfo>(
             this._uploadPath + "/blood-pressure-upload",
             file,
             {

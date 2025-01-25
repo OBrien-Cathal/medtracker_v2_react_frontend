@@ -1,9 +1,9 @@
-export interface IResponse {
+export interface IResponseInfo {
     successful: boolean
     message: string
     errors: string[]
 }
 
-export interface IResponse2  {
-    responseInfo: IResponse
+export interface IResponse {
+    responseInfo: IResponseInfo
 }

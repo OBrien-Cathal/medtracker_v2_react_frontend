@@ -1,5 +1,5 @@
 import {IMedicationType} from "./medication.type.ts";
-import {IResponse2} from "./generic.type.ts";
+import {IResponse} from "./generic.type.ts";
 
 
 export interface IPrescriptionOverviewType {
@@ -28,11 +28,11 @@ export interface IPrescriptionScheduleEntryType {
     dayStage: string
 }
 
-export interface ISubmitPrescriptionDetailsResponse extends IResponse2 {
+export interface ISubmitPrescriptionDetailsResponse extends IResponse {
     prescriptionId: bigint
 }
 
-export interface IGetPrescriptionDetailsResponse extends IResponse2 {
+export interface IGetPrescriptionDetailsResponse extends IResponse {
     prescriptionDetails: IPrescriptionDetailsType
 }
 
