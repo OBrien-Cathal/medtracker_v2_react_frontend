@@ -1,6 +1,5 @@
 import AuthenticatedService from "./authenticatedService.tsx";
-import {IMedicationType} from "../types/medication.type.ts";
-import {IResponse} from "../types/generic.type.ts";
+import {IAddMedicationResponse, IMedicationType} from "../types/medication.type.ts";
 
 export class MedicationService extends AuthenticatedService {
     constructor(token: string) {
@@ -16,7 +15,7 @@ export class MedicationService extends AuthenticatedService {
     }
 
     addMedication(medName: string) {
-        return this._client.post<IResponse>(
+        return this._client.post<IAddMedicationResponse>(
             "add",
             {
                 id: null,

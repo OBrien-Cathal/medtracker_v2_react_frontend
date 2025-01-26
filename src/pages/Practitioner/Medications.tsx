@@ -1,11 +1,11 @@
 import {useAuth} from "../../auth/AuthProvider.tsx";
 import {useEffect, useMemo, useState} from "preact/compat";
-import Swal from "sweetalert2";
 import {ColumnDef} from "@tanstack/react-table";
 import {MedicationService} from "../../service/medication.service.tsx";
 import {IMedicationType} from "../../types/medication.type.ts";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {useNavigate} from "react-router-dom";
+import {handleResponse, handleError} from "../utils/response-handler.tsx";
 
 const Medications = () => {
     const {token} = useAuth()
@@ -29,20 +29,15 @@ const Medications = () => {
     }
 
     function onClickAddMedication() {
-        medicationService.addMedication(medName).then(r => {
-
-            if (r.data.responseInfo.successful) {
-                Swal.fire(r.data.responseInfo.message).then()
-            } else {
-                console.log(r.data.responseInfo.message)
-                console.log(r.data.responseInfo.errors)
-                Swal.fire("ERROR!", r.data.responseInfo.errors.join("\n"), "error").then()
-            }
-            getMedications()
-        }).catch(e => console.log(e.error))
-
+        medicationService.addMedication(medName)
+            .then((v) => {
+                handleResponse(v)
+                getMedications()
+            })
+            .catch(e => {
+                handleError(e)
+            })
     }
-
 
     useEffect(() => {
         getMedications();
