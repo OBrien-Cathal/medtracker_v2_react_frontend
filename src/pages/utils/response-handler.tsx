@@ -7,9 +7,18 @@ export type RequestStatusType = {
 }
 
 class ResponseHandler {
+    private readonly _notify: boolean = false
+
+    constructor(notify: boolean) {
+        this._notify = notify;
+    }
+
+
     public handleResponse(response: AxiosResponse<IResponse>): RequestStatusType {
         if (response.data.responseInfo.successful) {
-            Swal.fire(response.data.responseInfo.message).then()
+            if (this._notify) {
+                Swal.fire(response.data.responseInfo.message).then()
+            }
             return {succeeded: true}
         } else {
             console.log(response.data.responseInfo.message)
@@ -26,8 +35,11 @@ class ResponseHandler {
 }
 
 export const handleResponse = (requestResponse: AxiosResponse<IResponse, any>) => {
-    new ResponseHandler().handleResponse(requestResponse)
+    new ResponseHandler(false).handleResponse(requestResponse)
+}
+export const handleResponseAndNotify = (requestResponse: AxiosResponse<IResponse, any>) => {
+    new ResponseHandler(true).handleResponse(requestResponse)
 }
 export const handleError = (error: any) => {
-    new ResponseHandler().handleError(error)
+    new ResponseHandler(true).handleError(error)
 }
