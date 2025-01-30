@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom";
 import UserDetails from "../components/UserDetails.tsx";
 import {IParams} from "../../types/params.type.ts";
 import PatientDataVis from "./PatientDataVis.tsx";
-import MaxWidthSection from "../../components/MaxWidthSection.tsx";
 import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 import PrescriptionsComponent from "../patient_practitioner/PrescriptionsComponent.tsx";
 
@@ -17,21 +16,16 @@ const PatientDetails = () => {
     return (
         <div className="mainContainer">
 
-            <div className={'titleContainer'}>
-                <div>Patient: {patientId}</div>
-            </div>
-
-
             <br/>
-            <MaxWidthSection content={
+
                 <div>
                     <SectionComponentWithDescription
-                        heading={<div>
-                            Patient: {patientId} Details
+                        heading={<div className={'titleContainer'}>
+                            <div>Patient {patientId} Details</div>
                         </div>}
                         description={
                             <div>
-                                <p>Basic details about a patient</p>
+                            <p>Basic details about a patient</p>
                             </div>
                         }
                         content={
@@ -56,7 +50,6 @@ const PatientDetails = () => {
                     <PrescriptionsComponent token={token} patientId={patientId}></PrescriptionsComponent>
                 </div>
 
-            }/>
 
             <br/>
             <PatientDataVis patientId={(params.id as unknown as bigint)}/>

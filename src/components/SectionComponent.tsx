@@ -2,7 +2,7 @@ import React from "react";
 import SectionComponentWithDescription from "./SectionComponentWithDescription.tsx";
 
 type Props = {
-    heading: string;
+    heading: React.ReactNode;
     content: React.ReactNode;
 }
 

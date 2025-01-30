@@ -123,7 +123,11 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
     const columns = useMemo(() => Columns, []);
 
     return (<SectionComponentWithDescription
-            heading={'Prescriptions'}
+            heading={
+                <div className={'titleContainer'}>
+                    <div>Prescriptions</div>
+                </div>
+            }
             description={
                 <div>
                     <p>Prescription information for the current patient</p>

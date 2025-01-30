@@ -15,6 +15,16 @@ export class BloodPressureService extends AuthenticatedService {
         return this._client.get<ITimeSeriesDataResponse>("/systole-graph-data");
     }
 
+    getPractitionerPatientSystoleGraphData(patientId: bigint) {
+        return this._client.get<ITimeSeriesDataResponse>("/systole-graph-data/patient?id=" + patientId);
+    }
+
+    getSystoleGraphDataForId(patientId: bigint) {
+        if (patientId > 0) {
+            return this.getPractitionerPatientSystoleGraphData(patientId)
+        } else return this.getSystoleGraphData()
+    }
+
     getBloodPressureDailyData(date: string) {
         let dateString = date.toString();
         console.log(dateString)
@@ -27,16 +37,6 @@ export class BloodPressureService extends AuthenticatedService {
         return this._client.post<IAddDatedBloodPressureDataRequestResponse>(
             "/add-blood-pressure-daily-data",
             data);
-    }
-
-    getPractitionerPatientSystoleGraphData(patientId: bigint) {
-        return this._client.get<ITimeSeriesDataResponse>("/systole-graph-data/patient?id=" + patientId);
-    }
-
-    getSystoleGraphDataForId(patientId: bigint) {
-        if (patientId > 0) {
-            return this.getPractitionerPatientSystoleGraphData(patientId)
-        } else return this.getSystoleGraphData()
     }
 
 

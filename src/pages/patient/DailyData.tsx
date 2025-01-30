@@ -10,7 +10,8 @@ import DailyBloodPressure from "./components/DailyBloodPressure.tsx";
 import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 import BloodPressureEntry from "./components/BloodPressureEntry.tsx";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
-import MaxWidthSection from "../../components/MaxWidthSection.tsx";
+import DoseData from "./components/DoseData.tsx";
+import {IDailyDoseData, IDailyMedicationDoseData} from "../../types/dose.type.ts";
 
 
 const DataVis = () => {
@@ -23,6 +24,8 @@ const DataVis = () => {
     const [dayStages, setDayStages] = useState<string[]>([])
     const [bloodPressureReadings, setBloodPressureReadings] = useState<ISubmittedBloodPressureData[]>([])
 
+    const [doseReadings, setDoseReadings] = useState<IDailyMedicationDoseData[]>([])
+
     function getDayStages() {
         prescriptionService.getDayStages()
             .then(r => {
@@ -34,7 +37,12 @@ const DataVis = () => {
     }
 
     function getDailyDoses() {
-        dosesService.getDoseGraphData()
+        dosesService.getDailyDoseData(date)
+            .then(r => {
+                handleResponse(r)
+                setDoseReadings(r.data.medicationDoses)
+            })
+            .catch(e => handleError(e))
     }
 
     function getBloodPressureData() {
@@ -55,6 +63,15 @@ const DataVis = () => {
             }).catch(e => handleError(e))
     }
 
+    function saveDailyDoseDataReading(reading: IDailyDoseData, newVal: boolean) {
+        dosesService.addDailyDoseData({date: date, dailyDoseData: {...reading, taken: newVal}})
+            .then(r => {
+                handleResponse(r)
+                console.log(r.data)
+                getDailyDoses()
+            }).catch(e => handleError(e))
+    }
+
     function onChangeDate(e: TargetedEvent<HTMLInputElement, Event>) {
         console.log(e.currentTarget.value)
         setDate(
@@ -69,60 +86,85 @@ const DataVis = () => {
     }, [])
     return (
         <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>Daily Data</div>
+
+            <div className={'DailyEvaluation'}>
+                <SectionComponentWithDescription
+                    heading={
+                        <div className={'titleContainer'}>
+                            <div>Daily Data</div>
+                        </div>
+                    }
+                    description={
+                        <div>
+                            <p>Daily view of entered data</p>
+                        </div>
+                    }
+                    content={
+
+                        <div>
+                            <div className={'labeled-field'}>
+                                <label>Viewing data for</label>
+                                <input aria-label="Date"
+                                       value={
+                                           date.toString()}
+                                       type="date"
+                                       onChange={(ev) => onChangeDate(ev)}
+                                />
+                            </div>
+                            <br/>
+
+
+                            <SectionComponentWithDescription heading={'Blood Pressure'}
+                                                             description={'Blood pressure readings for the selected date'}
+                                                             content={
+
+                                                                 <div>
+                                                                     <div className={'center-section-body'}>
+                                                                         <DailyBloodPressure
+                                                                             readings={bloodPressureReadings}></DailyBloodPressure>
+
+                                                                     </div>
+                                                                     <br/>
+                                                                     <BloodPressureEntry
+                                                                         saveBloodPressureReading={saveBloodPressureReading}
+                                                                         dayStages={dayStages}></BloodPressureEntry>
+                                                                 </div>
+                                                             }>
+                            </SectionComponentWithDescription>
+
+
+                            <SectionComponentWithDescription heading={'Medication Dose Schedule'}
+                                                             description={<div>
+                                                                 <p>
+                                                                     Dosage status for all current
+                                                                     prescriptions.
+                                                                 </p>
+                                                                 <p>
+                                                                     By default the system assumes
+                                                                     that schedules are adhered to, manual
+                                                                     changes can be made if reality does not
+                                                                     reflect this assumption
+                                                                 </p>
+                                                             </div>
+                                                             }
+                                                             content={
+                                                                 <div>
+                                                                     <DoseData
+                                                                         readings={doseReadings}
+                                                                         saveDailyDoseData={saveDailyDoseDataReading}></DoseData>
+                                                                 </div>
+
+
+                                                             }>
+                            </SectionComponentWithDescription>
+
+
+                        </div>
+
+                    }
+                />
             </div>
 
-            <MaxWidthSection content={
-                <div className={'DailyEvaluation'}>
-                    <SectionComponentWithDescription
-                        heading={'Daily Data'}
-                        description={
-                            <div>
-                                <p>Daily view of entered data</p>
-                            </div>
-                        }
-                        content={
-
-                            <div>
-                                <div className={'labeled-field'}>
-                                    <label>Viewing data for</label>
-                                    <input aria-label="Date"
-                                           value={
-                                               date.toString()}
-                                           type="date"
-                                           onChange={(ev) => onChangeDate(ev)}
-                                    />
-                                </div>
-                                <br/>
-
-                                <MaxWidthSection content={
-                                    <SectionComponentWithDescription heading={'Blood Pressure'}
-                                                                     description={'Blood pressure readings for the selected date'}
-                                                                     content={
-
-                                                                         <div>
-                                                                             <div className={'center-section-body'}>
-                                                                                 <DailyBloodPressure
-                                                                                     readings={bloodPressureReadings}></DailyBloodPressure>
-
-                                                                             </div>
-                                                                             <br/>
-                                                                             <BloodPressureEntry
-                                                                                 saveBloodPressureReading={saveBloodPressureReading}
-                                                                                 dayStages={dayStages}></BloodPressureEntry>
-                                                                         </div>
-                                                                     }>
-                                    </SectionComponentWithDescription>
-                                }/>
-
-                            </div>
-
-                        }
-                    />
-                </div>
-            }
-            />
         </div>
     )
 }

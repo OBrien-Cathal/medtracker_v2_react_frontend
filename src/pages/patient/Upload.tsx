@@ -82,14 +82,15 @@ const UploadPage = () => {
 
     return (
         <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>Upload</div>
-            </div>
+
             <br/>
             <br/>
             <div className={'max-width-section'}>
                 <SectionComponentWithDescription
-                    heading={'Data Uploads'}
+                    heading={
+                    <div className={'titleContainer'}>
+                        <div>Upload</div>
+                    </div>}
                     description={<p>Bulk data for different metrics can be uploaded below, the expect file format is
                         Excel
                         (.xlsx)</p>}

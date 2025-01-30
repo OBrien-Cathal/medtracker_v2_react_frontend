@@ -155,7 +155,7 @@ Styling for reusable components
 }
 
 .styled-table thead tr {
-    background-color: orange;
+    background-color: #808080;
     color: #ffffff;
     text-align: left;
 }
@@ -175,7 +175,7 @@ Styling for reusable components
 }
 
 .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid orange;
+    border-bottom: 2px solid #808080;
 }
 
 
@@ -229,15 +229,47 @@ Styling for reusable components
     font-weight: bold;
 }
 
+
+.label-with-text{
+
+}
+
+.label-with-text label{
+margin-right: 20px;
+}
+.label-with-text text{
+color: orange;
+    font-weight: bold;
+}
+
+
+
+
+.labeled-field{
+
+}
+.labeled-field label{
+    margin-right: 20px;
+}
 .SectionComponentWithDescription {
 }
 
 .section-header {
-    background-color: orange;
+    background-color: #808080;
     color: white;
     font-size: 18px;
     padding: 5px;
 
+}
+.single-row-section-header{
+    display: flex;
+    flex-direction: row;
+}
+
+.single-row-section-header .label-with-text text {
+    color: white;
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 .section-description {

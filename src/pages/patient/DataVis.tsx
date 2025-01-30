@@ -12,12 +12,13 @@ const DataVis = () => {
     const patientId: bigint = -1n
     return (
         <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>Data</div>
-            </div>
             <div className="graphsContainer">
                 <SectionComponentWithDescription
-                    heading={'Graph data views'}
+                    heading={
+                        <div className={'titleContainer'}>
+                            <div>Data Visualizations</div>
+                        </div>
+                    }
                     description={<p>Graphs based on accumulated data</p>}
                     content={
                         <div>

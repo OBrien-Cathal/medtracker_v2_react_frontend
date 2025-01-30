@@ -6,6 +6,7 @@ import {IMedicationType} from "../../types/medication.type.ts";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {useNavigate} from "react-router-dom";
 import {handleResponse, handleError} from "../utils/response-handler.tsx";
+import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 
 const Medications = () => {
     const {token} = useAuth()
@@ -70,19 +71,28 @@ const Medications = () => {
     const columns = useMemo(() => Columns, []);
     return (
         <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>Medications</div>
-            </div>
-            <div>Medications available + management</div>
-            <ReactTable<IMedicationType> data={medicationList} columns={columns}/>
-            <div className={'medicationEntry'}>
-                <input
-                    value={medName}
-                    placeholder="Medication name"
-                    onChange={(ev) => setMedName(ev.currentTarget.value)}
-                />
-                <input className={'inputButton'} type='submit' value={'Add Medication'} onClick={onClickAddMedication}/>
-            </div>
+
+            <SectionComponentWithDescription
+                heading={
+                    <div className={'titleContainer'}>
+                        <div>Medications</div>
+                    </div>
+                }
+                description={<p>Practitioners can view and add Medications here</p>}
+                content={
+                    <div>
+                        <div className={'medicationEntry'}>
+                            <input
+                                value={medName}
+                                placeholder="Medication name"
+                                onChange={(ev) => setMedName(ev.currentTarget.value)}
+                            />
+                            <input className={'inputButton'} type='submit' value={'Add Medication'}
+                                   onClick={onClickAddMedication}/>
+                        </div>
+                        <ReactTable<IMedicationType> data={medicationList} columns={columns}/>
+                    </div>
+                }/>
         </div>
     )
 }

@@ -7,10 +7,6 @@ const Prescriptions = () => {
 
     return (
         <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>Prescriptions</div>
-            </div>
-
             <div>
                 <PrescriptionsComponent
                     token={token}

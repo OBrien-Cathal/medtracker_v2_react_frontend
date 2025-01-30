@@ -6,6 +6,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {PatientDataService} from "../../service/patient.service.tsx";
 import {useNavigate} from "react-router-dom";
+import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 
 
 type IPatientRow = {
@@ -78,7 +79,9 @@ const PatientRegistration = () => {
             }
         }).catch(e => console.log(e.data))
 
-    } function onClickViewDetails(id: bigint) {
+    }
+
+    function onClickViewDetails(id: bigint) {
         console.log('clicked view details: ' + id)
         navigate('/patient-details/' + id)
     }
@@ -106,7 +109,7 @@ const PatientRegistration = () => {
             cell: ({cell}) => {
                 const id = cell.row.original.patientRegistrationId
                 const disableButton = cell.row.original.patientRegistrationId < 0
-                if(!cell.row.original.approved){
+                if (!cell.row.original.approved) {
                     return (
                         <input type={"button"} value="Approve"
                                onClick={() => onClickApprove(id)} disabled={disableButton}>
@@ -119,11 +122,11 @@ const PatientRegistration = () => {
             header: "Details",
             cell: ({cell}) => {
                 const id = cell.row.original.patientId
-                    return (
-                        <input type={"button"} value="View"
-                               onClick={() => onClickViewDetails(id)}>
-                            View
-                        </input>)
+                return (
+                    <input type={"button"} value="View"
+                           onClick={() => onClickViewDetails(id)}>
+                        View
+                    </input>)
             }
         }
     ];
@@ -133,18 +136,24 @@ const PatientRegistration = () => {
 
     return (
         <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>Patients</div>
-            </div>
-            <div>
-                <p>All registered patients and applying patients
-                </p>
-                <span/>
-                <p>
-                    The status of current registrations is also visible
-                </p>
-            </div>
-            <ReactTable<IPatientRow> data={patientList} columns={columns}/>
+            <SectionComponentWithDescription
+                heading={
+                    <div className={'titleContainer'}>
+                        <div>Patients</div>
+                    </div>
+                }
+                description={<div>
+                    <p>List of all currently registered patients and new patient registration requests.
+                    </p>
+                    <span/>
+                    <p>
+                        New patient registrations can be viewed and approved here.
+                    </p>
+                </div>}
+                content={
+                    <ReactTable<IPatientRow> data={patientList} columns={columns}/>
+                }
+            />
         </div>
     )
 }

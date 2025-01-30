@@ -5,19 +5,27 @@ import {useAuth} from "../auth/AuthProvider.tsx";
 import Swal from "sweetalert2";
 import SectionComponentWithDescription from "../components/SectionComponentWithDescription.tsx";
 import React from "react";
+import SectionComponent from "../components/SectionComponent.tsx";
 
 const AccountManagement = () => {
     return (
         <div className="mainContainer">
-            <div className={'titleContainer'}>
-                <div>Account management</div>
-            </div>
+
             <br/>
-            <SectionComponentWithDescription
-                heading={'Role Requests'}
-                description={'Available roles can be requested below, any role requests will be reviewed by a system admin'}
-                content={<RoleRequests/>}
+            <SectionComponent
+                heading={
+                    <div className={'titleContainer'}>
+                        <div>Account management</div>
+                    </div>
+                } content={
+                <SectionComponentWithDescription
+                    heading={'Role Requests'}
+                    description={'Available roles can be requested below, any role requests will be reviewed by a system admin'}
+                    content={<RoleRequests/>}
+                />
+            }
             />
+
         </div>
     )
 }
@@ -108,6 +116,8 @@ const RoleChange = (
     }
 
     return (
+
+
         <SectionComponentWithDescription
             heading={prettyRoleName}
             description={roleDescription}
