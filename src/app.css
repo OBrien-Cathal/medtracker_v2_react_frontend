@@ -3,7 +3,13 @@ html, body {
     margin: 0;
 }
 
+#app {
+    display: flex;
+    flex-direction: column;
+}
+
 body {
+    height: 100vh;
     font: normal 14px Verdana, Arial, sans-serif;
 }
 
@@ -53,14 +59,20 @@ input[type=file]::file-selector-button:hover {
 
 /*Routes*/
 .route-container {
+    display: flex;
+    flex-direction: column;
     margin-left: 10px;
     margin-right: 10px;
+
 }
 
 /*Styles for Header and Nav elements*/
 .HeaderContainer {
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     background-color: orange;
     margin-bottom: 20px;
 }
@@ -114,11 +126,7 @@ input[type=file]::file-selector-button:hover {
     background-color: #808080;
 }
 
-@media (max-width: 1024px) {
-    .Navigation {
-        flex-direction: column;
-    }
-}
+
 
 .NavElement {
     height: 50px;
@@ -270,7 +278,7 @@ Styling for reusable components
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-    flex-grow: 1;
+    width: 100%;
 }
 
 .heading-and-controls {
@@ -295,7 +303,9 @@ Styling for reusable components
 
 }
 
-.MTPage {
+.MTPage, .MTPageBody, .MTSectionBody, .MTSectionContent, .section-with-controls-content {
+    display: flex;
+    flex-direction: column;
 
 }
 
@@ -312,16 +322,19 @@ Styling for reusable components
     padding: 10px 10px 10px 10px;
 }
 
-.MTSectionGroupHeading1{
+.MTSectionGroupHeading1 {
     font-size: 24px;
 }
+
 .MTSectionHeading {
     display: flex;
     flex-direction: row;
     font-size: 18px;
     padding: 10px 10px 10px 20px;
 }
-
+.MTPage{
+    width: 100%;
+}
 
 .MTPageHeading {
     display: flex;
@@ -332,22 +345,27 @@ Styling for reusable components
 }
 
 .MTPageContent {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
+    align-self: center;
+    width: 80%;
 }
 
 .MTPageBody {
+    width: 100%;
 }
 
 .MTSectionBody {
     background-color: #f3f3f3;
     padding: 10px;
 }
-.MTSectionContent{
+
+.MTSectionContent {
     flex-basis: 100%;
 }
 
 .section-with-controls-description-content {
-
 }
 
 .section-with-controls-content {
@@ -423,7 +441,7 @@ Styling for reusable components
 
 }
 
-.LineGraph{
+.LineGraph {
 
 }
 
@@ -509,4 +527,19 @@ Styling for reusable components
     border-radius: 8px;
     border: 1px solid grey;
     padding-left: 8px;
+}
+
+@media (max-width: 1024px) {
+    .Navigation {
+        flex-direction: column;
+    }
+    .MTPageContent {
+
+        padding: 0;
+        overflow: scroll;
+        width: 100%;
+    }
+    .HeaderContainer{
+        position: inherit;
+    }
 }

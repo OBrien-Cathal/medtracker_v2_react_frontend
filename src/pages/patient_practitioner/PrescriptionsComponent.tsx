@@ -11,7 +11,6 @@ import {
     MTSectionBody,
     MTSectionContent,
 } from "../../components/section/MTSection.tsx";
-import {MTPageContent} from "../../components/pages/MTPage.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
 
@@ -130,7 +129,7 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
     const columns = useMemo(() => Columns, []);
 
     return (
-        <MTPageContent>
+        <MTSectionContent>
             <MTSectionWithControls mtHeading={
                 <MTSectionHeading>
                     Current
@@ -187,7 +186,7 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
                     </MTSectionContent>
                 </MTSectionBody>
             </MTSectionWithControls>
-        </MTPageContent>
+        </MTSectionContent>
     )
 }
 

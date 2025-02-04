@@ -13,7 +13,6 @@ import {IDailyDoseData, IDailyMedicationDoseData} from "../../types/dose.type.ts
 import {MTPage, MTPageBody, MTPageContent, MTPageDescription, MTPageHeading} from "../../components/pages/MTPage.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import {MTSectionBody, MTSectionGroupHeading} from "../../components/section/MTSection.tsx";
-import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
 
 
 const DataVis = () => {
@@ -127,7 +126,8 @@ const DataVis = () => {
                                 <p>Blood pressure readings for the selected date</p>
                             </MTPageDescription>
                         }>
-                        <MTSectionBody><CenteredFlex>
+                        <MTSectionBody>
+
                             <DailyBloodPressure
                                 readings={bloodPressureReadings}>
 
@@ -138,8 +138,6 @@ const DataVis = () => {
                                 dayStages={dayStages}>
 
                             </BloodPressureEntry>
-                        </CenteredFlex>
-
 
                         </MTSectionBody>
                     </MTSectionWithControls>
