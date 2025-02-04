@@ -27,6 +27,17 @@ const Home = () => {
 
     }
 
+
+    const onSignInClicked = () => {
+        navigate('/login')
+
+    }
+    const onRegisterClicked = () => {
+
+        navigate('/register')
+
+    }
+
     return (
         <MTPage>
             <MTSectionWithControls
@@ -44,6 +55,22 @@ const Home = () => {
                             <div>Welcome to Med Tracker!</div>
                         </div>
                         <br/>
+                        {!isLoggedIn && <div>
+                            <p>
+
+                                <text className={"clickable-text"} onClick={onSignInClicked}>
+                                   Sign in
+                                </text>
+                                <span> </span>
+                                or
+                                <span> </span>
+                                <text className={"clickable-text"} onClick={onRegisterClicked}>
+                                    Register
+                                </text>
+                            </p>
+
+                        </div>}
+
                         {needsExplanation && (<div>
                             <p>
                                 Newly created accounts have minimal functionality,

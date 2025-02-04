@@ -4,14 +4,15 @@ import authenticationDataService from "../service/authentication.service.tsx"
 import {useAuth} from "../auth/AuthProvider.tsx";
 import Swal from "sweetalert2";
 import {MTPage, MTPageBody, MTPageContent} from "../components/pages/MTPage.tsx";
-
 import CenteredFlex from "../components/layout/CenteredFlex.tsx";
 
-const Login = () => {
+const Register = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [repeatPassword, setRepeatPassword] = useState('')
     const [usernameError, setUsernameError] = useState('')
     const [passwordError, setPasswordError] = useState('')
+    const [repeatPasswordError, setRepeatPasswordError] = useState('')
 
     const auth = useAuth()
     const navigate = useNavigate()
@@ -30,9 +31,9 @@ const Login = () => {
         })
     }
 
-    // Log in a user using email and password
-    const signIn = () => {
-        authenticationDataService.signIn({username: username, password: password})
+
+    const signUp = () => {
+        authenticationDataService.signUp({username: username, password: password})
             .then((r) => {
                 if (r.data.message === 'success') {
                     auth.login({username: username, token: r.data.token, currentRole: r.data.currentUserRole})
@@ -45,16 +46,14 @@ const Login = () => {
                     }).then();
                 }
             }).catch(reason => {
+            console.log(reason)
             Swal.fire({
-                title: "Sign In failed",
+                title: "Sign up failed",
                 text: reason.response.data.message,
                 icon: "error"
             }).then();
-        })
-    }
 
-    function onClickRegister() {
-        navigate('/register')
+        })
     }
 
     const onButtonClick = (e: any) => {
@@ -62,6 +61,7 @@ const Login = () => {
         // Set initial error values to empty
         setUsernameError('')
         setPasswordError('')
+        setRepeatPasswordError('')
 
         // Check if the user has entered both fields correctly
         if ('' === username) {
@@ -79,22 +79,43 @@ const Login = () => {
             return
         }
 
-        checkAccountExists((accountExists: boolean) => {
-            // If yes, log in
-            if (accountExists) signIn()
-            // Else, ask user if they want to create a new account and if yes, then log in
-            else {
-                Swal.fire({
-                    title: "Sign in failed!",
-                    text: "The submitted combination of username and password is not valid, please check you account details or sign up",
+        if ('' === repeatPassword) {
+            setPasswordError('Please repeat your password')
+            return
+        }
 
+        if (repeatPassword != password) {
+            setPasswordError('passwords do not match')
+            setRepeatPasswordError('passwords do not match')
+            return
+        }
+
+
+        // if (password.length < 7) {
+        //   setPasswordError('The password must be 8 characters or longer')
+        //   return
+        // }
+
+        // Authentication calls will be made here...
+
+
+        checkAccountExists((accountExists: boolean) => {
+            if (accountExists) {
+                Swal.fire({
+                    title: "Sign up failed!",
+                    text: "The email used to sign up is already registered, this warning should be replaced by a email with a confirmation link, to avoid privacy issues",
                 }).then();
+
+            } else {
+                signUp()
             }
         })
     }
 
 
     return (
+
+
         <MTPage>
             <MTPageBody>
                 <MTPageContent>
@@ -104,16 +125,6 @@ const Login = () => {
                         </div>
                     </div>
                     <CenteredFlex>
-                        <p>
-                            <text>
-                                Sign in below or
-                            </text>
-                            <span> </span>
-                            <text className={"clickable-text"} onClick={onClickRegister}>
-                                register a new account.
-                            </text>
-                        </p>
-                        <br/>
                         <form onSubmit={onButtonClick}>
                             <div className={'inputContainer'}>
                                 <input
@@ -137,9 +148,22 @@ const Login = () => {
                                 <label className="errorLabel">{passwordError}</label>
                             </div>
                             <br/>
-                            <div className={'buttonContainer'}>
-                                <input className={'inputButton'} type='submit' value={'Log in'}/>
+                            <div className={'inputContainer'}>
+                                <input
+                                    type="password"
+                                    autoComplete="off"
+                                    value={repeatPassword}
+                                    placeholder="Repeat password"
+                                    onChange={(ev) => setRepeatPassword(ev.currentTarget.value)}
+                                    className={'inputBox'}
+                                />
+                                <label className="errorLabel">{repeatPasswordError}</label>
                             </div>
+                            <br/>
+                            <div className={'buttonContainer'}>
+                                <input className={'inputButton'} type='submit' value={'Register'}/>
+                            </div>
+
                         </form>
                     </CenteredFlex>
 
@@ -151,4 +175,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register

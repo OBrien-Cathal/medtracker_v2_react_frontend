@@ -1,4 +1,5 @@
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 export const auth_routes = [
 
@@ -14,6 +15,13 @@ export const auth_routes = [
         ele: <Login></Login>,
         availability: [],
         title: "Login",
+        showInNav: false
+    },
+    {
+        path: "/register",
+        ele: <Register></Register>,
+        availability: [],
+        title: "Register",
         showInNav: false
     }
 ]
