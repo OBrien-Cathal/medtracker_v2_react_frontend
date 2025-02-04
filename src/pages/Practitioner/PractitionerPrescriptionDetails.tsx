@@ -244,19 +244,20 @@ const PractitionerPrescriptionDetails =
                     <MTSectionContent>
                         <CenteredFlex>
                             <div className="PrescriptionDetails">
-                                <div>
-                                    <div className={'labeled-field'}>
-                                        <label>Dose (mg)</label>
+                                <div className={'labeled-field'}>
+                                    <label>Dose (mg)</label>
+                                    <div className={'field'}>
                                         <input
                                             value={
                                                 editModel.editCopy.doseMg}
                                             type={'number'}
                                             placeholder='0'
-                                            onChange={(ev) => updateDoseMg(ev)}/>
-                                    </div>
-                                    <br/>
-                                    <div className={'labeled-field'}>
-                                        <label>Start</label>
+                                            onChange={(ev) => updateDoseMg(ev)}/></div>
+                                </div>
+
+                                <div className={'labeled-field'}>
+                                    <label>Start</label>
+                                    <div className={'field'}>
                                         <input aria-label="Date and time"
                                                value={
                                                    editModel.editCopy.beginTime.toString().substring(0, 16)}
@@ -264,9 +265,11 @@ const PractitionerPrescriptionDetails =
                                                onChange={(ev) => updateBeginTime(ev)}
                                         />
                                     </div>
-                                    <br/>
-                                    <div className={'labeled-field'}>
-                                        <label>End</label>
+                                </div>
+
+                                <div className={'labeled-field'}>
+                                    <label>End</label>
+                                    <div className={'field'}>
                                         <input aria-label="Date and time"
                                                value={
                                                    editModel.editCopy.endTime ?
@@ -275,9 +278,11 @@ const PractitionerPrescriptionDetails =
                                                onChange={(ev) => updateEndTime(ev)}
                                         />
                                     </div>
-                                    <br/>
-                                    <div className={'labeled-field'}>
-                                        <label>Medication</label>
+                                </div>
+
+                                <div className={'labeled-field'}>
+                                    <label>Medication</label>
+                                    <div className={'field'}>
                                         <div className="medication-picker">
                                             <Select
                                                 // If you don't need a state you can remove the two following lines value & onChange
@@ -292,29 +297,31 @@ const PractitionerPrescriptionDetails =
                                                 backspaceRemovesValue={true}
                                             />
                                         </div>
-
                                     </div>
-                                    <br/>
-                                    <div className={'labeled-field'}>
-                                        <label>Day Stages</label>
-                                        <div>
-                                            {dayStageSelectors && dayStageSelectors.map((ds) => {
-                                                return (
-                                                    <div>
-                                                        <input id={ds.dayStage} type={'checkbox'} name={ds.dayStage}
-                                                               checked={ds.included}
-                                                               onChange={(ev) => updateDayStage(ev)}>
 
-                                                        </input>
-                                                        <label for={ds.dayStage}>{ds.dayStage}</label>
-                                                    </div>)
-                                            })}
-
-                                        </div>
-
-                                    </div>
-                                    <br/>
                                 </div>
+
+                                <div className={'labeled-field'}>
+                                    <label>Day Stages</label>
+                                    <div className={'field'}>
+
+                                        {dayStageSelectors && dayStageSelectors.map((ds) => {
+                                            return (
+                                                <div className={'row'}>
+                                                    <input id={ds.dayStage} type={'checkbox'} name={ds.dayStage}
+                                                           checked={ds.included}
+                                                           onChange={(ev) => updateDayStage(ev)}>
+
+                                                    </input>
+                                                    <label for={ds.dayStage}>{ds.dayStage}</label>
+                                                </div>)
+                                        })}
+
+
+                                    </div>
+
+                                </div>
+                                <br/>
                                 <div>
                                     <br/>
                                     {

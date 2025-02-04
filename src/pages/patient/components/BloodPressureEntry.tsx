@@ -9,6 +9,7 @@ import {
     MTSectionHeading
 } from "../../../components/section/MTSection.tsx";
 import Validation from "../../../components/Validation.tsx";
+import CenteredFlex from "../../../components/layout/CenteredFlex.tsx";
 
 type Props = {
     saveBloodPressureReading: Function
@@ -107,47 +108,49 @@ const BloodPressureEntry = ({saveBloodPressureReading, dayStages}: Props) => {
         >
             <MTSectionBody>
                 <MTSectionContent>
-                    <div className={'labeled-field'}>
-                        <label>Systole</label>
-                        <input
-                            value={
-                                editorModel.editCopy.systole}
-                            type={'number'}
-                            placeholder='0'
-                            onChange={(ev) => onChangeSystole(ev)}/>
-                    </div>
-                    <div className={'labeled-field'}>
-                        <label>Diastole</label>
-                        <input
-                            value={
-                                editorModel.editCopy.diastole}
-                            type={'number'}
-                            placeholder='0'
-                            onChange={(ev) => onChangeDiastole(ev)}/>
-                    </div>
-                    <div className={'labeled-field'}>
-                        <label>Heart Rate</label>
-                        <input
-                            value={
-                                editorModel.editCopy.heartRate}
-                            type={'number'}
-                            placeholder='0'
-                            onChange={(ev) => onChangeHeartRate(ev)}/>
-                    </div>
-
-                    <div className={'labeled-field'}>
-                        <label>Day Stage</label>
-                        <div className="dayStage-picker">
-                            <select value={editorModel.editCopy.dayStage} onChange={event => {
-                                onChangeDayStage(event.currentTarget.value)
-                            }}>
-                                {dayStages && dayStages.map((v) => {
-                                    return (<option value={v}
-                                                    label={v.substring(0, 1) + v.substring(1, v.length).toLowerCase()}></option>)
-                                })}
-                            </select>
+                    <CenteredFlex>
+                        <div className={'labeled-field'}>
+                            <label>Systole</label>
+                            <input
+                                value={
+                                    editorModel.editCopy.systole}
+                                type={'number'}
+                                placeholder='0'
+                                onChange={(ev) => onChangeSystole(ev)}/>
                         </div>
-                    </div>
+                        <div className={'labeled-field'}>
+                            <label>Diastole</label>
+                            <input
+                                value={
+                                    editorModel.editCopy.diastole}
+                                type={'number'}
+                                placeholder='0'
+                                onChange={(ev) => onChangeDiastole(ev)}/>
+                        </div>
+                        <div className={'labeled-field'}>
+                            <label>Heart Rate</label>
+                            <input
+                                value={
+                                    editorModel.editCopy.heartRate}
+                                type={'number'}
+                                placeholder='0'
+                                onChange={(ev) => onChangeHeartRate(ev)}/>
+                        </div>
+
+                        <div className={'labeled-field'}>
+                            <label>Day Stage</label>
+                            <div className="dayStage-picker">
+                                <select value={editorModel.editCopy.dayStage} onChange={event => {
+                                    onChangeDayStage(event.currentTarget.value)
+                                }}>
+                                    {dayStages && dayStages.map((v) => {
+                                        return (<option value={v}
+                                                        label={v.substring(0, 1) + v.substring(1, v.length).toLowerCase()}></option>)
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                    </CenteredFlex>
                     <br/>
                     {
                         editorModel.errors.length > 0 &&

@@ -30,6 +30,12 @@ const PatientPrescriptionDetails =
             editCopy: prescriptionDetails
         })
 
+        function prettyDateString(aDateString: string): string {
+            if (!aDateString) return 'Open ended'
+            let date = new Date(aDateString);
+            return aDateString ? date.toDateString() + ' - ' + date.toLocaleTimeString() : '-'
+        }
+
 
         useEffect(() => {
             console.log('useEffect details component')
@@ -59,62 +65,66 @@ const PatientPrescriptionDetails =
                                 <div>
                                     <div className={'labeled-field'}>
                                         <label>Dose (mg)</label>
-                                        <input
-                                            value={
-                                                editModel.editCopy.doseMg}
-                                            type={'number'}
-                                            placeholder='0'
-                                        />
+                                        <div className={'read-only-field'}>
+                                            <text>
+                                                {
+                                                    editModel.editCopy.doseMg}
+                                            </text>
+
+                                        </div>
                                     </div>
-                                    <br/>
+
                                     <div className={'labeled-field'}>
                                         <label>Start</label>
-                                        <input aria-label="Date and time"
-                                               value={
-                                                   editModel.editCopy.beginTime.toString().substring(0, 16)}
-                                               type="datetime-local"
+                                        <div className={'read-only-field'}>
+                                            <text>
+                                                {
+                                                    prettyDateString(editModel.editCopy.beginTime)
+                                                }
+                                            </text>
 
-                                        />
+
+                                        </div>
                                     </div>
-                                    <br/>
+
                                     <div className={'labeled-field'}>
                                         <label>End</label>
-                                        <input aria-label="Date and time"
-                                               value={
-                                                   editModel.editCopy.endTime ?
-                                                       editModel.editCopy.endTime.toString().substring(0, 16) : ''}
-                                               type="datetime-local"
+                                        <div className={'read-only-field'}>
+                                            <text>
+                                                {
+                                                    prettyDateString(editModel.editCopy.endTime)
+                                                }
 
-                                        />
+                                            </text>
+
+                                        </div>
                                     </div>
-                                    <br/>
+
                                     <div className={'labeled-field'}>
                                         <label>Medication</label>
-                                        <div className="medication-name">
-                                            {editModel.editCopy.medication?.name}
+                                        <div className={'read-only-field'}>
+                                            <text>
+                                                {editModel.editCopy.medication?.name}
+                                            </text>
                                         </div>
-
                                     </div>
-                                    <br/>
-                                    <div className={'labeled-field'}>
-                                        <label>Day Stages</label>
-                                        <div>
-                                            {editModel.editCopy.prescriptionScheduleEntries.map((ds) => {
-                                                return (
-                                                    <li>{ds.dayStage}</li>)
-                                            })}
-
-                                        </div>
-
-                                    </div>
-                                    <br/>
-                                </div>
-                                <div>
-
 
                                 </div>
 
+                                <div className={'labeled-field'}>
+                                    <label>Day Stages</label>
+                                    <div className={'read-only-field'}>
+                                        {editModel.editCopy.prescriptionScheduleEntries.map((ds) => {
+                                            return (
+                                                <li>
+                                                    <text>{ds.dayStage}</text>
+                                                </li>)
+                                        })}
 
+                                    </div>
+
+                                </div>
+                                <br/>
                             </div>
                         </CenteredFlex>
                     </MTSectionContent>

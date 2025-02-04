@@ -9,7 +9,7 @@ import {handleResponse, handleError} from "../utils/response-handler.tsx";
 import {MTPage, MTPageHeading, MTPageBody, MTPageContent, MTPageDescription} from "../../components/pages/MTPage.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
-import {MTSectionHeading,  MTSectionBody,} from "../../components/section/MTSection.tsx";
+import {MTSectionHeading, MTSectionBody, MTSectionContent,} from "../../components/section/MTSection.tsx";
 
 const Medications = () => {
     const {token} = useAuth()
@@ -95,13 +95,17 @@ const Medications = () => {
                             </MTSectionHeading>
                         }>
                         <MTSectionBody>
-                            <input
-                                value={medName}
-                                placeholder="Medication name"
-                                onChange={(ev) => setMedName(ev.currentTarget.value)}
-                            />
-                            <input className={'inputButton'} type='submit' value={'Add Medication'}
-                                   onClick={onClickAddMedication}/>
+                            <MTSectionContent>
+                                <div className={'labeled-field'}>
+                                    <label>Medication name</label>
+                                    <input
+                                        value={medName}
+                                        placeholder="Enter medication name"
+                                        onChange={(ev) => setMedName(ev.currentTarget.value)}
+                                    />
+                                </div>
+                                <input className={'inputButton'} type='submit' value={'Add Medication'}
+                                       onClick={onClickAddMedication}/></MTSectionContent>
                         </MTSectionBody>
                     </MTSectionWithControls>
 

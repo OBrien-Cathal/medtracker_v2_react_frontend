@@ -127,7 +127,6 @@ input[type=file]::file-selector-button:hover {
 }
 
 
-
 .NavElement {
     height: 50px;
 }
@@ -252,14 +251,47 @@ Styling for reusable components
     font-weight: bold;
 }
 
+.vertical-item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 .labeled-field {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 10px 0 10px 0;
+}
 
+.labeled-field input {
+    width: 100%;
 }
 
 .labeled-field label {
     margin-right: 20px;
+    width: 150px;
 }
+
+.field, .read-only-field{
+    width: 200px
+}
+
+.read-only-field text{
+    color: orange;
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row input {
+    width: auto;
+}
+
 
 .single-row-section-header {
     display: flex;
@@ -332,7 +364,8 @@ Styling for reusable components
     font-size: 18px;
     padding: 10px 10px 10px 20px;
 }
-.MTPage{
+
+.MTPage {
     width: 100%;
 }
 
@@ -416,6 +449,12 @@ Styling for reusable components
     margin-right: 20px;
 }
 
+/*PRescriptions*/
+.PrescriptionDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 /*Account Management*/
 
@@ -533,13 +572,15 @@ Styling for reusable components
     .Navigation {
         flex-direction: column;
     }
+
     .MTPageContent {
 
         padding: 0;
         overflow: scroll;
         width: 100%;
     }
-    .HeaderContainer{
+
+    .HeaderContainer {
         position: inherit;
     }
 }
