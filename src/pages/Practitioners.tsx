@@ -6,7 +6,10 @@ import {useAuth} from "../auth/AuthProvider.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../components/table/ReactTable.tsx";
 import {PatientDataService} from "../service/patient.service.tsx";
-import SectionComponentWithDescription from "../components/SectionComponentWithDescription.tsx";
+import {MTPage, MTPageHeading, MTPageDescription, MTPageContent, MTPageBody} from "../components/pages/MTPage.tsx";
+import MTSectionWithControls from "../components/MTSectionWithControls.tsx";
+import CenteredFlex from "../components/layout/CenteredFlex.tsx";
+
 
 
 type IPatientRegistrationRow = {
@@ -117,37 +120,33 @@ const Practitioners = () => {
 
     const columns = useMemo(() => Columns, []);
 
-
     return (
-        <div className="mainContainer">
-            <div className={'titleContainer'}>
-            </div>
-            <br/>
-
-            <SectionComponentWithDescription
-                heading={
-                <div className={'titleContainer'}>
-                    Practitioner Overview
-                </div>
-
-
-                    }
-                description={
-                    <div>
-                        <p>All available practitioners are listed below, it is possible to register with
-                            multiple
-                            practitioners.</p>
-                        <p>
-                            New Registrations will be reviewed and approved by the practitioner.
-                        </p>
-                    </div>
+        <MTPage>
+            <MTSectionWithControls
+                mtHeading={
+                    <MTPageHeading>
+                        Practitioner Overview
+                    </MTPageHeading>
                 }
-                content={
-                    <div className={'center-section-body'}><ReactTable<IPatientRegistrationRow>
-                        data={practitionerList} columns={columns}/></div>
-                }/>
-
-        </div>
+                mtDescription={<MTPageDescription>
+                    <p>All available practitioners are listed below, it is possible to register with
+                        multiple
+                        practitioners.</p>
+                    <p>
+                        New Registrations will be reviewed and approved by the practitioner.
+                    </p>
+                </MTPageDescription>}
+            >
+            </MTSectionWithControls>
+            <MTPageBody>
+                <MTPageContent>
+                    <CenteredFlex>
+                        <ReactTable<IPatientRegistrationRow>
+                            data={practitionerList} columns={columns}/>
+                    </CenteredFlex>
+                </MTPageContent>
+            </MTPageBody>
+        </MTPage>
     )
 }
 

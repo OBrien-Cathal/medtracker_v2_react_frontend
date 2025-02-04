@@ -1,8 +1,15 @@
 import {Chart} from "react-google-charts";
 import {IGraphData} from "../../../types/generic-graph-data.type.ts";
+import MTSectionWithControls from "../../../components/MTSectionWithControls.tsx";
+import {MTSectionDescription, MTSectionHeading} from "../../../components/section/MTSection.tsx";
 
+type PropsType = {
+    graphData: IGraphData
+    title: string
+    descriptionText: string
+}
 
-const LineGraph = (graphData: IGraphData) => {
+const LineGraph = ({graphData, title, descriptionText}: PropsType) => {
     // console.log("render line graph")
     function combinedData(myGraphData: IGraphData): any[][] {
         let tempArray: any[][] = []
@@ -15,18 +22,27 @@ const LineGraph = (graphData: IGraphData) => {
     // console.log(data)
 
     return (
-        <div className="lineGraphContainer">
+        <div className="LineGraph">
+            <MTSectionWithControls
+                mtHeading={
+                    <MTSectionHeading>
+                        {title}
+                    </MTSectionHeading>}
+                mtDescription={
+                    <MTSectionDescription>
+                        <p>{descriptionText}</p>
+                    </MTSectionDescription>}
+            >
 
-                <div>
-                    <Chart
-                        chartType={'LineChart'}
-                        data={data}
-                        width={"100%"}
-                        height={"400px"}
-                    >
-                    </Chart>
+                <Chart
+                    chartType={'LineChart'}
+                    data={data}
+                    width={"100%"}
+                    height={"400px"}
+                >
+                </Chart>
+            </MTSectionWithControls>
 
-                </div>
 
         </div>
     )

@@ -1,12 +1,19 @@
 import PractitionerPrescriptionDetails from "../Practitioner/PractitionerPrescriptionDetails.tsx";
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {IPrescriptionDetailsType, IPrescriptionOverviewType} from "../../types/prescription.type.ts";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
 import {useEffect, useMemo, useState} from "react";
 import {ColumnDef} from "@tanstack/react-table";
-import MaxWidthSection from "../../components/MaxWidthSection.tsx";
 import PatientPrescriptionDetails from "../patient/PatientPrescriptionDetails.tsx";
+import {
+    MTSectionHeading,
+    MTSectionDescription,
+    MTSectionBody,
+    MTSectionContent,
+} from "../../components/section/MTSection.tsx";
+import {MTPageContent} from "../../components/pages/MTPage.tsx";
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
 
 type Props = {
     token: string
@@ -122,71 +129,65 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
 
     const columns = useMemo(() => Columns, []);
 
-    return (<SectionComponentWithDescription
-            heading={
-                <div className={'titleContainer'}>
-                    <div>Prescriptions</div>
-                </div>
-            }
-            description={
-                <div>
-                    <p>Prescription information for the current patient</p>
-                </div>
-            }
-            content={
-                <div>
-                    <SectionComponentWithDescription
-                        heading={'Current'}
-                        description={
-                            <div>
-                                <p>Prescriptions that are currently valid, (Work in progress still includes old
-                                    prescriptions)</p>
-                            </div>
-                        }
-                        content={
-                            <div className={'center-section-body'}>
-                                <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
-                                <MaxWidthSection content={
-                                    <SectionComponentWithDescription
-                                        heading={`Prescription ${prescriptionDetails.id ? prescriptionDetails.id : (patientId ? '(New)' : '')} Details`}
-                                        description={
-                                            <div>
-                                                <p>Select a prescription from the above list to view details</p>
-                                            </div>
-                                        }
-                                        content={
-                                            <div>
-                                                {patientId &&
-                                                    <PractitionerPrescriptionDetails
-                                                        token={token}
-                                                        patientId={patientId}
-                                                        prescriptionDetails={prescriptionDetails}
-                                                        getPrescriptionDetails={getPrescriptionDetails}>
-                                                    </PractitionerPrescriptionDetails>}
+    return (
+        <MTPageContent>
+            <MTSectionWithControls mtHeading={
+                <MTSectionHeading>
+                    Current
+                </MTSectionHeading>
+            } mtDescription={
+                <MTSectionDescription>
+                    <p>Prescriptions that are currently valid, (Work in progress still includes
+                        old
+                        prescriptions)</p>
+                </MTSectionDescription>
+            }>
+                <MTSectionBody>
+                    <MTSectionContent>
+                        <CenteredFlex>
 
 
-                                                {!patientId &&
-                                                    <PatientPrescriptionDetails
-                                                        prescriptionDetails={prescriptionDetails}></PatientPrescriptionDetails>}
-                                            </div>
-                                        }/>
-                                }>
-                                </MaxWidthSection>
-                            </div>
-                        }/>
-                    <br/>
-                    <SectionComponentWithDescription
-                        heading={'Expired'}
-                        description={
-                            <div>
-                                <p>Prescriptions that are no longer valid, this section is under construction </p>
-                            </div>
-                        }
-                        content={
-                            <div className={'center-section-body'}>
-                            </div>
-                        }/>
-                </div>}/>
+                            <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
+
+
+                            {patientId &&
+                                <PractitionerPrescriptionDetails
+                                    token={token}
+                                    patientId={patientId}
+                                    prescriptionDetails={prescriptionDetails}
+                                    getPrescriptionDetails={getPrescriptionDetails}>
+                                </PractitionerPrescriptionDetails>}
+
+
+                            {!patientId &&
+                                <PatientPrescriptionDetails
+                                    prescriptionDetails={prescriptionDetails}></PatientPrescriptionDetails>}
+
+                        </CenteredFlex>
+                    </MTSectionContent>
+                </MTSectionBody>
+            </MTSectionWithControls>
+
+            <br/>
+
+            <MTSectionWithControls
+                mtHeading={
+                    <MTSectionHeading>
+                        Expired
+                    </MTSectionHeading>
+                }
+                mtDescription={
+                    <MTSectionDescription>
+                        <p>List of expired prescriptions, these can not be edited</p>
+                    </MTSectionDescription>
+                }>
+                <MTSectionBody>
+                    <MTSectionContent>
+                        UNDER CONSTRUCTION
+                    </MTSectionContent>
+                </MTSectionBody>
+            </MTSectionWithControls>
+        </MTPageContent>
     )
 }
 

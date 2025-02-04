@@ -6,7 +6,9 @@ import {IUserModel} from "../../types/user.type.ts";
 import {useMemo} from "preact/compat";
 import Swal from "sweetalert2";
 import {useAuth} from "../../auth/AuthProvider.tsx";
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import {MTPage, MTPageBody, MTPageContent, MTPageDescription, MTPageHeading} from "../../components/pages/MTPage.tsx";
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
 
 type UserList = IUserModel[];
 
@@ -107,20 +109,27 @@ const UserManagement = () => {
     const columns = useMemo(() => Columns, []);
 
     return (
-        <div className="mainContainer">
-            <SectionComponentWithDescription
-                heading={
-                    <div className={'titleContainer'}>
-                        <div>User management</div>
-                    </div>
+        <MTPage>
+            <MTSectionWithControls
+                mtHeading={
+                    <MTPageHeading>
+                        User management
+                    </MTPageHeading>
                 }
-                description={<p>Admin page for managing users</p>}
-                content={
-
-                    <ReactTable<IUserModel> data={userList} columns={columns}/>
-                }
-            />
-        </div>
+                mtDescription={
+                    <MTPageDescription>
+                        <p>Admin page for managing users</p>
+                    </MTPageDescription>}
+            >
+            </MTSectionWithControls>
+            <MTPageBody>
+                <MTPageContent>
+                    <CenteredFlex>
+                        <ReactTable<IUserModel> data={userList} columns={columns}/>
+                    </CenteredFlex>
+                </MTPageContent>
+            </MTPageBody>
+        </MTPage>
     )
 }
 export default UserManagement

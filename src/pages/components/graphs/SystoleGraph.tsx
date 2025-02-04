@@ -2,7 +2,6 @@ import {useEffect, useState} from "preact/compat";
 import {BloodPressureService} from "../../../service/bloodPressure.service.tsx";
 import {IGraphData} from "../../../types/generic-graph-data.type.ts";
 import LineGraph from "./LineGraph.tsx";
-import SectionComponentWithDescription from "../../../components/SectionComponentWithDescription.tsx";
 
 type PropsType = {
     patientIdOrNegative: bigint
@@ -31,13 +30,12 @@ const SystoleGraph = ({patientIdOrNegative, bloodPressureService}: PropsType) =>
 
     return (
         <div>
-            {data &&
-                <SectionComponentWithDescription
-                    heading={'Systole'}
-                    description={<p>Systole value represents blood pressure at the moment of the heartbeat. </p>}
-                    content={
-                        <LineGraph {...data}/>
-                    }/>
+            {
+                data && <LineGraph
+                    graphData={data}
+                    title={'Systole'}
+                    descriptionText={'Systole value represents blood pressure at the moment of the heartbeat.'}
+                />
             }
         </div>
     )

@@ -6,7 +6,10 @@ import {IMedicationType} from "../../types/medication.type.ts";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {useNavigate} from "react-router-dom";
 import {handleResponse, handleError} from "../utils/response-handler.tsx";
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import {MTPage, MTPageHeading, MTPageBody, MTPageContent, MTPageDescription} from "../../components/pages/MTPage.tsx";
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
+import {MTSectionHeading,  MTSectionBody,} from "../../components/section/MTSection.tsx";
 
 const Medications = () => {
     const {token} = useAuth()
@@ -70,18 +73,28 @@ const Medications = () => {
 
     const columns = useMemo(() => Columns, []);
     return (
-        <div className="mainContainer">
-
-            <SectionComponentWithDescription
-                heading={
-                    <div className={'titleContainer'}>
-                        <div>Medications</div>
-                    </div>
+        <MTPage>
+            <MTSectionWithControls
+                mtHeading={
+                    <MTPageHeading>
+                        Medications
+                    </MTPageHeading>
                 }
-                description={<p>Practitioners can view and add Medications here</p>}
-                content={
-                    <div>
-                        <div className={'medicationEntry'}>
+                mtDescription={
+                    <MTPageDescription>
+                        <p>Practitioners can view and add Medications here</p>
+                    </MTPageDescription>}
+            >
+            </MTSectionWithControls>
+            <MTPageBody>
+                <MTPageContent>
+                    <MTSectionWithControls
+                        mtHeading={
+                            <MTSectionHeading>
+                                New Medication
+                            </MTSectionHeading>
+                        }>
+                        <MTSectionBody>
                             <input
                                 value={medName}
                                 placeholder="Medication name"
@@ -89,11 +102,26 @@ const Medications = () => {
                             />
                             <input className={'inputButton'} type='submit' value={'Add Medication'}
                                    onClick={onClickAddMedication}/>
-                        </div>
-                        <ReactTable<IMedicationType> data={medicationList} columns={columns}/>
-                    </div>
-                }/>
-        </div>
+                        </MTSectionBody>
+                    </MTSectionWithControls>
+
+                    <MTSectionWithControls
+                        mtHeading={
+                            <MTSectionHeading>
+                                Existing Medications
+                            </MTSectionHeading>
+                        }
+                    >
+                        <MTSectionBody>
+                            <CenteredFlex>
+                                <ReactTable<IMedicationType> data={medicationList} columns={columns}/>
+                            </CenteredFlex>
+                        </MTSectionBody>
+                    </MTSectionWithControls>
+
+                </MTPageContent>
+            </MTPageBody>
+        </MTPage>
     )
 }
 

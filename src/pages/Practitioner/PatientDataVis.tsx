@@ -3,7 +3,14 @@ import {BloodPressureService} from "../../service/bloodPressure.service.tsx";
 import SystoleGraph from "../components/graphs/SystoleGraph.tsx";
 import DoseGraph from "../components/graphs/DoseGraph.tsx";
 import {DosesService} from "../../service/dosesService.tsx";
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import {
+    MTSectionBody,
+    MTSectionContent, MTSectionDescription,
+    MTSectionGroupHeading,
+
+} from "../../components/section/MTSection.tsx";
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+
 
 type PropsType = {
     patientId: bigint
@@ -15,20 +22,26 @@ const PatientDataVis = ({patientId}: PropsType) => {
     const dosesService = new DosesService(token)
 
     return (
-        <div className="graphsContainer">
-
-            <SectionComponentWithDescription
-                heading={
-                    <div className={'titleContainer'}>
-                        <div>Data Visualizations</div>
-                    </div>
-                }
-                description={<p>Graphs based on accumulated data</p>}
-                content={<div>
+        <MTSectionWithControls
+            mtHeading={
+                <MTSectionGroupHeading>
+                    Data Visualizations
+                </MTSectionGroupHeading>
+            }
+            mtDescription={
+                <MTSectionDescription>
+                    <p>Graphs based on accumulated data</p>
+                </MTSectionDescription>
+            }
+        >
+            <MTSectionBody>
+                <MTSectionContent>
                     <SystoleGraph patientIdOrNegative={patientId} bloodPressureService={bloodPressureService}/>
-                    <DoseGraph patientIdOrNegative={patientId} dosesService={dosesService}/></div>
-                }/>
-        </div>
+                    <DoseGraph patientIdOrNegative={patientId} dosesService={dosesService}/>
+                </MTSectionContent>
+            </MTSectionBody>
+        </MTSectionWithControls>
+
     )
 }
 export default PatientDataVis

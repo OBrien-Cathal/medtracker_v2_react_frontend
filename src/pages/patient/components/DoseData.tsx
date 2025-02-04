@@ -3,7 +3,9 @@ import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../../../components/table/ReactTable.tsx";
 
 import {IDailyDoseData, IDailyMedicationDoseData} from "../../../types/dose.type.ts";
-import SectionComponentWithDescription from "../../../components/SectionComponentWithDescription.tsx";
+import MTSectionWithControls from "../../../components/MTSectionWithControls.tsx";
+import {MTSectionDescription, MTSectionHeading} from "../../../components/section/MTSection.tsx";
+import CenteredFlex from "../../../components/layout/CenteredFlex.tsx";
 
 
 type Props = {
@@ -54,45 +56,51 @@ const DoseData = ({readings, saveDailyDoseData}: Props) => {
         <div className={'DoseData'}>
             {readings && readings.map(r => {
                     return (
+                        <MTSectionWithControls
+                            mtHeading={
+                                <MTSectionHeading>
 
-                        <SectionComponentWithDescription
-                            heading={
-                                <div className={'single-row-section-header'}>
-                                    <div className={'label-with-text'}>
-                                        <label>
-                                            Medication
-                                        </label>
-                                        <text>
-                                            {r.medicationName}
-                                        </text>
-                                    </div>
-                                    <div className={'label-with-text'}>
-                                        <label>
-                                            Dose
-                                        </label>
-                                        <text>
-                                            {r.doseMg} Mg
-                                        </text>
-                                    </div>
-                                </div>
-                            }
-                            description={
-                                <div>
-                                    <p>Dosage status for a prescription, the day stage indicates the time of day a dose
-                                        should be taken.</p>
-
-                                </div>
-                            }
-                            content={
-                                <div className={'DailyMedicationDoseData'}>
-                                    <div className={'center-section-body'}>
-                                        <div className="DailyDoseData">
-                                            <ReactTable<IDailyDoseData> data={r.doses} columns={columns}/>
+                                    <div className={'single-row-section-header'}>
+                                        <div className={'label-with-text'}>
+                                            <label>
+                                                Medication
+                                            </label>
+                                            <text>
+                                                {r.medicationName}
+                                            </text>
+                                        </div>
+                                        <div className={'label-with-text'}>
+                                            <label>
+                                                Dose
+                                            </label>
+                                            <text>
+                                                {r.doseMg} Mg
+                                            </text>
                                         </div>
                                     </div>
-                                </div>
+                                </MTSectionHeading>
+
                             }
-                        />)
+                            mtDescription={
+                                <MTSectionDescription>
+                                    <p>Dosage status for a prescription, the day stage indicates the time of
+                                        day a dose
+                                        should be taken.</p>
+                                </MTSectionDescription>
+                            }
+
+                        >
+                            <div className={'DailyMedicationDoseData'}>
+
+                                <CenteredFlex>
+                                    <ReactTable<IDailyDoseData> data={r.doses} columns={columns}/>
+                                </CenteredFlex>
+
+
+                            </div>
+
+                        </MTSectionWithControls>
+                    )
                 }
             )}
         </div>

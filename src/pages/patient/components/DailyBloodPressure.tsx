@@ -1,8 +1,8 @@
-import { useMemo} from "react";
+import {useMemo} from "react";
 import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../../../components/table/ReactTable.tsx";
 import {ISubmittedBloodPressureData} from "../../../types/blood-pressure.type.ts";
-
+import CenteredFlex from "../../../components/layout/CenteredFlex.tsx";
 
 
 type Props = {
@@ -32,8 +32,8 @@ const DailyBloodPressure = ({readings}: Props) => {
         {
             header: "Day Stage",
             accessorFn: originalRow => {
-                return originalRow.dayStage ? originalRow.dayStage.substring(0,1) +
-                    originalRow.dayStage.substring(1,originalRow.dayStage.length).toLowerCase() : '-'
+                return originalRow.dayStage ? originalRow.dayStage.substring(0, 1) +
+                    originalRow.dayStage.substring(1, originalRow.dayStage.length).toLowerCase() : '-'
             },
         },
 
@@ -42,9 +42,9 @@ const DailyBloodPressure = ({readings}: Props) => {
 
     const columns = useMemo(() => Columns, []);
     return (
-        <div className="DailyBloodPressure">
+        <CenteredFlex>
             <ReactTable<ISubmittedBloodPressureData> data={readings} columns={columns}/>
-        </div>
+        </CenteredFlex>
     )
 }
 

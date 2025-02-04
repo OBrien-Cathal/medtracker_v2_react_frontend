@@ -6,7 +6,10 @@ import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../../components/table/ReactTable.tsx";
 import {PatientDataService} from "../../service/patient.service.tsx";
 import {useNavigate} from "react-router-dom";
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import {MTPage, MTPageHeading, MTPageBody, MTPageContent, MTPageDescription} from "../../components/pages/MTPage.tsx";
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+
+import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
 
 
 type IPatientRow = {
@@ -135,26 +138,33 @@ const PatientRegistration = () => {
 
 
     return (
-        <div className="mainContainer">
-            <SectionComponentWithDescription
-                heading={
-                    <div className={'titleContainer'}>
-                        <div>Patients</div>
-                    </div>
-                }
-                description={<div>
-                    <p>List of all currently registered patients and new patient registration requests.
-                    </p>
-                    <span/>
-                    <p>
-                        New patient registrations can be viewed and approved here.
-                    </p>
-                </div>}
-                content={
-                    <ReactTable<IPatientRow> data={patientList} columns={columns}/>
-                }
-            />
-        </div>
+            <MTPage>
+                <MTSectionWithControls
+                    mtHeading={
+                        <MTPageHeading>
+                            Patients
+                        </MTPageHeading>
+                    }
+                    mtDescription={
+                        <MTPageDescription>
+                            <p>List of all currently registered patients and new patient registration requests.
+                            </p>
+                            <span/>
+                            <p>
+                                New patient registrations can be viewed and approved here.
+                            </p>
+                        </MTPageDescription>}
+                >
+                </MTSectionWithControls>
+                <MTPageBody>
+                    <MTPageContent>
+                        <CenteredFlex>
+                            <ReactTable<IPatientRow> data={patientList} columns={columns}/>
+                        </CenteredFlex>
+                    </MTPageContent>
+                </MTPageBody>
+            </MTPage>
+
     )
 }
 

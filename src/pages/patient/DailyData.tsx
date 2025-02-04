@@ -6,12 +6,14 @@ import {TargetedEvent, useEffect} from "react";
 import {handleError, handleResponse} from "../utils/response-handler.tsx";
 import {IBloodPressureData, ISubmittedBloodPressureData} from "../../types/blood-pressure.type.ts";
 import DailyBloodPressure from "./components/DailyBloodPressure.tsx";
-
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 import BloodPressureEntry from "./components/BloodPressureEntry.tsx";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
 import DoseData from "./components/DoseData.tsx";
 import {IDailyDoseData, IDailyMedicationDoseData} from "../../types/dose.type.ts";
+import {MTPage, MTPageBody, MTPageContent, MTPageDescription, MTPageHeading} from "../../components/pages/MTPage.tsx";
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+import {MTSectionBody, MTSectionGroupHeading} from "../../components/section/MTSection.tsx";
+import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
 
 
 const DataVis = () => {
@@ -85,87 +87,100 @@ const DataVis = () => {
         getDailyDoses()
     }, [])
     return (
-        <div className="mainContainer">
+        <MTPage>
+            <MTPageBody>
 
-            <div className={'DailyEvaluation'}>
-                <SectionComponentWithDescription
-                    heading={
-                        <div className={'titleContainer'}>
+                <MTSectionWithControls
+                    mtHeading={
+                        <MTPageHeading>
                             <div>Daily Data</div>
-                        </div>
-                    }
-                    description={
-                        <div>
+                        </MTPageHeading>}
+                    mtDescription={
+                        <MTPageDescription>
                             <p>Daily view of entered data</p>
-                        </div>
-                    }
-                    content={
+                        </MTPageDescription>
+                    }/>
 
-                        <div>
-                            <div className={'labeled-field'}>
-                                <label>Viewing data for</label>
-                                <input aria-label="Date"
-                                       value={
-                                           date.toString()}
-                                       type="date"
-                                       onChange={(ev) => onChangeDate(ev)}
-                                />
-                            </div>
+                <MTPageContent>
+
+
+                    <div className={'labeled-field'}>
+                        <label>Viewing data for</label>
+                        <input aria-label="Date"
+                               value={
+                                   date.toString()}
+                               type="date"
+                               onChange={(ev) => onChangeDate(ev)}
+                        />
+                    </div>
+                    <br/>
+
+                    <MTSectionWithControls
+                        mtHeading={
+                            <MTSectionGroupHeading>
+                                Blood Pressure
+                            </MTSectionGroupHeading>
+                        }
+
+                        mtDescription={
+                            <MTPageDescription>
+                                <p>Blood pressure readings for the selected date</p>
+                            </MTPageDescription>
+                        }>
+                        <MTSectionBody><CenteredFlex>
+                            <DailyBloodPressure
+                                readings={bloodPressureReadings}>
+
+                            </DailyBloodPressure>
                             <br/>
+                            <BloodPressureEntry
+                                saveBloodPressureReading={saveBloodPressureReading}
+                                dayStages={dayStages}>
+
+                            </BloodPressureEntry>
+                        </CenteredFlex>
 
 
-                            <SectionComponentWithDescription heading={'Blood Pressure'}
-                                                             description={'Blood pressure readings for the selected date'}
-                                                             content={
-
-                                                                 <div>
-                                                                     <div className={'center-section-body'}>
-                                                                         <DailyBloodPressure
-                                                                             readings={bloodPressureReadings}></DailyBloodPressure>
-
-                                                                     </div>
-                                                                     <br/>
-                                                                     <BloodPressureEntry
-                                                                         saveBloodPressureReading={saveBloodPressureReading}
-                                                                         dayStages={dayStages}></BloodPressureEntry>
-                                                                 </div>
-                                                             }>
-                            </SectionComponentWithDescription>
+                        </MTSectionBody>
+                    </MTSectionWithControls>
 
 
-                            <SectionComponentWithDescription heading={'Medication Dose Schedule'}
-                                                             description={<div>
-                                                                 <p>
-                                                                     Dosage status for all current
-                                                                     prescriptions.
-                                                                 </p>
-                                                                 <p>
-                                                                     By default the system assumes
-                                                                     that schedules are adhered to, manual
-                                                                     changes can be made if reality does not
-                                                                     reflect this assumption
-                                                                 </p>
-                                                             </div>
-                                                             }
-                                                             content={
-                                                                 <div>
-                                                                     <DoseData
-                                                                         readings={doseReadings}
-                                                                         saveDailyDoseData={saveDailyDoseDataReading}></DoseData>
-                                                                 </div>
+                    <MTSectionWithControls
+                        mtHeading={
+                            <MTSectionGroupHeading>
+                                Medication Dose Schedule
+                            </MTSectionGroupHeading>
+                        }
+
+                        mtDescription={
+                            <MTPageDescription>
+                                <p>
+                                    Dosage status for all current
+                                    prescriptions.
+                                </p>
+                                <p>
+                                    By default the system assumes
+                                    that schedules are adhered to, manual
+                                    changes can be made if reality does not
+                                    reflect this assumption
+                                </p>
+                            </MTPageDescription>
+                        }>
+                        <MTSectionBody>
+
+                            <DoseData
+                                readings={doseReadings}
+                                saveDailyDoseData={saveDailyDoseDataReading}></DoseData>
+
+                        </MTSectionBody>
+                    </MTSectionWithControls>
 
 
-                                                             }>
-                            </SectionComponentWithDescription>
+                </MTPageContent>
+            </MTPageBody>
+        </MTPage>
 
 
-                        </div>
-
-                    }
-                />
-            </div>
-
-        </div>
     )
 }
 

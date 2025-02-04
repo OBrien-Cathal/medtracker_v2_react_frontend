@@ -50,8 +50,9 @@ input[type=file]::file-selector-button:hover {
     color: black;
     cursor: pointer;
 }
+
 /*Routes*/
-.route-container{
+.route-container {
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -230,38 +231,29 @@ Styling for reusable components
 }
 
 
-.label-with-text{
+.label-with-text {
 
 }
 
-.label-with-text label{
-margin-right: 20px;
+.label-with-text label {
+    margin-right: 20px;
 }
-.label-with-text text{
-color: orange;
+
+.label-with-text text {
+    color: orange;
     font-weight: bold;
 }
 
 
-
-
-.labeled-field{
+.labeled-field {
 
 }
-.labeled-field label{
+
+.labeled-field label {
     margin-right: 20px;
 }
-.SectionComponentWithDescription {
-}
 
-.section-header {
-    background-color: #808080;
-    color: white;
-    font-size: 18px;
-    padding: 5px;
-
-}
-.single-row-section-header{
+.single-row-section-header {
     display: flex;
     flex-direction: row;
 }
@@ -272,25 +264,140 @@ color: orange;
     margin-right: 20px;
 }
 
-.section-description {
-    background-color: #d3d3d3;
-    padding: 10px
-}
+/*SECTION WITH CONTROLS*/
 
-.section-body {
-    background-color: #f3f3f3;
-    padding: 10px;
-}
-.center-section-body{
+.MTSectionWithControls {
     display: flex;
     flex-direction: column;
-    flex-basis: 100%;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.heading-and-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.section-with-controls-heading {
+    flex-grow: 1;
+}
+
+.section-controls {
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+}
+
+.section-control {
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
+
+.MTPage {
+
+}
+
+
+.MTPageHeading, .MTSectionHeading, .header-container, .heading-and-controls {
+    background-color: #808080;
+    align-items: center;
+    font-weight: bold;
+
+}
+
+.MTPageHeading, .MTSectionHeading, .header-container, .MTSectionGroupHeading1 {
+    color: white;
+    padding: 10px 10px 10px 10px;
+}
+
+.MTSectionGroupHeading1{
+    font-size: 24px;
+}
+.MTSectionHeading {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+}
+
+
+.MTPageHeading {
+    display: flex;
+    font-size: 44px;
+    font-weight: bolder;
     align-items: center;
     justify-content: center;
 }
-.max-width-section{
-    width: 100%;
+
+.MTPageContent {
+    padding: 10px;
 }
+
+.MTPageBody {
+}
+
+.MTSectionBody {
+    background-color: #f3f3f3;
+    padding: 10px;
+}
+.MTSectionContent{
+    flex-basis: 100%;
+}
+
+.section-with-controls-description-content {
+
+}
+
+.section-with-controls-content {
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    flex-grow: max(100);
+    background-color: #808080;
+    color: white;
+    font-size: 18px;
+    padding: 5px;
+}
+
+
+.MTPageDescription, .MTSectionDescription {
+    background-color: #d3d3d3;
+    padding: 10px;
+
+}
+
+.MTPageDescription {
+}
+
+.MTSectionDescription {
+}
+
+.CenteredFlex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+/*New Section*/
+
+
+.section-heading-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.section-heading-row .label-with-text text {
+    color: white;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
 
 /*Account Management*/
 
@@ -316,11 +423,7 @@ color: orange;
 
 }
 
-.graphsContainer .graphContainer {
-
-}
-
-.graphContainer .lineGraphContainer {
+.LineGraph{
 
 }
 
@@ -371,17 +474,12 @@ color: orange;
 }
 
 /*Home page*/
-.explanationContainer {
-
-}
-
-.explanationContainer .clickable {
+.clickable-text {
     cursor: pointer;
     font-weight: bold;
-
 }
 
-.explanationContainer .clickable:hover {
+.clickable-text:hover {
     color: orange;
 }
 

@@ -1,7 +1,10 @@
 import {useNavigate} from 'react-router-dom'
 import {useState} from "preact/compat";
 import {useAuth} from "../auth/AuthProvider.tsx";
-import SectionComponent from "../components/SectionComponent.tsx";
+import {MTPage, MTPageHeading, MTPageContent, MTPageBody} from "../components/pages/MTPage.tsx";
+import MTSectionWithControls from "../components/MTSectionWithControls.tsx";
+import CenteredFlex from "../components/layout/CenteredFlex.tsx";
+
 
 const Home = () => {
     const [username, setUsername] = useState('')
@@ -25,35 +28,36 @@ const Home = () => {
     }
 
     return (
-        <div className="mainContainer">
-            <SectionComponent
-                heading={
-                    <div className={'titleContainer'}>
-                        <div>Med Tracker</div>
-                    </div>
+        <MTPage>
+            <MTSectionWithControls
+                mtHeading={
+                    <MTPageHeading>
+                        Med Tracker
+                    </MTPageHeading>
                 }
-
-                content={
-                    <div>
-
+            >
+            </MTSectionWithControls>
+            <MTPageBody>
+                <MTPageContent>
+                    <CenteredFlex>
                         <div className={'titleContainer'}>
                             <div>Welcome to Med Tracker!</div>
                         </div>
                         <br/>
-                        {needsExplanation && (<div className={'explanationContainer'}>
+                        {needsExplanation && (<div>
                             <p>
                                 Newly created accounts have minimal functionality,
                                 to unlock more features you will need to upgrade your account.
                             </p>
                             <p> either via
                                 <span> </span>
-                                <text className={"clickable"} onClick={onUpgradeAccountClick}>
+                                <text className={"clickable-text"} onClick={onUpgradeAccountClick}>
                                     Account Management,
                                 </text>
                                 <span> </span>
                                 or by
                                 <span> </span>
-                                <text className={"clickable"} onClick={onRegisterPatientClick}>
+                                <text className={"clickable-text"} onClick={onRegisterPatientClick}>
                                     Registering with a Practitioner
                                 </text>
                             </p>
@@ -63,14 +67,13 @@ const Home = () => {
 
                             {isLoggedIn ? <div>Signed in successfully as {username}</div> : <div/>}
                         </div>
-                    </div>
-                }/>
+                    </CenteredFlex>
 
+                </MTPageContent>
+            </MTPageBody>
+        </MTPage>
 
-        </div>
     )
-
-
 }
 
 export default Home

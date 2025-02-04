@@ -2,8 +2,13 @@ import {useState} from "preact/compat";
 import {TargetedEvent} from "react";
 import Swal from "sweetalert2";
 import {IBloodPressureData} from "../../../types/blood-pressure.type.ts";
-import SectionComponentWithDescription from "../../../components/SectionComponentWithDescription.tsx";
-import {List} from "../../../components/List.tsx";
+import MTSectionWithControls from "../../../components/MTSectionWithControls.tsx";
+import {
+    MTSectionBody,
+    MTSectionContent,
+    MTSectionHeading
+} from "../../../components/section/MTSection.tsx";
+import Validation from "../../../components/Validation.tsx";
 
 type Props = {
     saveBloodPressureReading: Function
@@ -23,7 +28,10 @@ const BloodPressureEntry = ({saveBloodPressureReading, dayStages}: Props) => {
         heartRate: 0,
         dayStage: ''
     }
-    const editorModelPlaceholder: EditorModel = {editCopy: editCopyPlaceholder, errors: getValidationErrorsFor(editCopyPlaceholder)}
+    const editorModelPlaceholder: EditorModel = {
+        editCopy: editCopyPlaceholder,
+        errors: getValidationErrorsFor(editCopyPlaceholder)
+    }
 
     const [editorModel, setEditorModel] = useState(editorModelPlaceholder)
 
@@ -90,68 +98,71 @@ const BloodPressureEntry = ({saveBloodPressureReading, dayStages}: Props) => {
     }
 
     return (
-        <div className="BloodPressureEntry">
-            <div className={'labeled-field'}>
-                <label>Systole</label>
-                <input
-                    value={
-                        editorModel.editCopy.systole}
-                    type={'number'}
-                    placeholder='0'
-                    onChange={(ev) => onChangeSystole(ev)}/>
-            </div>
-            <div className={'labeled-field'}>
-                <label>Diastole</label>
-                <input
-                    value={
-                        editorModel.editCopy.diastole}
-                    type={'number'}
-                    placeholder='0'
-                    onChange={(ev) => onChangeDiastole(ev)}/>
-            </div>
-            <div className={'labeled-field'}>
-                <label>Heart Rate</label>
-                <input
-                    value={
-                        editorModel.editCopy.heartRate}
-                    type={'number'}
-                    placeholder='0'
-                    onChange={(ev) => onChangeHeartRate(ev)}/>
-            </div>
+        <MTSectionWithControls
+            mtHeading={
+                <MTSectionHeading>
+                    Entry
+                </MTSectionHeading>
+            }
+        >
+            <MTSectionBody>
+                <MTSectionContent>
+                    <div className={'labeled-field'}>
+                        <label>Systole</label>
+                        <input
+                            value={
+                                editorModel.editCopy.systole}
+                            type={'number'}
+                            placeholder='0'
+                            onChange={(ev) => onChangeSystole(ev)}/>
+                    </div>
+                    <div className={'labeled-field'}>
+                        <label>Diastole</label>
+                        <input
+                            value={
+                                editorModel.editCopy.diastole}
+                            type={'number'}
+                            placeholder='0'
+                            onChange={(ev) => onChangeDiastole(ev)}/>
+                    </div>
+                    <div className={'labeled-field'}>
+                        <label>Heart Rate</label>
+                        <input
+                            value={
+                                editorModel.editCopy.heartRate}
+                            type={'number'}
+                            placeholder='0'
+                            onChange={(ev) => onChangeHeartRate(ev)}/>
+                    </div>
 
-            <div className={'labeled-field'}>
-                <label>Day Stage</label>
-                <div className="dayStage-picker">
-                    <select value={editorModel.editCopy.dayStage} onChange={event => {
-                        onChangeDayStage(event.currentTarget.value)
-                    }}>
-                        {dayStages && dayStages.map((v) => {
-                            return (<option value={v}
-                                            label={v.substring(0, 1) + v.substring(1, v.length).toLowerCase()}></option>)
-                        })}
-                    </select>
-                </div>
-            </div>
-            <section className={"validation-errors"}>
-                <br/>
-                {
-                    editorModel.errors.length > 0 &&
-                    <SectionComponentWithDescription heading={'Validation'}
-                                                     description={'Save allowed when suggestions are addressed'}
-                                                     content={
-                                                         <List items={editorModel.errors}
-                                                               renderItem={(error) => (
-                                                                   <li>
-                                                                       <p>{error}</p>
-                                                                   </li>
-                                                               )}/>
-                                                     }>
-                    </SectionComponentWithDescription>
-                }
-            </section>
-            <input className={'inputButton'} type='submit' value={'Save'}
-                   onClick={onClickSaveBloodPressureReading}/>
-        </div>
+                    <div className={'labeled-field'}>
+                        <label>Day Stage</label>
+                        <div className="dayStage-picker">
+                            <select value={editorModel.editCopy.dayStage} onChange={event => {
+                                onChangeDayStage(event.currentTarget.value)
+                            }}>
+                                {dayStages && dayStages.map((v) => {
+                                    return (<option value={v}
+                                                    label={v.substring(0, 1) + v.substring(1, v.length).toLowerCase()}></option>)
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <br/>
+                    {
+                        editorModel.errors.length > 0 &&
+                        <Validation errors={editorModel.errors}/>
+                    }
+
+                    <input className={'inputButton'} type='submit' value={'Save'}
+                           onClick={onClickSaveBloodPressureReading}/>
+                </MTSectionContent>
+            </MTSectionBody>
+
+
+        </MTSectionWithControls>
+
+
     )
 }
 

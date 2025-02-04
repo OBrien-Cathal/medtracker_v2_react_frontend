@@ -1,12 +1,18 @@
 import {TargetedEvent, useState} from "preact/compat";
 import {IPrescriptionDetailsType, IPrescriptionScheduleEntryType} from "../../types/prescription.type.ts";
 import {PrescriptionService} from "../../service/prescription.service.tsx";
-import {List} from "../../components/List.tsx";
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 import {useEffect} from "react";
 import Select from "react-select"
 import {IMedicationType} from "../../types/medication.type.ts";
 import {MedicationService} from "../../service/medication.service.tsx";
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+import {
+    MTSectionBody,
+    MTSectionContent,
+    MTSectionDescription,
+    MTSectionHeading
+} from "../../components/section/MTSection.tsx";
+import Validation from "../../components/Validation.tsx";
 
 
 type Props = {
@@ -221,125 +227,117 @@ const PractitionerPrescriptionDetails =
         }, [prescriptionDetails])
 
 
-        return (
-            <div className="PrescriptionDetails">
-                <div>
-                    <div className={'labeled-field'}>
-                        <label>Dose (mg)</label>
-                        <input
-                            value={
-                                editModel.editCopy.doseMg}
-                            type={'number'}
-                            placeholder='0'
-                            onChange={(ev) => updateDoseMg(ev)}/>
-                    </div>
-                    <br/>
-                    <div className={'labeled-field'}>
-                        <label>Start</label>
-                        <input aria-label="Date and time"
-                               value={
-                                   editModel.editCopy.beginTime.toString().substring(0, 16)}
-                               type="datetime-local"
-                               onChange={(ev) => updateBeginTime(ev)}
-                        />
-                    </div>
-                    <br/>
-                    <div className={'labeled-field'}>
-                        <label>End</label>
-                        <input aria-label="Date and time"
-                               value={
-                                   editModel.editCopy.endTime ?
-                                       editModel.editCopy.endTime.toString().substring(0, 16) : ''}
-                               type="datetime-local"
-                               onChange={(ev) => updateEndTime(ev)}
-                        />
-                    </div>
-                    <br/>
-                    <div className={'labeled-field'}>
-                        <label>Medication</label>
-                        <div className="medication-picker">
-                            <Select
-                                // If you don't need a state you can remove the two following lines value & onChange
-                                value={editModel.editCopy.medication}
-                                onChange={(option: IMedicationType | null) => {
-                                    updateMedication(option);
-                                }}
-                                getOptionLabel={(med: IMedicationType) => med.name}
-                                getOptionValue={(med: IMedicationType) => med.name}
-                                options={medications}
-                                isClearable={false}
-                                backspaceRemovesValue={true}
-                            />
-                        </div>
+        return (<MTSectionWithControls
+                mtHeading={
+                    <MTSectionHeading>
+                        {`Prescription ${prescriptionDetails.id ? prescriptionDetails.id : ''} Details ${prescriptionDetails.id ? '' : '(New)'}`}
+                    </MTSectionHeading>}
+                mtDescription={
+                    <MTSectionDescription>
+                        <p>View and Edit prescriptions, new prescriptions can also be
+                            added when there is no current selection</p>
+                    </MTSectionDescription>
+                }>
 
-                    </div>
-                    <br/>
-                    <div className={'labeled-field'}>
-                        <label>Day Stages</label>
-                        <div>
-                            {dayStageSelectors && dayStageSelectors.map((ds) => {
-                                return (
+                <MTSectionBody>
+                    <MTSectionContent>
+                        <div className="PrescriptionDetails">
+                            <div>
+                                <div className={'labeled-field'}>
+                                    <label>Dose (mg)</label>
+                                    <input
+                                        value={
+                                            editModel.editCopy.doseMg}
+                                        type={'number'}
+                                        placeholder='0'
+                                        onChange={(ev) => updateDoseMg(ev)}/>
+                                </div>
+                                <br/>
+                                <div className={'labeled-field'}>
+                                    <label>Start</label>
+                                    <input aria-label="Date and time"
+                                           value={
+                                               editModel.editCopy.beginTime.toString().substring(0, 16)}
+                                           type="datetime-local"
+                                           onChange={(ev) => updateBeginTime(ev)}
+                                    />
+                                </div>
+                                <br/>
+                                <div className={'labeled-field'}>
+                                    <label>End</label>
+                                    <input aria-label="Date and time"
+                                           value={
+                                               editModel.editCopy.endTime ?
+                                                   editModel.editCopy.endTime.toString().substring(0, 16) : ''}
+                                           type="datetime-local"
+                                           onChange={(ev) => updateEndTime(ev)}
+                                    />
+                                </div>
+                                <br/>
+                                <div className={'labeled-field'}>
+                                    <label>Medication</label>
+                                    <div className="medication-picker">
+                                        <Select
+                                            // If you don't need a state you can remove the two following lines value & onChange
+                                            value={editModel.editCopy.medication}
+                                            onChange={(option: IMedicationType | null) => {
+                                                updateMedication(option);
+                                            }}
+                                            getOptionLabel={(med: IMedicationType) => med.name}
+                                            getOptionValue={(med: IMedicationType) => med.name}
+                                            options={medications}
+                                            isClearable={false}
+                                            backspaceRemovesValue={true}
+                                        />
+                                    </div>
+
+                                </div>
+                                <br/>
+                                <div className={'labeled-field'}>
+                                    <label>Day Stages</label>
                                     <div>
-                                        <input id={ds.dayStage} type={'checkbox'} name={ds.dayStage}
-                                               checked={ds.included}
-                                               onChange={(ev) => updateDayStage(ev)}>
+                                        {dayStageSelectors && dayStageSelectors.map((ds) => {
+                                            return (
+                                                <div>
+                                                    <input id={ds.dayStage} type={'checkbox'} name={ds.dayStage}
+                                                           checked={ds.included}
+                                                           onChange={(ev) => updateDayStage(ev)}>
 
-                                        </input>
-                                        <label for={ds.dayStage}>{ds.dayStage}</label>
-                                    </div>)
-                            })}
+                                                    </input>
+                                                    <label for={ds.dayStage}>{ds.dayStage}</label>
+                                                </div>)
+                                        })}
+
+                                    </div>
+
+                                </div>
+                                <br/>
+                            </div>
+                            <div>
+                                <br/>
+                                {
+                                    editModel.errors.length > 0 &&
+                                    <Validation errors={editModel.errors}/>
+                                }
+                                {
+                                    editModel.serverErrors.length > 0 &&
+                                    <Validation errors={editModel.serverErrors}/>
+                                }
+                            </div>
+                            <div className={'prescription-actions'}>
+                                <input className={'inputButton'} type='submit' value={'Save'}
+                                       onClick={savePrescriptionDetails}/>
+                                <input className={'inputButton'} type='submit' value={'Reset Edits'}
+                                       onClick={() => {
+                                           getPrescriptionDetails(null)
+                                       }}/>
+                            </div>
+
 
                         </div>
-
-                    </div>
-                    <br/>
-                </div>
-                <div>
-                    <section className={"validation-errors"}>
-                        <br/>
-                        {
-                            editModel.errors.length > 0 &&
-                            <SectionComponentWithDescription heading={'Errors'}
-                                                             description={'Errors must be corrected before submission'}
-                                                             content={
-                                                                 <List items={editModel.errors}
-                                                                       renderItem={(error) => (
-                                                                           <li>
-                                                                               <p>{error}</p>
-                                                                           </li>
-                                                                       )}/>
-                                                             }>
-                            </SectionComponentWithDescription>
-                        }
-                        {
-                            editModel.serverErrors.length > 0 &&
-                            <SectionComponentWithDescription heading={'Server Errors'}
-                                                             description={'Server errors will be cleared after successful submission'}
-                                                             content={
-                                                                 <List
-                                                                     items={editModel.serverErrors}
-                                                                     renderItem={(error) => (
-                                                                         <li>
-                                                                             <p>{error}</p>
-                                                                         </li>
-                                                                     )}/>
-                                                             }>
-                            </SectionComponentWithDescription>}
-                    </section>
-
-
-                </div>
-                <div className={'prescription-actions'}>
-                    <input className={'inputButton'} type='submit' value={'Save'}
-                           onClick={savePrescriptionDetails}/>
-                    <input className={'inputButton'} type='submit' value={'Reset Edits'}
-                           onClick={() => {
-                               getPrescriptionDetails(null)
-                           }}/>
-                </div>
-
-
-            </div>
+                    </MTSectionContent>
+                </MTSectionBody>
+            </MTSectionWithControls>
         )
     }
 

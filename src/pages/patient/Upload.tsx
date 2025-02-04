@@ -3,8 +3,11 @@ import {useAuth} from "../../auth/AuthProvider.tsx";
 import {PatientDataService} from "../../service/patient.service.tsx";
 import {useState} from "preact/compat";
 import * as React from "preact/compat";
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
 import Swal from "sweetalert2";
+import {MTPage, MTPageHeading, MTPageBody, MTPageContent, MTPageDescription} from "../../components/pages/MTPage.tsx";
+
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+
 
 const UploadPage = () => {
     const {token} = useAuth()
@@ -81,84 +84,93 @@ const UploadPage = () => {
 
 
     return (
-        <div className="mainContainer">
+        <MTPage>
+            <MTSectionWithControls
+                mtHeading={
+                    <MTPageHeading>
+                        Upload
+                    </MTPageHeading>}
+                mtDescription={
+                    <MTPageDescription>
+                        <p>
+                            Bulk data for different metrics can be uploaded below, the expect file format is
+                            Excel
+                            (.xlsx)
+                        </p>
+                    </MTPageDescription>
+                }>
 
-            <br/>
-            <br/>
-            <div className={'max-width-section'}>
-                <SectionComponentWithDescription
-                    heading={
-                    <div className={'titleContainer'}>
-                        <div>Upload</div>
-                    </div>}
-                    description={<p>Bulk data for different metrics can be uploaded below, the expect file format is
-                        Excel
-                        (.xlsx)</p>}
-                    content={
-                        <div className="uploadsContainer">
-                            <div className={'uploadContainer'}>
-                                <div className={'uploadContainer-header'}>
-                                    <div className={'upload-header'}>Dose</div>
-                                </div>
-                                <div className="input-group">
-                                    <input id="doseFile" type="file" onChange={handleDoseFileChange}/>
-                                </div>
-                                <br/>
+            </MTSectionWithControls>
+            <MTPageBody>
+                <MTPageContent>
+                    <div className="uploadsContainer">
+                        <div className={'uploadContainer'}>
+                            <div className={'uploadContainer-header'}>
+                                <div className={'upload-header'}>Dose</div>
+                            </div>
+                            <div className="input-group">
+                                <input id="doseFile" type="file" onChange={handleDoseFileChange}/>
+                            </div>
+                            <br/>
+                            {doseFile && (
+                                <section>
+                                    File details:
+                                    <ul>
+                                        <li>Name: {doseFile.name}</li>
+                                        <li>Type: {doseFile.type}</li>
+                                        <li>Size: {doseFile.size} bytes</li>
+                                    </ul>
+                                </section>
+                            )}
+                            <div className={'uploadContainerSubmitBox'}>
                                 {doseFile && (
-                                    <section>
-                                        File details:
-                                        <ul>
-                                            <li>Name: {doseFile.name}</li>
-                                            <li>Type: {doseFile.type}</li>
-                                            <li>Size: {doseFile.size} bytes</li>
-                                        </ul>
-                                    </section>
+                                    <input
+                                        type={'submit'}
+                                        onClick={onUploadDoseFileClick}
+                                        className="submitDose">
+                                        Upload a file
+                                    </input>
                                 )}
-                                <div className={'uploadContainerSubmitBox'}>
-                                    {doseFile && (
-                                        <input
-                                            type={'submit'}
-                                            onClick={onUploadDoseFileClick}
-                                            className="submitDose">
-                                            Upload a file
-                                        </input>
-                                    )}
-                                </div>
                             </div>
+                        </div>
 
-                            <div className={'uploadContainer'}>
-                                <div className={'uploadContainer-header'}>
-                                    <div className={'upload-header'}>Blood Pressure</div>
-                                </div>
-                                <div className="input-group">
-                                    <input id="bpfile" type="file" onChange={handleBpFileChange}/>
-                                </div>
-                                <br/>
+                        <div className={'uploadContainer'}>
+                            <div className={'uploadContainer-header'}>
+                                <div className={'upload-header'}>Blood Pressure</div>
+                            </div>
+                            <div className="input-group">
+                                <input id="bpfile" type="file" onChange={handleBpFileChange}/>
+                            </div>
+                            <br/>
+                            {bpFile && (
+                                <section>
+                                    File details:
+                                    <ul>
+                                        <li>Name: {bpFile.name}</li>
+                                        <li>Type: {bpFile.type}</li>
+                                        <li>Size: {bpFile.size} bytes</li>
+                                    </ul>
+                                </section>
+                            )}
+
+                            <div className={'uploadContainerSubmitBox'}>
                                 {bpFile && (
-                                    <section>
-                                        File details:
-                                        <ul>
-                                            <li>Name: {bpFile.name}</li>
-                                            <li>Type: {bpFile.type}</li>
-                                            <li>Size: {bpFile.size} bytes</li>
-                                        </ul>
-                                    </section>
+                                    <input
+                                        type={'submit'}
+                                        onClick={onUploadBpFileClick}
+                                        className="submitBp">
+                                        Upload a file
+                                    </input>
                                 )}
-
-                                <div className={'uploadContainerSubmitBox'}>
-                                    {bpFile && (
-                                        <input
-                                            type={'submit'}
-                                            onClick={onUploadBpFileClick}
-                                            className="submitBp">
-                                            Upload a file
-                                        </input>
-                                    )}
-                                </div>
                             </div>
-                        </div>}/></div>
-        </div>
+                        </div>
+                    </div>
+                </MTPageContent>
+            </MTPageBody>
+
+        </MTPage>
+
+
     )
 }
-
 export default UploadPage

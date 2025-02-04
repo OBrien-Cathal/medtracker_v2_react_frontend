@@ -3,30 +3,49 @@ import {IRoleChange} from "../types/user.type.ts";
 import {UserDataService} from "../service/user.service.tsx";
 import {useAuth} from "../auth/AuthProvider.tsx";
 import Swal from "sweetalert2";
-import SectionComponentWithDescription from "../components/SectionComponentWithDescription.tsx";
 import React from "react";
-import SectionComponent from "../components/SectionComponent.tsx";
+import MTSectionWithControls from "../components/MTSectionWithControls.tsx";
+import {MTSectionBody, MTSectionDescription, MTSectionHeading} from "../components/section/MTSection.tsx";
+import {MTPage, MTPageBody, MTPageContent, MTPageHeading} from "../components/pages/MTPage.tsx";
 
 const AccountManagement = () => {
     return (
-        <div className="mainContainer">
+        <MTPage>
+            <MTSectionWithControls
+                mtHeading={
+                    <MTPageHeading>
+                        Account management
+                    </MTPageHeading>
+                }
+            >
+            </MTSectionWithControls>
+            <MTPageBody>
+                <MTPageContent>
+                    <MTSectionWithControls
+                        mtHeading={
+                            <MTSectionHeading>
+                                Role Requests
+                            </MTSectionHeading>
+                        }
+                        mtDescription={
+                            <MTSectionDescription>
+                                <p>
+                                    Available roles can be requested below, any role requests will be reviewed by a
+                                    system admin
+                                </p>
+                            </MTSectionDescription>
+                        }
+                    >
+                        <MTSectionBody>
+                            <RoleRequests/>
+                        </MTSectionBody>
+                    </MTSectionWithControls>
 
-            <br/>
-            <SectionComponent
-                heading={
-                    <div className={'titleContainer'}>
-                        <div>Account management</div>
-                    </div>
-                } content={
-                <SectionComponentWithDescription
-                    heading={'Role Requests'}
-                    description={'Available roles can be requested below, any role requests will be reviewed by a system admin'}
-                    content={<RoleRequests/>}
-                />
-            }
-            />
+                </MTPageContent>
+            </MTPageBody>
+        </MTPage>
 
-        </div>
+
     )
 }
 export default AccountManagement
@@ -116,13 +135,19 @@ const RoleChange = (
     }
 
     return (
+        <MTSectionWithControls
+            mtHeading={
+                <MTSectionHeading>
+                    {prettyRoleName}
+                </MTSectionHeading>
+            }
 
-
-        <SectionComponentWithDescription
-            heading={prettyRoleName}
-            description={roleDescription}
-            content={
-
+            mtDescription={
+                <MTSectionDescription>
+                    {roleDescription}
+                </MTSectionDescription>}
+        >
+            <MTSectionBody>
                 <div className="RoleChange">
                     <div>
                         <input className={'inputButton'} type="button" onClick={onRequestButtonClick}
@@ -132,7 +157,9 @@ const RoleChange = (
                     </div>
 
                 </div>
-            }/>
+            </MTSectionBody>
+        </MTSectionWithControls>
+
 
     )
 }

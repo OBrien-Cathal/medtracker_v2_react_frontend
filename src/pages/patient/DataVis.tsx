@@ -3,7 +3,9 @@ import {BloodPressureService} from "../../service/bloodPressure.service.tsx";
 import SystoleGraph from "../components/graphs/SystoleGraph.tsx";
 import {DosesService} from "../../service/dosesService.tsx";
 import DoseGraph from "../components/graphs/DoseGraph.tsx";
-import SectionComponentWithDescription from "../../components/SectionComponentWithDescription.tsx";
+import {MTPage, MTPageHeading, MTPageBody, MTPageContent, MTPageDescription} from "../../components/pages/MTPage.tsx";
+import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+
 
 const DataVis = () => {
     const {token} = useAuth()
@@ -11,23 +13,30 @@ const DataVis = () => {
     const dosesService = new DosesService(token)
     const patientId: bigint = -1n
     return (
-        <div className="mainContainer">
-            <div className="graphsContainer">
-                <SectionComponentWithDescription
-                    heading={
-                        <div className={'titleContainer'}>
-                            <div>Data Visualizations</div>
-                        </div>
-                    }
-                    description={<p>Graphs based on accumulated data</p>}
-                    content={
-                        <div>
-                            <SystoleGraph patientIdOrNegative={patientId} bloodPressureService={bloodPressureService}/>
-                            <DoseGraph patientIdOrNegative={patientId} dosesService={dosesService}/>
-                        </div>
-                    }/>
-            </div>
-        </div>
+
+        <MTPage>
+            <MTSectionWithControls
+                mtHeading={
+                    <MTPageHeading>
+
+                        Data Visualizations
+                    </MTPageHeading>
+                }
+                mtDescription={
+                    <MTPageDescription>
+                        <p>Graphs based on accumulated data</p>
+                    </MTPageDescription>}
+            >
+            </MTSectionWithControls>
+            <MTPageBody>
+                <MTPageContent>
+                    <SystoleGraph patientIdOrNegative={patientId}
+                                  bloodPressureService={bloodPressureService}/>
+                    <DoseGraph patientIdOrNegative={patientId} dosesService={dosesService}/>
+
+                </MTPageContent>
+            </MTPageBody>
+        </MTPage>
     )
 }
 
