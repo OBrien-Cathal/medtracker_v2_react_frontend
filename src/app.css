@@ -111,15 +111,15 @@ input[type=file]::file-selector-button:hover {
 }
 
 
-.UserStatus img {
+.UserStatus img, .section-controls img {
     justify-self: center;
     cursor: pointer;
 }
 
-.UserStatus img:hover {
-
+.UserStatus img:hover, .section-controls img:hover {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
+
 
 .Navigation {
     display: flex;
@@ -208,15 +208,6 @@ Styling for reusable components
 }
 
 /*Styles for basic page elements*/
-.mainContainer {
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-}
-
 .titleContainer {
     display: flex;
     flex-direction: column;
@@ -226,37 +217,23 @@ Styling for reusable components
     font-weight: bolder;
     align-items: center;
     justify-content: center;
-}
-
-.componentContainer {
-
-}
-
-.componentContainer .titleContainer {
-    font-size: 24px;
-    font-weight: bold;
+    margin-bottom: 50px;
 }
 
 
 .label-with-text {
-
+    margin-right: 20px;
 }
 
 .label-with-text label {
-    margin-right: 20px;
 }
 
 .label-with-text text {
     color: orange;
     font-weight: bold;
+    font-size: 20px;
+    margin-left: 10px;
 }
-
-.vertical-item-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 
 .labeled-field {
     display: flex;
@@ -274,11 +251,11 @@ Styling for reusable components
     width: 150px;
 }
 
-.field, .read-only-field{
+.field, .read-only-field {
     width: 200px
 }
 
-.read-only-field text{
+.read-only-field text {
     color: orange;
     font-weight: bold;
 }
@@ -290,18 +267,6 @@ Styling for reusable components
 
 .row input {
     width: auto;
-}
-
-
-.single-row-section-header {
-    display: flex;
-    flex-direction: row;
-}
-
-.single-row-section-header .label-with-text text {
-    color: white;
-    font-weight: bold;
-    margin-right: 20px;
 }
 
 /*SECTION WITH CONTROLS*/
@@ -335,23 +300,25 @@ Styling for reusable components
 
 }
 
-.MTPage, .MTPageBody, .MTSectionBody, .MTSectionContent, .section-with-controls-content {
+.MTPage, .MTPageBody, .MTPageContent, .MTSectionBody, .MTSectionContent, .section-with-controls-content {
     display: flex;
     flex-direction: column;
-
 }
 
 
-.MTPageHeading, .MTSectionHeading, .header-container, .heading-and-controls {
+.MTPageHeading, .MTSectionHeading, .MTSectionGroupHeading1, .heading-and-controls {
+    display: flex;
+    flex-direction: row;
     background-color: #808080;
-    align-items: center;
-    font-weight: bold;
+    color: white;
+    justify-content: center;
 
 }
 
-.MTPageHeading, .MTSectionHeading, .header-container, .MTSectionGroupHeading1 {
-    color: white;
-    padding: 10px 10px 10px 10px;
+.MTSectionHeading, .MTSectionGroupHeading1 {
+    flex-direction: column;
+    font-weight: bold;
+    padding: 10px 10px 10px 20px;
 }
 
 .MTSectionGroupHeading1 {
@@ -359,10 +326,7 @@ Styling for reusable components
 }
 
 .MTSectionHeading {
-    display: flex;
-    flex-direction: row;
     font-size: 18px;
-    padding: 10px 10px 10px 20px;
 }
 
 .MTPage {
@@ -370,16 +334,13 @@ Styling for reusable components
 }
 
 .MTPageHeading {
-    display: flex;
     font-size: 44px;
     font-weight: bolder;
     align-items: center;
-    justify-content: center;
+
 }
 
 .MTPageContent {
-    display: flex;
-    flex-direction: column;
     padding: 10px;
     align-self: center;
     width: 80%;
@@ -404,16 +365,6 @@ Styling for reusable components
 .section-with-controls-content {
 }
 
-.header-container {
-    display: flex;
-    flex-direction: row;
-    flex-grow: max(100);
-    background-color: #808080;
-    color: white;
-    font-size: 18px;
-    padding: 5px;
-}
-
 
 .MTPageDescription, .MTSectionDescription {
     background-color: #d3d3d3;
@@ -435,19 +386,11 @@ Styling for reusable components
 
 }
 
-/*New Section*/
-
-
-.section-heading-row {
-    display: flex;
-    flex-direction: row;
+/*Validation*/
+.Validation {
+    color: red;
 }
 
-.section-heading-row .label-with-text text {
-    color: white;
-    font-weight: bold;
-    margin-right: 20px;
-}
 
 /*PRescriptions*/
 .PrescriptionDetails {
@@ -456,7 +399,14 @@ Styling for reusable components
     align-items: center;
 }
 
-/*Account Management*/
+/*DailyData*/
+.DoseData {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 80%;
+
+}
 
 
 /*Uploads*/
@@ -468,20 +418,8 @@ Styling for reusable components
     border: 10px #808080;
 }
 
-.graphsContainer {
-    width: 100%;
-}
-
-.graphContainer {
-
-}
-
-.lineGraphContainer {
-
-}
 
 .LineGraph {
-
 }
 
 .uploadContainerSubmitBox {
@@ -582,5 +520,8 @@ Styling for reusable components
 
     .HeaderContainer {
         position: inherit;
+    }
+    .DoseData{
+        width: 100%;
     }
 }

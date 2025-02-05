@@ -121,10 +121,18 @@ const Register = () => {
                 <MTPageContent>
                     <div className={'titleContainer'}>
                         <div>
-                            Sign In
+                            Register
                         </div>
                     </div>
+
                     <CenteredFlex>
+                        <p>
+                            <text>
+                                Fill in your email and password below to register a new account
+                            </text>
+
+                        </p>
+                        <br/>
                         <form onSubmit={onButtonClick}>
                             <div className={'inputContainer'}>
                                 <input

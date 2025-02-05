@@ -60,7 +60,7 @@ const DoseData = ({readings, saveDailyDoseData}: Props) => {
                             mtHeading={
                                 <MTSectionHeading>
 
-                                    <div className={'single-row-section-header'}>
+                                    <div className={'row'}>
                                         <div className={'label-with-text'}>
                                             <label>
                                                 Medication
