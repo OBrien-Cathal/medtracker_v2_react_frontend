@@ -6,13 +6,14 @@ import collapseIcon from "../assets/collapse.svg";
 interface Props extends React.PropsWithChildren {
     mtDescription?: React.ReactNode;
     mtHeading?: React.ReactNode;
-
+    isInitiallyCollapsed?: boolean
 }
 
-export function MTSectionWithControls({children, mtHeading, mtDescription}: Props) {
-    const [showDescription, setShowDescription] = useState<boolean>(false)
-    const [collapsed, setCollapsed] = useState<boolean>(false)
+export function MTSectionWithControls({children, mtHeading, mtDescription, isInitiallyCollapsed}: Props) {
+    const initiallyCollapsed = isInitiallyCollapsed == true
 
+    const [showDescription, setShowDescription] = useState<boolean>(false)
+    const [collapsed, setCollapsed] = useState<boolean>(initiallyCollapsed)
 
     function toggleDescription() {
         setShowDescription(!showDescription)

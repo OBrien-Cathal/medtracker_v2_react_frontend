@@ -111,12 +111,12 @@ input[type=file]::file-selector-button:hover {
 }
 
 
-.UserStatus img, .section-controls img {
+.UserStatus img, .section-controls img, .date-selector-widget img{
     justify-self: center;
     cursor: pointer;
 }
 
-.UserStatus img:hover, .section-controls img:hover {
+.UserStatus img:hover, .section-controls img:hover, .date-selector-widget img{
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
@@ -400,14 +400,50 @@ Styling for reusable components
 }
 
 /*DailyData*/
-.DoseData {
+.DailyDataSectionWrapper {
     display: flex;
     flex-direction: column;
     align-self: center;
     width: 80%;
-
+}
+/*Date Component*/
+.date-selector-widget {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
 }
 
+
+
+.current-with-calendar {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 60%;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.right-date-arrow, .left-date-arrow {
+    display: flex;
+    flex-basis: 20%;
+}
+
+.right-date-arrow {
+    flex-direction: row;
+    margin-left: 10px;
+}
+
+.left-date-arrow {
+    flex-direction: row-reverse;
+    margin-right: 10px;
+}
+
+.date-selector-current {
+    font-size: 20px;
+    color: orange;
+    font-weight: bold;
+}
 
 /*Uploads*/
 .uploadsContainer {
@@ -521,7 +557,8 @@ Styling for reusable components
     .HeaderContainer {
         position: inherit;
     }
-    .DoseData{
+
+    .DoseData {
         width: 100%;
     }
 }

@@ -99,13 +99,15 @@ const BloodPressureEntry = ({saveBloodPressureReading, dayStages}: Props) => {
     }
 
     return (
-        <CenteredFlex><CenteredFlex>
+
+        <div className={'DailyDataSectionWrapper'}>
             <MTSectionWithControls
                 mtHeading={
                     <MTSectionHeading>
-                        Entry
+                        Add Measurement
                     </MTSectionHeading>
                 }
+                isInitiallyCollapsed={true}
             >
                 <MTSectionBody>
                     <MTSectionContent>
@@ -164,7 +166,8 @@ const BloodPressureEntry = ({saveBloodPressureReading, dayStages}: Props) => {
                 </MTSectionBody>
 
 
-            </MTSectionWithControls></CenteredFlex></CenteredFlex>
+            </MTSectionWithControls>
+        </div>
 
 
     )

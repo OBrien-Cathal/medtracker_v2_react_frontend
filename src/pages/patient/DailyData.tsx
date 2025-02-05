@@ -2,7 +2,7 @@ import {useAuth} from "../../auth/AuthProvider.tsx";
 import {BloodPressureService} from "../../service/bloodPressure.service.tsx";
 import {DosesService} from "../../service/dosesService.tsx";
 import {useState} from "preact/compat";
-import {TargetedEvent, useEffect} from "react";
+import {useEffect} from "react";
 import {handleError, handleResponse} from "../utils/response-handler.tsx";
 import {IBloodPressureData, ISubmittedBloodPressureData} from "../../types/blood-pressure.type.ts";
 import DailyBloodPressure from "./components/DailyBloodPressure.tsx";
@@ -13,7 +13,7 @@ import {IDailyDoseData, IDailyMedicationDoseData} from "../../types/dose.type.ts
 import {MTPage, MTPageBody, MTPageContent, MTPageDescription, MTPageHeading} from "../../components/pages/MTPage.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import {MTSectionBody, MTSectionGroupHeading} from "../../components/section/MTSection.tsx";
-
+import DateWidget from "../../components/date/DateWidget.tsx";
 
 const DataVis = () => {
     const {token} = useAuth()
@@ -28,6 +28,8 @@ const DataVis = () => {
     const [doseReadings, setDoseReadings] = useState<IDailyMedicationDoseData[]>([])
 
     function getDayStages() {
+        if (dayStages.length != 0) return
+        console.log('getting day stages')
         prescriptionService.getDayStages()
             .then(r => {
                 console.log(r.data)
@@ -73,11 +75,10 @@ const DataVis = () => {
             }).catch(e => handleError(e))
     }
 
-    function onChangeDate(e: TargetedEvent<HTMLInputElement, Event>) {
-        console.log(e.currentTarget.value)
-        setDate(
-            (e.currentTarget.value))
+    function updateDate(newDateString: string) {
+        setDate(newDateString)
         getBloodPressureData()
+        getDailyDoses()
     }
 
     useEffect(() => {
@@ -101,17 +102,8 @@ const DataVis = () => {
                     }/>
 
                 <MTPageContent>
+                    <DateWidget date={date} updateDate={updateDate}/>
 
-
-                    <div className={'labeled-field'}>
-                        <label>Viewing data for</label>
-                        <input aria-label="Date"
-                               value={
-                                   date.toString()}
-                               type="date"
-                               onChange={(ev) => onChangeDate(ev)}
-                        />
-                    </div>
                     <br/>
 
                     <MTSectionWithControls
@@ -138,6 +130,7 @@ const DataVis = () => {
                                 dayStages={dayStages}>
 
                             </BloodPressureEntry>
+
 
                         </MTSectionBody>
                     </MTSectionWithControls>

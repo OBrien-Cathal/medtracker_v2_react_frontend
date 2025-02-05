@@ -53,7 +53,7 @@ const DoseData = ({readings, saveDailyDoseData}: Props) => {
 
     const columns = useMemo(() => Columns, []);
     return (
-        <div className={'DoseData'}>
+        <div className={'DailyDataSectionWrapper'}>
             {readings && readings.map(r => {
                     return (
                         <MTSectionWithControls

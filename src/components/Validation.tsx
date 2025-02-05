@@ -4,7 +4,7 @@ import {List} from "./List.tsx";
 type Props = {
     errors: string[]
 }
-const Home = ({errors}: Props) => {
+const Validation = ({errors}: Props) => {
 
     return (
 
@@ -22,4 +22,4 @@ const Home = ({errors}: Props) => {
     )
 }
 
-export default Home
+export default Validation
