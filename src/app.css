@@ -111,12 +111,12 @@ input[type=file]::file-selector-button:hover {
 }
 
 
-.UserStatus img, .section-controls img, .date-selector-widget img{
+.UserStatus img, .section-controls img, .date-selector-widget img {
     justify-self: center;
     cursor: pointer;
 }
 
-.UserStatus img:hover, .section-controls img:hover, .date-selector-widget img{
+.UserStatus img:hover, .section-controls img:hover, .date-selector-widget img {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
@@ -124,6 +124,7 @@ input[type=file]::file-selector-button:hover {
 .Navigation {
     display: flex;
     background-color: #808080;
+
 }
 
 
@@ -337,6 +338,7 @@ Styling for reusable components
     font-size: 44px;
     font-weight: bolder;
     align-items: center;
+    margin: 10px 0 10px 0;
 
 }
 
@@ -406,16 +408,57 @@ Styling for reusable components
     align-self: center;
     width: 80%;
 }
-/*Date Component*/
-.date-selector-widget {
+
+/*Date Components*/
+.date-selector-widget, .date-range-widget, .start-date, .end-date {
     display: flex;
     flex-direction: row;
+
+}
+
+.date-selector-widget, .date-range-widget {
+    flex: 1;
     align-items: center;
     justify-items: center;
+    background-color: #f3f3f3;
+    padding: 5px;
+}
+
+/*Range*/
+
+.date-range-widget {
+    margin-bottom: 10px;
+}
+
+.date-range-center {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 20%;
+}
+
+.date-range-refresh {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-self: center;
+    flex: 1;
+
+
+}
+.date-range-refresh input[type='submit'] {
+
+    margin: 8px;
+    font-size: 20px;
 }
 
 
+.start-date, .end-date {
+    flex-basis: 40%;
+    align-items: center;
+}
 
+
+/*Date*/
 .current-with-calendar {
     display: flex;
     flex-direction: column;
@@ -444,6 +487,7 @@ Styling for reusable components
     color: orange;
     font-weight: bold;
 }
+
 
 /*Uploads*/
 .uploadsContainer {

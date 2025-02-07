@@ -1,19 +1,18 @@
 import previous from "../../assets/previous.svg";
 import next from "../../assets/next.svg"
 import {TargetedEvent} from "react";
-
+import {dateStringAdjusted} from "../../date-utils.ts";
 
 type Props = {
     date: string
     updateDate: Function
 }
-const Validation = ({date, updateDate}: Props) => {
+const DateWidget = ({date, updateDate}: Props) => {
 
     function setDate(dateString: string) {
         console.log('widget date')
         updateDate(dateString)
     }
-
 
     function onChangeDate(e: TargetedEvent<HTMLInputElement, Event>) {
         setDate(e.currentTarget.value)
@@ -28,9 +27,7 @@ const Validation = ({date, updateDate}: Props) => {
     }
 
     function adjustDate(number: number): string {
-        let dateObj: Date = new Date(date);
-        dateObj.setDate(dateObj.getDate() + number)
-        return dateObj.toISOString().slice(0, 10)
+        return dateStringAdjusted(date, number)
     }
 
     return (
@@ -61,4 +58,4 @@ const Validation = ({date, updateDate}: Props) => {
     )
 }
 
-export default Validation
+export default DateWidget

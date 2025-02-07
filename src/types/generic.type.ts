@@ -7,3 +7,8 @@ export interface IResponseInfo {
 export interface IResponse {
     responseInfo: IResponseInfo
 }
+
+export interface IDateRange {
+    start: string
+    end: string
+}

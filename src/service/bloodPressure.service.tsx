@@ -5,24 +5,27 @@ import {
     IAddDatedBloodPressureDataRequest,
     IAddDatedBloodPressureDataRequestResponse
 } from "../types/blood-pressure.type.ts";
+import {IDateRange} from "../types/generic.type.ts";
 
 export class BloodPressureService extends AuthenticatedService {
     constructor(token: string) {
         super(token, "/blood-pressure");
     }
 
-    getSystoleGraphData() {
-        return this._client.get<ITimeSeriesDataResponse>("/systole-graph-data");
+    getSystoleGraphData(dateRange: IDateRange) {
+        return this._client.post<ITimeSeriesDataResponse>(
+            "/systole-graph-data",
+            dateRange);
     }
 
-    getPractitionerPatientSystoleGraphData(patientId: bigint) {
-        return this._client.get<ITimeSeriesDataResponse>("/systole-graph-data/patient?id=" + patientId);
+    getPractitionerPatientSystoleGraphData(patientId: bigint, dateRange: IDateRange) {
+        return this._client.post<ITimeSeriesDataResponse>("/systole-graph-data/patient", {...dateRange, patientId,});
     }
 
-    getSystoleGraphDataForId(patientId: bigint) {
+    getSystoleGraphDataForId(patientId: bigint, dateRange: IDateRange) {
         if (patientId > 0) {
-            return this.getPractitionerPatientSystoleGraphData(patientId)
-        } else return this.getSystoleGraphData()
+            return this.getPractitionerPatientSystoleGraphData(patientId, dateRange)
+        } else return this.getSystoleGraphData(dateRange)
     }
 
     getBloodPressureDailyData(date: string) {

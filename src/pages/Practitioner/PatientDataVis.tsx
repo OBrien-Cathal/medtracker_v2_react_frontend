@@ -10,6 +10,11 @@ import {
 
 } from "../../components/section/MTSection.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+import {useState} from "react";
+
+import DateRangeWidget from "../../components/date/DateRangeWidget.tsx";
+import {IDateRange} from "../../types/generic.type.ts";
+import {todayString, todayStringAdjusted} from "../../date-utils.ts";
 
 
 type PropsType = {
@@ -20,7 +25,7 @@ const PatientDataVis = ({patientId}: PropsType) => {
     const {token} = useAuth()
     const bloodPressureService = new BloodPressureService(token)
     const dosesService = new DosesService(token)
-
+    const [dateRange, setDateRange] = useState<IDateRange>({start: todayStringAdjusted(-7), end: todayString()})
     return (
         <MTSectionWithControls
             mtHeading={
@@ -36,8 +41,15 @@ const PatientDataVis = ({patientId}: PropsType) => {
         >
             <MTSectionBody>
                 <MTSectionContent>
-                    <SystoleGraph patientIdOrNegative={patientId} bloodPressureService={bloodPressureService}/>
-                    <DoseGraph patientIdOrNegative={patientId} dosesService={dosesService}/>
+                    <DateRangeWidget dateRange={dateRange} updateRange={setDateRange}/>
+                    <SystoleGraph
+                        patientIdOrNegative={patientId}
+                        bloodPressureService={bloodPressureService}
+                        dateRange={dateRange}/>
+                    <DoseGraph
+                        patientIdOrNegative={patientId}
+                        dosesService={dosesService}
+                        dateRange={dateRange}/>
                 </MTSectionContent>
             </MTSectionBody>
         </MTSectionWithControls>

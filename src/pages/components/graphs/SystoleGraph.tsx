@@ -1,32 +1,35 @@
 import {useEffect, useState} from "preact/compat";
 import {BloodPressureService} from "../../../service/bloodPressure.service.tsx";
-import {IGraphData} from "../../../types/generic-graph-data.type.ts";
+import {IGraphData, IGraphProps} from "../../../types/generic-graph-data.type.ts";
 import LineGraph from "./LineGraph.tsx";
+import {handleError, handleResponse} from "../../utils/response-handler.tsx";
 
-type PropsType = {
-    patientIdOrNegative: bigint
+
+interface Props extends IGraphProps {
     bloodPressureService: BloodPressureService
 }
 
-const SystoleGraph = ({patientIdOrNegative, bloodPressureService}: PropsType) => {
+const SystoleGraph = ({patientIdOrNegative, bloodPressureService, dateRange}: Props) => {
     const [data, setData] = useState<IGraphData>()
 
     function getGraphData() {
-        // console.log("Received PATIENT SYSTOLE graph data ID: " + patientIdOrNegative)
-        bloodPressureService.getSystoleGraphDataForId(patientIdOrNegative)
+        console.log("Received PATIENT SYSTOLE graph data ID: " + patientIdOrNegative)
+        bloodPressureService.getSystoleGraphDataForId(patientIdOrNegative, dateRange)
             .then(r => {
 
-                // console.log("Received SYSTOLE DOSE graph data ID: " + patientIdOrNegative)
-                // console.log(data)
+                console.log("Received SYSTOLE DOSE graph data ID: " + patientIdOrNegative)
+                console.log(r)
+                handleResponse(r)
                 setData(r.data.graphData)
             }).catch((reason) => {
             console.log(reason)
+            handleError(reason)
         });
     }
 
     useEffect(() => {
         getGraphData();
-    }, [])
+    }, [dateRange])
 
     return (
         <div>
