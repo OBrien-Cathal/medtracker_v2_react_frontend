@@ -1,26 +1,28 @@
 import {useEffect, useState} from "preact/compat";
+import {BloodPressureService} from "../../../service/bloodPressure.service.tsx";
 import {IGraphData, IGraphProps} from "../../../types/generic-graph-data.type.ts";
 import LineGraph from "./LineGraph.tsx";
-import {DosesService} from "../../../service/dosesService.tsx";
 import {handleError, handleResponse} from "../../utils/response-handler.tsx";
 
 
 interface Props extends IGraphProps {
-    dosesService: DosesService
+    bloodPressureService: BloodPressureService
 }
 
-const DoseGraph = ({patientIdOrNegative, dosesService, dateRange}: Props) => {
+const DiastoleGraph = ({patientIdOrNegative, bloodPressureService, dateRange}: Props) => {
     const [data, setData] = useState<IGraphData>()
 
     function getGraphData() {
-        // console.log("Request PATIENT DOSE graph data ID: " + patientIdOrNegative)
-        dosesService.getDoseGraphDataForId(patientIdOrNegative, dateRange)
+        console.log("Received PATIENT Diastole graph data ID: " + patientIdOrNegative)
+        bloodPressureService.getDiastoleGraphDataForId(patientIdOrNegative, dateRange)
             .then(r => {
-                // console.log("Received PATIENT DOSE graph data ID: " + patientIdOrNegative)
-                // console.log(r)
+
+                console.log("Received Diastole DOSE graph data ID: " + patientIdOrNegative)
+                console.log(r)
                 handleResponse(r)
                 setData(r.data.graphData)
             }).catch((reason) => {
+            console.log(reason)
             handleError(reason)
         });
     }
@@ -34,13 +36,12 @@ const DoseGraph = ({patientIdOrNegative, dosesService, dateRange}: Props) => {
             {
                 data && <LineGraph
                     graphData={data}
-                    title={'Dose'}
-                    descriptionText={'Shows the dose(mg) of medication based on active prescriptions at a point in time.'}
+                    title={'Diastole'}
+                    descriptionText={'Diastole value represents blood pressure in between heart beats.'}
                 />
             }
         </div>
-
     )
 }
 
-export default DoseGraph
+export default DiastoleGraph

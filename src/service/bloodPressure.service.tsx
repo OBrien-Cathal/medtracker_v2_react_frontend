@@ -26,6 +26,42 @@ export class BloodPressureService extends AuthenticatedService {
         if (patientId > 0) {
             return this.getPractitionerPatientSystoleGraphData(patientId, dateRange)
         } else return this.getSystoleGraphData(dateRange)
+    }   
+    
+    
+    
+    getDiastoleGraphData(dateRange: IDateRange) {
+        return this._client.post<ITimeSeriesDataResponse>(
+            "/diastole-graph-data",
+            dateRange);
+    }
+
+    getPractitionerPatientDiastoleGraphData(patientId: bigint, dateRange: IDateRange) {
+        return this._client.post<ITimeSeriesDataResponse>("/diastole-graph-data/patient", {...dateRange, patientId,});
+    }
+
+    getDiastoleGraphDataForId(patientId: bigint, dateRange: IDateRange) {
+        if (patientId > 0) {
+            return this.getPractitionerPatientDiastoleGraphData(patientId, dateRange)
+        } else return this.getDiastoleGraphData(dateRange)
+    }   
+    
+    
+    
+    getHeartRateGraphData(dateRange: IDateRange) {
+        return this._client.post<ITimeSeriesDataResponse>(
+            "/heart-rate-graph-data",
+            dateRange);
+    }
+
+    getPractitionerPatientHeartRateGraphData(patientId: bigint, dateRange: IDateRange) {
+        return this._client.post<ITimeSeriesDataResponse>("/heart-rate-graph-data/patient", {...dateRange, patientId,});
+    }
+
+    getHeartRateGraphDataForId(patientId: bigint, dateRange: IDateRange) {
+        if (patientId > 0) {
+            return this.getPractitionerPatientHeartRateGraphData(patientId, dateRange)
+        } else return this.getHeartRateGraphData(dateRange)
     }
 
     getBloodPressureDailyData(date: string) {

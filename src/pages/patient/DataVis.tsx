@@ -10,6 +10,8 @@ import {useState} from "react";
 import DateRangeWidget from "../../components/date/DateRangeWidget.tsx";
 import {IDateRange} from "../../types/generic.type.ts";
 import {todayString, todayStringAdjusted} from "../../date-utils.ts";
+import DiastoleGraph from "../components/graphs/DiastoleGraph.tsx";
+import HeartRateGraph from "../components/graphs/HeartRateGraph.tsx";
 
 
 const DataVis = () => {
@@ -17,7 +19,7 @@ const DataVis = () => {
     const bloodPressureService = new BloodPressureService(token)
     const dosesService = new DosesService(token)
     const patientId: bigint = -1n
-    const [dateRange, setDateRange] = useState<IDateRange>({start: todayStringAdjusted(-7), end: todayString()})
+    const [dateRange, setDateRange] = useState<IDateRange>({start: todayStringAdjusted(-30), end: todayString()})
 
     return (
 
@@ -42,11 +44,18 @@ const DataVis = () => {
                         patientIdOrNegative={patientId}
                         bloodPressureService={bloodPressureService}
                         dateRange={dateRange}/>
+                    <DiastoleGraph
+                        patientIdOrNegative={patientId}
+                        bloodPressureService={bloodPressureService}
+                        dateRange={dateRange}/>
+                    <HeartRateGraph
+                        patientIdOrNegative={patientId}
+                        bloodPressureService={bloodPressureService}
+                        dateRange={dateRange}/>
                     <DoseGraph
                         patientIdOrNegative={patientId}
                         dosesService={dosesService}
                         dateRange={dateRange}/>
-
                 </MTPageContent>
             </MTPageBody>
         </MTPage>
