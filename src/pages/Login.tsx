@@ -22,8 +22,10 @@ const Login = () => {
         authenticationDataService.signIn({username: username, password: password})
             .then((r) => {
                 handleResponse(r)
-                auth.login({username: username, token: r.data.token, currentRole: r.data.currentUserRole})
-                navigate('/home')
+                if (r.data.responseInfo.successful) {
+                    auth.login({username: username, token: r.data.token, currentRole: r.data.currentUserRole})
+                    navigate('/home')
+                }
 
             }).catch(reason => {
             console.log(reason)

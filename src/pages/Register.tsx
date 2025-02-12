@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import authenticationDataService from "../service/authentication.service.tsx"
 import {MTPage, MTPageBody, MTPageContent} from "../components/pages/MTPage.tsx";
 import CenteredFlex from "../components/layout/CenteredFlex.tsx";
-import { handleResponseAndNotify} from "./utils/response-handler.tsx";
+import {handleResponseAndNotify} from "./utils/response-handler.tsx";
 import Swal from "sweetalert2";
 
 const Register = () => {
@@ -21,7 +21,9 @@ const Register = () => {
         authenticationDataService.signUp({username: username, password: password})
             .then((r) => {
                 handleResponseAndNotify(r)
-                navigate('/login')
+                if (r.data.responseInfo.successful) {
+                    navigate('/login')
+                }
             }).catch(reason => {
             console.log(reason)
             Swal.fire({

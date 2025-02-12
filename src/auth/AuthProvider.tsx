@@ -61,7 +61,7 @@ const AuthProvider = ({children}: Props) => {
 
     useEffect(() => {
         {
-            if (!(token === ''))
+            if ((token != '') && token != null)
                 authenticationDataService.verifyAuthentication({token: token})
                     .then(value => {
                         if (value.data.authenticated) {
