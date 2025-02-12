@@ -2,7 +2,7 @@ import http from "../service/http-client";
 import {
     IAuthenticationResponse,
     IAuthenticationRequest,
-    IAuthenticationVerificationRequest, IAccountVerificationResponse, IAuthenticationVerificationResponse
+    IAuthenticationVerificationRequest, IAuthenticationVerificationResponse
 } from "../types/authentication.type.ts";
 
 class AuthenticationDataService {
@@ -17,10 +17,6 @@ class AuthenticationDataService {
     }
     verifyAuthentication(data: IAuthenticationVerificationRequest) {
         return http.post<IAuthenticationVerificationResponse>(this._authPath + "/verify", data);
-    }
-
-    checkAccountExists(data: IAuthenticationRequest) {
-        return http.post<IAccountVerificationResponse>(this._authPath + "/checkaccount", data);
     }
 }
 

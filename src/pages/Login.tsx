@@ -16,20 +16,6 @@ const Login = () => {
     const auth = useAuth()
     const navigate = useNavigate()
 
-
-    const checkAccountExists = (callback: any) => {
-        authenticationDataService.checkAccountExists({username: username, password: ""})
-            .then((r) => {
-                callback(r.data?.accountExists)
-            }).catch((r) => {
-            Swal.fire({
-                title: "Account check failed",
-                text: r.data.message,
-                icon: "error"
-            }).then();
-        })
-    }
-
     // Log in a user using email and password
     const signIn = () => {
         authenticationDataService.signIn({username: username, password: password})
@@ -39,7 +25,7 @@ const Login = () => {
                     navigate('/home')
                 } else {
                     Swal.fire({
-                        title: "Sign up failed",
+                        title: "Sign in failed",
                         text: r.data.message,
                         icon: "error"
                     }).then();
@@ -78,19 +64,7 @@ const Login = () => {
             setPasswordError('Please enter a password')
             return
         }
-
-        checkAccountExists((accountExists: boolean) => {
-            // If yes, log in
-            if (accountExists) signIn()
-            // Else, ask user if they want to create a new account and if yes, then log in
-            else {
-                Swal.fire({
-                    title: "Sign in failed!",
-                    text: "The submitted combination of username and password is not valid, please check you account details or sign up",
-
-                }).then();
-            }
-        })
+        signIn()
     }
 
 

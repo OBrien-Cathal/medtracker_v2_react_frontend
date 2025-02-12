@@ -4,10 +4,6 @@ export interface IAuthenticationResponse {
     currentUserRole: string;
 }
 
-export interface IAccountVerificationResponse {
-    accountExists: boolean
-}
-
 export interface IAuthenticationVerificationResponse {
     authenticated: boolean
 }

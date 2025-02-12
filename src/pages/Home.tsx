@@ -59,7 +59,7 @@ const Home = () => {
                             <p>
 
                                 <text className={"clickable-text"} onClick={onSignInClicked}>
-                                   Sign in
+                                    Sign in
                                 </text>
                                 <span> </span>
                                 or
@@ -93,6 +93,24 @@ const Home = () => {
                         <div className={'buttonContainer'}>
 
                             {isLoggedIn ? <div>Signed in successfully as {username}</div> : <div/>}
+                        </div>
+                        <div>
+                            <p>
+                                Test users are available and can be used to explore functionality. All users have the same
+                                password: "abc'.
+                            </p>
+                            <ul>
+                                <li>
+                                    admin@medtracker.com
+                                </li>
+                                <li>
+                                    doc1@medtracker.com
+                                </li>
+                                <li>
+                                    patient1@medtracker.com
+                                </li>
+
+                            </ul>
                         </div>
                     </CenteredFlex>
 

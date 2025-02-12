@@ -18,20 +18,6 @@ const Register = () => {
     const navigate = useNavigate()
 
 
-    const checkAccountExists = (callback: any) => {
-        authenticationDataService.checkAccountExists({username: username, password: ""})
-            .then((r) => {
-                callback(r.data?.accountExists)
-            }).catch((r) => {
-            Swal.fire({
-                title: "Account check failed",
-                text: r.data.message,
-                icon: "error"
-            }).then();
-        })
-    }
-
-
     const signUp = () => {
         authenticationDataService.signUp({username: username, password: password})
             .then((r) => {
@@ -89,27 +75,7 @@ const Register = () => {
             setRepeatPasswordError('passwords do not match')
             return
         }
-
-
-        // if (password.length < 7) {
-        //   setPasswordError('The password must be 8 characters or longer')
-        //   return
-        // }
-
-        // Authentication calls will be made here...
-
-
-        checkAccountExists((accountExists: boolean) => {
-            if (accountExists) {
-                Swal.fire({
-                    title: "Sign up failed!",
-                    text: "The email used to sign up is already registered, this warning should be replaced by a email with a confirmation link, to avoid privacy issues",
-                }).then();
-
-            } else {
-                signUp()
-            }
-        })
+        signUp()
     }
 
 
