@@ -1,4 +1,6 @@
-export interface IAuthenticationResponse {
+import {IResponse} from "./generic.type.ts";
+
+export interface IAuthenticationResponse extends IResponse{
     token: string
     message: string
     currentUserRole: string;

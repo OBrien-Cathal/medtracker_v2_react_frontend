@@ -1,10 +1,10 @@
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import authenticationDataService from "../service/authentication.service.tsx"
-import {useAuth} from "../auth/AuthProvider.tsx";
-import Swal from "sweetalert2";
 import {MTPage, MTPageBody, MTPageContent} from "../components/pages/MTPage.tsx";
 import CenteredFlex from "../components/layout/CenteredFlex.tsx";
+import { handleResponseAndNotify} from "./utils/response-handler.tsx";
+import Swal from "sweetalert2";
 
 const Register = () => {
     const [username, setUsername] = useState('')
@@ -14,23 +14,14 @@ const Register = () => {
     const [passwordError, setPasswordError] = useState('')
     const [repeatPasswordError, setRepeatPasswordError] = useState('')
 
-    const auth = useAuth()
     const navigate = useNavigate()
 
 
     const signUp = () => {
         authenticationDataService.signUp({username: username, password: password})
             .then((r) => {
-                if (r.data.message === 'success') {
-                    auth.login({username: username, token: r.data.token, currentRole: r.data.currentUserRole})
-                    navigate('/home')
-                } else {
-                    Swal.fire({
-                        title: "Sign up failed",
-                        text: r.data.message,
-                        icon: "error"
-                    }).then();
-                }
+                handleResponseAndNotify(r)
+                navigate('/login')
             }).catch(reason => {
             console.log(reason)
             Swal.fire({
@@ -38,7 +29,6 @@ const Register = () => {
                 text: reason.response.data.message,
                 icon: "error"
             }).then();
-
         })
     }
 
