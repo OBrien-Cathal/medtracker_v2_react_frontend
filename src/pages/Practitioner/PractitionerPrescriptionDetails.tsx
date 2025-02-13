@@ -184,6 +184,7 @@ const PractitionerPrescriptionDetails =
 
         function submitPrescriptionDetails(toSave: IPrescriptionDetailsType) {
             if (toSave.id === null) {
+                toSave.endTime = toSave.endTime ===''? null :toSave.endTime
                 console.log('add')
                 return prescriptionService.addPrescription(toSave)
             } else {
@@ -275,6 +276,7 @@ const PractitionerPrescriptionDetails =
                                                    editModel.editCopy.endTime ?
                                                        editModel.editCopy.endTime.toString().substring(0, 16) : ''}
                                                type="datetime-local"
+
                                                onChange={(ev) => updateEndTime(ev)}
                                         />
                                     </div>

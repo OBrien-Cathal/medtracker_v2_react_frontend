@@ -6,10 +6,10 @@ import {useEffect, useMemo, useState} from "react";
 import {ColumnDef} from "@tanstack/react-table";
 import PatientPrescriptionDetails from "../patient/PatientPrescriptionDetails.tsx";
 import {
-    MTSectionHeading,
-    MTSectionDescription,
     MTSectionBody,
     MTSectionContent,
+    MTSectionDescription,
+    MTSectionHeading,
 } from "../../components/section/MTSection.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
@@ -35,15 +35,28 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
     }
 
     const [prescriptionList, setPrescriptionList] = useState<IPrescriptionOverviewType[]>([])
+    const [expiredPrescriptionList, setExpiredPrescriptionList] = useState<IPrescriptionOverviewType[]>([])
     const [prescriptionDetails, setPrescriptionDetails] = useState<IPrescriptionDetailsType>(prescriptionDetailsPlaceholder)
 
     function getPrescriptions() {
         getPrescriptionOverviews()
             .then(r => {
-                setPrescriptionList(r.data)
+                let now = new Date();
+                setExpiredPrescriptionList(r.data.filter((v) => {
+                    return isExpired(v.endTime, now)
+                }))
+
+                setPrescriptionList(r.data.filter((v) => {
+                    return !isExpired(v.endTime, now)
+                }))
             }).catch((reason) => {
             console.log(reason.errors)
         });
+    }
+
+    function isExpired(endTime: string | null, now: Date): boolean {
+        if (endTime === null || endTime === '') return false
+        return new Date(endTime).getMilliseconds() < now.getMilliseconds()
     }
 
     function getPrescriptionOverviews() {
@@ -148,26 +161,13 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
 
                             <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
 
-
-                            {patientId &&
-                                <PractitionerPrescriptionDetails
-                                    token={token}
-                                    patientId={patientId}
-                                    prescriptionDetails={prescriptionDetails}
-                                    getPrescriptionDetails={getPrescriptionDetails}>
-                                </PractitionerPrescriptionDetails>}
-
-
-                            {!patientId &&
-                                <PatientPrescriptionDetails
-                                    prescriptionDetails={prescriptionDetails}></PatientPrescriptionDetails>}
-
                         </CenteredFlex>
                     </MTSectionContent>
                 </MTSectionBody>
             </MTSectionWithControls>
 
             <br/>
+
 
             <MTSectionWithControls
                 mtHeading={
@@ -179,13 +179,38 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
                     <MTSectionDescription>
                         <p>List of expired prescriptions, these can not be edited</p>
                     </MTSectionDescription>
-                }>
+                }
+                isInitiallyCollapsed={true}>
                 <MTSectionBody>
                     <MTSectionContent>
-                        UNDER CONSTRUCTION
+                        <CenteredFlex>
+                            <ReactTable<IPrescriptionOverviewType> data={expiredPrescriptionList} columns={columns}/>
+
+                        </CenteredFlex>
                     </MTSectionContent>
                 </MTSectionBody>
             </MTSectionWithControls>
+
+
+            <CenteredFlex>
+
+
+                {patientId &&
+                    <PractitionerPrescriptionDetails
+                        token={token}
+                        patientId={patientId}
+                        prescriptionDetails={prescriptionDetails}
+                        getPrescriptionDetails={getPrescriptionDetails}>
+                    </PractitionerPrescriptionDetails>}
+
+
+                {!patientId &&
+                    <PatientPrescriptionDetails
+                        prescriptionDetails={prescriptionDetails}></PatientPrescriptionDetails>}
+
+            </CenteredFlex>
+
+
         </MTSectionContent>
     )
 }

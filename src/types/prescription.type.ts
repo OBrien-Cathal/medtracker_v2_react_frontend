@@ -17,7 +17,7 @@ export interface IPrescriptionDetailsType {
     doseMg: number
     medication: IMedicationType | null,
     beginTime: string
-    endTime: string
+    endTime: string | null
     patientId: number | null
     practitionerId: number | null
     prescriptionScheduleEntries: IPrescriptionScheduleEntryType[]
