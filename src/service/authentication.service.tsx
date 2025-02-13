@@ -15,6 +15,7 @@ class AuthenticationDataService {
     signIn(data: IAuthenticationRequest) {
         return http.post<IAuthenticationResponse>(this._authPath + "/signin", data);
     }
+
     verifyAuthentication(data: IAuthenticationVerificationRequest) {
         return http.post<IAuthenticationVerificationResponse>(this._authPath + "/verify", data);
     }
