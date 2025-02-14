@@ -14,6 +14,7 @@ import {
 } from "../../components/section/MTSection.tsx";
 import Validation from "../../components/Validation.tsx";
 import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
+import {handleResponse} from "../utils/response-handler.tsx";
 
 
 type Props = {
@@ -182,16 +183,6 @@ const PractitionerPrescriptionDetails =
             )
         }
 
-        function submitPrescriptionDetails(toSave: IPrescriptionDetailsType) {
-            if (toSave.id === null) {
-                toSave.endTime = toSave.endTime ===''? null :toSave.endTime
-                console.log('add')
-                return prescriptionService.addPrescription(toSave)
-            } else {
-                console.log('update')
-                return prescriptionService.updatePrescription(toSave)
-            }
-        }
 
         function savePrescriptionDetails() {
             let validationErrors = getValidationErrorsFor(editModel.editCopy);
@@ -205,14 +196,12 @@ const PractitionerPrescriptionDetails =
             }
             logForURLParameters('About to submit save')
             console.log(toSave)
-            submitPrescriptionDetails(toSave).then(r => {
-                    console.log(r.data)
+            prescriptionService.submitPrescription(toSave).then(r => {
+                    handleResponse(r)
                     if (r.data.responseInfo.successful) {
-                        console.log(r.data.responseInfo.message)
                         getPrescriptionDetails(r.data.prescriptionId)
                     } else {
-                        console.log(r.data.responseInfo.message)
-                        console.log(r.data.responseInfo.errors)
+
                         setEditModelServerErrors(r.data.responseInfo.errors)
                     }
                 }

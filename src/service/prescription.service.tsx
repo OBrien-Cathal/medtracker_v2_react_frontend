@@ -25,15 +25,10 @@ export class PrescriptionService extends AuthenticatedService {
         return this._client.get<IGetPrescriptionDetailsResponse>("/prescription-details?id=" + prescriptionId);
     }
 
-    updatePrescription(details: IPrescriptionDetailsType) {
+
+    submitPrescription(details: IPrescriptionDetailsType) {
         return this._client.post<ISubmitPrescriptionDetailsResponse>(
-            "update",
-            details
-        )
-    }
-    addPrescription(details: IPrescriptionDetailsType) {
-        return this._client.post<ISubmitPrescriptionDetailsResponse>(
-            "add",
+            "submit-prescription",
             details
         )
     }
