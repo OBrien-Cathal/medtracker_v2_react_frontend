@@ -1,19 +1,18 @@
 // import Swal from "sweetalert2";
 import {useAuth} from "../../auth/AuthProvider.tsx";
-import {PatientDataService} from "../../service/patient.service.tsx";
 import {useState} from "preact/compat";
 import * as React from "preact/compat";
 import Swal from "sweetalert2";
 import {MTPage, MTPageHeading, MTPageBody, MTPageContent, MTPageDescription} from "../../components/pages/MTPage.tsx";
-
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
+import {BulkDataService} from "../../service/bulk-data.service.tsx";
 
 
 const UploadPage = () => {
     const {token} = useAuth()
     const [doseFile, setDoseFile] = useState<File | null>(null);
     const [bpFile, setBpFile] = useState<File | null>(null);
-    const patientDataService = new PatientDataService(token)
+    const bulkDataService = new BulkDataService(token)
 
     const handleDoseFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
@@ -41,7 +40,7 @@ const UploadPage = () => {
         e.preventDefault();
         let data = new FormData();
         data.append('dosesFile', doseFile as Blob);
-        patientDataService.uploadDoseFile(data).then(r => {
+        bulkDataService.uploadDoseFile(data).then(r => {
             if (r.data.responseInfo.successful) {
                 handleSuccessfulUpload(r.data.responseInfo.message);
             } else {
@@ -71,7 +70,7 @@ const UploadPage = () => {
         e.preventDefault();
         let data = new FormData();
         data.append('bloodPressureFile', bpFile as Blob);
-        patientDataService.uploadBloodPressureFile(data).then(r => {
+        bulkDataService.uploadBloodPressureFile(data).then(r => {
             if (r.data.responseInfo.successful) {
                 handleSuccessfulUpload(r.data.responseInfo.message);
             } else {

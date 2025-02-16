@@ -1,7 +1,6 @@
 import {IUserModel} from "../types/user.type.ts";
 import {useEffect, useMemo, useState} from "preact/compat";
 import {UserDataService} from "../service/user.service.tsx";
-import Swal from "sweetalert2";
 import {useAuth} from "../auth/AuthProvider.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../components/table/ReactTable.tsx";
@@ -9,7 +8,7 @@ import {PatientDataService} from "../service/patient.service.tsx";
 import {MTPage, MTPageHeading, MTPageDescription, MTPageContent, MTPageBody} from "../components/pages/MTPage.tsx";
 import MTSectionWithControls from "../components/MTSectionWithControls.tsx";
 import CenteredFlex from "../components/layout/CenteredFlex.tsx";
-
+import {handleError, handleResponseAndNotify} from "./utils/response-handler.tsx";
 
 
 type IPatientRegistrationRow = {
@@ -67,21 +66,10 @@ const Practitioners = () => {
 
     function onClick(roleChangeId: bigint) {
         patientDataService.submitPatientRegistration(roleChangeId).then(r => {
-                if (r.data.responseInfo.successful) {
-                    Swal.fire({
-                        title: "Registration Successful",
-                        text: "Request pending with id: " + r.data.data.id,
-                        icon: "success"
-                    }).then()
-                } else {
-                    console.log(r.data.responseInfo.message)
-                    console.log(r.data.responseInfo.errors)
-                    Swal.fire("ERROR", r.data.responseInfo.errors.join("\n"), "error").then()
-                }
+                handleResponseAndNotify(r)
                 getPractitioners()
             }
-        ).catch(e => console.log(e.error))
-
+        ).catch(e => handleError(e))
     }
 
 

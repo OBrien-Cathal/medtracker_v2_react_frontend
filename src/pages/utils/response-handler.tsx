@@ -17,7 +17,11 @@ class ResponseHandler {
     public handleResponse(response: AxiosResponse<IResponse>): RequestStatusType {
         if (response.data.responseInfo.successful) {
             if (this._notify) {
-                Swal.fire(response.data.responseInfo.message).then()
+                Swal.fire({
+                    title: "Success",
+                    text: response.data.responseInfo.message,
+                    icon: "success"
+                }).then()
             }
             return {succeeded: true}
         } else {

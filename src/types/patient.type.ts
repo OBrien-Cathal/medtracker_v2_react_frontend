@@ -8,11 +8,9 @@ export interface IPatientRegistrationData{
 }
 
 export interface IPatientRegistrationResponse extends IResponse{
-    data: IPatientRegistrationData
+    registrationId: bigint
 }
 
-export interface IPatientRegistrationRequest{
-    practitionerId: bigint
-}
+
 
 
