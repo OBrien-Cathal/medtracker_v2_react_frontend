@@ -9,19 +9,21 @@ import {useAuth} from "../../auth/AuthProvider.tsx";
 import {MTPage, MTPageBody, MTPageContent, MTPageDescription, MTPageHeading} from "../../components/pages/MTPage.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
+import {RoleChangeService} from "../../service/role-change.service.tsx";
 
 type UserList = IUserModel[];
 
 const UserManagement = () => {
     const {token} = useAuth()
     const uds: UserDataService = new UserDataService(token)
+    const rcs = new RoleChangeService(token)
     const [userList, setUserList] = useState<UserList>([])
 
     const fetchUnapprovedRoleChanges = (fetchedUsers: IUserModel[]): void => {
         for (const fetchedUser of fetchedUsers) {
             fetchedUser.roleChange = []
         }
-        uds.getUnapprovedRoleChanges()
+        rcs.getUnapprovedRoleChanges()
             .then(value => {
                     const roleChanges = value.data
                     for (const roleChangeElement of roleChanges) {
@@ -47,7 +49,7 @@ const UserManagement = () => {
     }
 
     function onClick(roleChangeId: bigint) {
-        uds.approveRoleChange(roleChangeId).then(r => {
+        rcs.approveRoleChange(roleChangeId).then(r => {
             if (r.data.responseInfo.successful) {
                 Swal.fire(r.data.responseInfo.message).then()
             } else {

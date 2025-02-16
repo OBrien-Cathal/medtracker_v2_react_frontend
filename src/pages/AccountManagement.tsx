@@ -1,12 +1,12 @@
 import {useState, useEffect} from "preact/compat";
 import {IRoleChange} from "../types/user.type.ts";
-import {UserDataService} from "../service/user.service.tsx";
 import {useAuth} from "../auth/AuthProvider.tsx";
 import Swal from "sweetalert2";
 import React from "react";
 import MTSectionWithControls from "../components/MTSectionWithControls.tsx";
 import {MTSectionBody, MTSectionDescription, MTSectionHeading} from "../components/section/MTSection.tsx";
 import {MTPage, MTPageBody, MTPageContent, MTPageHeading} from "../components/pages/MTPage.tsx";
+import {RoleChangeService} from "../service/role-change.service.tsx";
 
 const AccountManagement = () => {
     return (
@@ -54,7 +54,7 @@ export default AccountManagement
 const RoleRequests = () => {
     const {token, currentRole} = useAuth()
     const canMakeRoleRequests = currentRole === 'USER'
-    const userDataService: UserDataService = new UserDataService(token)
+    const userDataService: RoleChangeService = new RoleChangeService(token)
 
     const [adminRoleChange, setAdminRoleChange] = useState<IRoleChange>({
         id: -1n,
