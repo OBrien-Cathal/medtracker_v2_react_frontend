@@ -94,38 +94,50 @@ input[type=file]::file-selector-button:hover {
     float: right;
     display: flex;
     justify-self: center;
+    align-items: center;
+    gap: 20px;
 }
 
 .UserStatus a {
     color: black;
     font-weight: bold;
     text-decoration: none;
-    margin-right: 20px;
     padding: 5px;
 
 }
 
-.UserStatus a:hover {
-    color: black;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+.UserStatusName {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+
 }
 
+.UserStatusName:hover {
+    color: black;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 
-.UserStatus img, .section-controls img, .date-selector-widget img {
+}
+
+.sign-out-button {
     justify-self: center;
     cursor: pointer;
 }
 
-.UserStatus img:hover, .section-controls img:hover, .date-selector-widget img {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+.sign-out-button, .section-controls img, .date-selector-widget img {
+    justify-self: center;
+    cursor: pointer;
 }
 
+.sign-out-button img:hover, .section-controls img:hover, .date-selector-widget img {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
 
 .Navigation {
     display: flex;
     background-color: #808080;
-border: solid orange;
-border-width: 0 0 5px 0;
+    border: solid orange;
+    border-width: 0 0 5px 0;
 
 }
 
@@ -447,6 +459,7 @@ Styling for reusable components
 
 
 }
+
 .date-range-refresh input[type='submit'] {
 
     margin: 8px;
