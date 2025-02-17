@@ -13,16 +13,16 @@ const DiastoleGraph = ({patientIdOrNegative, bloodPressureService, dateRange}: P
     const [data, setData] = useState<IGraphData>()
 
     function getGraphData() {
-        console.log("Received PATIENT Diastole graph data ID: " + patientIdOrNegative)
+        // console.log("Received PATIENT Diastole graph data ID: " + patientIdOrNegative)
         bloodPressureService.getDiastoleGraphDataForId(patientIdOrNegative, dateRange)
             .then(r => {
 
-                console.log("Received Diastole DOSE graph data ID: " + patientIdOrNegative)
-                console.log(r)
+                // console.log("Received Diastole DOSE graph data ID: " + patientIdOrNegative)
+                // console.log(r)
                 handleResponse(r)
                 setData(r.data.graphData)
             }).catch((reason) => {
-            console.log(reason)
+            // console.log(reason)
             handleError(reason)
         });
     }

@@ -29,7 +29,6 @@ const DataVis = () => {
 
     function getDayStages() {
         if (dayStages.length != 0) return
-        console.log('getting day stages')
         prescriptionService.getDayStages()
             .then(r => {
                 console.log(r.data)

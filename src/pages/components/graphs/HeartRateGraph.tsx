@@ -13,16 +13,16 @@ const HeartRateGraph = ({patientIdOrNegative, bloodPressureService, dateRange}: 
     const [data, setData] = useState<IGraphData>()
 
     function getGraphData() {
-        console.log("Received PATIENT HeartRate graph data ID: " + patientIdOrNegative)
+        // console.log("Received PATIENT HeartRate graph data ID: " + patientIdOrNegative)
         bloodPressureService.getHeartRateGraphDataForId(patientIdOrNegative, dateRange)
             .then(r => {
 
-                console.log("Received HeartRate DOSE graph data ID: " + patientIdOrNegative)
-                console.log(r)
+                // console.log("Received HeartRate DOSE graph data ID: " + patientIdOrNegative)
+                // console.log(r)
                 handleResponse(r)
                 setData(r.data.graphData)
             }).catch((reason) => {
-            console.log(reason)
+
             handleError(reason)
         });
     }

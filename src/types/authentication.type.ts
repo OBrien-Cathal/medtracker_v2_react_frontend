@@ -20,14 +20,6 @@ export interface IAuthenticationRequest {
     username: string
 }
 
-export interface IAuthenticatedUser {
-    username: string
-    token: string
-    currentUserRole: string;
-}
-
-
-
 
 
 

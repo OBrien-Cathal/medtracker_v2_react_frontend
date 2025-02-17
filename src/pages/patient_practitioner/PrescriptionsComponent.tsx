@@ -74,8 +74,6 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
         }
 
         prescriptionService.getPrescriptionDetails(id).then(r => {
-            console.log('Received Get prescription details response  ')
-            console.log(r.data)
             if (r.data.responseInfo.successful) {
                 console.log(r.data.responseInfo.message)
                 setPrescriptionDetails(r.data.prescriptionDetails)

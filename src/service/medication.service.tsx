@@ -10,10 +10,6 @@ export class MedicationService extends AuthenticatedService {
         return this._client.get<IMedicationType[]>("");
     }
 
-    getMedicationsByPatient() {
-        return this._client.get<IMedicationType[]>("/patient");
-    }
-
     addMedication(medName: string) {
         return this._client.post<IAddMedicationResponse>(
             "add",

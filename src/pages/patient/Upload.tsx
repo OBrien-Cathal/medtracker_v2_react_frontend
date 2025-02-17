@@ -16,7 +16,6 @@ const UploadPage = () => {
 
     const handleDoseFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
-        console.log("dose handle")
         if (target) {
             if (target.files) {
                 setDoseFile(target.files[0]);
@@ -27,7 +26,6 @@ const UploadPage = () => {
 
     const handleBpFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
-        console.log("bp handle")
         if (target) {
             if (target.files) {
                 setBpFile(target.files[0]);

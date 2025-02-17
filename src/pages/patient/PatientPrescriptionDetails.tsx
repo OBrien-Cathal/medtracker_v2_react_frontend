@@ -30,7 +30,7 @@ const PatientPrescriptionDetails =
             editCopy: prescriptionDetails
         })
 
-        function prettyDateString(aDateString: string): string {
+        function prettyDateString(aDateString: string | undefined| null): string {
             if (!aDateString) return 'Open ended'
             let date = new Date(aDateString);
             return aDateString ? date.toDateString() + ' - ' + date.toLocaleTimeString() : '-'
@@ -38,8 +38,6 @@ const PatientPrescriptionDetails =
 
 
         useEffect(() => {
-            console.log('useEffect details component')
-
             setEditModel({
                 editCopy: prescriptionDetails,
             })

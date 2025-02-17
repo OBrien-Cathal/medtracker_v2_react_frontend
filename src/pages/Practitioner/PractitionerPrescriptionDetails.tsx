@@ -39,7 +39,6 @@ type DayStageSelector = {
 
 const PractitionerPrescriptionDetails =
     ({token, prescriptionDetails, getPrescriptionDetails}: Props) => {
-        console.log('render details')
         const editModelPlaceholder: EditorModel = {
             errors: [],
             serverErrors: [],
@@ -56,7 +55,6 @@ const PractitionerPrescriptionDetails =
         const [dayStageSelectors, setDayStageSelectors] = useState<DayStageSelector[]>([])
 
         function getMedications() {
-            console.log('Recieved medications')
             medicationService.getMedicationsByPractitioner()
                 .then(r => {
                     setMedications(r.data)
@@ -68,7 +66,6 @@ const PractitionerPrescriptionDetails =
         function getDayStages() {
             prescriptionService.getDayStages()
                 .then(r => {
-                    console.log('Recieved daystages')
                     let selectors = r.data.map((v) => {
                         return asDayStageSelector(v, prescriptionDetails.prescriptionScheduleEntries)
                     });
@@ -100,12 +97,12 @@ const PractitionerPrescriptionDetails =
             return {id: id, included: !!existing, dayStage: ds}
         }
 
-        function logForURLParameters(string: string) {
-            console.log(string + `prescription ID: ${prescriptionDetails.id} patient ID: ${prescriptionDetails.patientId}`)
-        }
+        // function logForURLParameters(string: string) {
+        //     console.log(string + `prescription ID: ${prescriptionDetails.id} patient ID: ${prescriptionDetails.patientId}`)
+        // }
 
         function getValidationErrorsFor(ec: IPrescriptionDetailsType): string[] {
-            logForURLParameters('Validating')
+
             let tmpErrors: string[] = []
 
             if (ec.doseMg < 0) {
@@ -124,7 +121,6 @@ const PractitionerPrescriptionDetails =
 
         function updateDoseMg(event:
                               TargetedEvent<HTMLInputElement, Event>) {
-            console.log('updateDose')
             setEditModelEditCopy({
                     ...editModel.editCopy,
                     doseMg: Number(event.currentTarget.value)
@@ -134,7 +130,6 @@ const PractitionerPrescriptionDetails =
 
         function updateBeginTime(event:
                                  TargetedEvent<HTMLInputElement, Event>) {
-            console.log('updateBegin')
             setEditModelEditCopy({
                     ...editModel.editCopy,
                     beginTime: (
@@ -145,7 +140,6 @@ const PractitionerPrescriptionDetails =
 
         function updateEndTime(event:
                                TargetedEvent<HTMLInputElement, Event>) {
-            console.log('updateEnd')
             setEditModelEditCopy({
                     ...editModel.editCopy,
                     endTime: ((event.currentTarget.value))
@@ -155,14 +149,11 @@ const PractitionerPrescriptionDetails =
 
         function updateDayStage(event:
                                 TargetedEvent<HTMLInputElement, Event>) {
-            console.log('updateDayStage')
 
             let name = event.currentTarget.name;
-            let id = Number(event.currentTarget.id);
             let checked = event.currentTarget.checked;
 
-            console.log(`checked: ${checked} name: ${name} id: ${id}`)
-
+            // console.log(`checked: ${checked} name: ${name} id: ${id}`)
             let newSelectors = dayStageSelectors.map((dss) => {
                 return {
                     ...dss,
@@ -174,8 +165,6 @@ const PractitionerPrescriptionDetails =
         }
 
         function updateMedication(med: IMedicationType | null) {
-            console.log('updateMed')
-
             setEditModelEditCopy({
                     ...editModel.editCopy,
                     medication: med ? med : null
@@ -187,14 +176,12 @@ const PractitionerPrescriptionDetails =
         function savePrescriptionDetails() {
             let validationErrors = getValidationErrorsFor(editModel.editCopy);
             if (validationErrors.length !== 0) {
-                logForURLParameters('On Save validation failed')
                 return
             }
             let toSave: IPrescriptionDetailsType = {
                 ...editModel.editCopy,
                 prescriptionScheduleEntries: getPrescriptionScheduleEntries()
             }
-            logForURLParameters('About to submit save')
             console.log(toSave)
             prescriptionService.submitPrescription(toSave).then(r => {
                     handleResponse(r)
@@ -209,7 +196,6 @@ const PractitionerPrescriptionDetails =
         }
 
         useEffect(() => {
-            console.log('useEffect details component')
             getMedications()
             getDayStages()
             setEditModel({
