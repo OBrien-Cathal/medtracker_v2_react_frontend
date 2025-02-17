@@ -23,7 +23,7 @@ const Login = () => {
             .then((r) => {
                 handleResponse(r)
                 if (r.data.responseInfo.successful) {
-                    auth.login({username: username, token: r.data.token, currentRole: r.data.currentUserRole})
+                    auth.login({username: r.data.username, token: r.data.token, currentRole: r.data.currentUserRole})
                     navigate('/home')
                 }
 
@@ -84,6 +84,7 @@ const Login = () => {
                             <text className={"clickable-text"} onClick={onClickRegister}>
                                 register a new account.
                             </text>
+                            <a href={''}/>
                         </p>
                         <br/>
                         <form onSubmit={onButtonClick}>
