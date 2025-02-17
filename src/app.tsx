@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation.tsx";
 import HeaderContainer from "./components/HeaderContainer.tsx";
 import AuthProvider from "./auth/AuthProvider.tsx";
 import {BrowserRouter} from "react-router-dom";
+import FooterContainer from "./components/FooterContainer.tsx";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                         <Navigation/>
                     </HeaderContainer>
                     <AppRoutes></AppRoutes>
+                    <FooterContainer/>
                 </AuthProvider>
             </BrowserRouter>
         </React.Fragment>

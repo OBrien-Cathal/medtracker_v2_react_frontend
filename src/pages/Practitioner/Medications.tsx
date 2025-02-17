@@ -91,7 +91,7 @@ const Medications = () => {
                     <MTSectionWithControls
                         mtHeading={
                             <MTSectionHeading>
-                                New Medication
+                                Add Medication
                             </MTSectionHeading>
                         }>
                         <MTSectionBody>
@@ -112,7 +112,7 @@ const Medications = () => {
                     <MTSectionWithControls
                         mtHeading={
                             <MTSectionHeading>
-                                Existing Medications
+                                Available Medications
                             </MTSectionHeading>
                         }
                     >
