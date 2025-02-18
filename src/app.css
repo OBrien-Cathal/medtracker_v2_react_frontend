@@ -320,6 +320,7 @@ Styling for reusable components
     display: flex;
     flex-direction: row;
     margin-right: 10px;
+    column-gap: 10px;
 }
 
 .section-control {
@@ -331,6 +332,7 @@ Styling for reusable components
 .MTPage, .MTPageBody, .MTPageContent, .MTSectionBody, .MTSectionContent, .section-with-controls-content {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 
@@ -388,10 +390,48 @@ Styling for reusable components
     flex-basis: 100%;
 }
 
-.section-with-controls-description-content {
+.section-with-controls-content {
+
+    &.open {
+        opacity: 100;
+    }
+
+
+    &.visible {
+        opacity: 100;
+        animation: fade-in 600ms;
+    }
+
+    &.hidden {
+        opacity: 0;
+        animation: fade-out 600ms;
+    }
+
+
 }
 
-.section-with-controls-content {
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 100;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 100;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+
+.section-with-controls-description-content {
 }
 
 

@@ -1,7 +1,8 @@
-import React from "react";
-import {useState} from "preact/compat";
+import React, {useRef} from "react";
+import {useEffect, useState} from "preact/compat";
 import question from "../assets/question.svg";
 import collapseIcon from "../assets/collapse.svg";
+import expandIcon from "../assets/expand.svg";
 
 interface Props extends React.PropsWithChildren {
     mtDescription?: React.ReactNode;
@@ -10,10 +11,16 @@ interface Props extends React.PropsWithChildren {
 }
 
 export function MTSectionWithControls({children, mtHeading, mtDescription, isInitiallyCollapsed}: Props) {
-    const initiallyCollapsed = isInitiallyCollapsed == true
+
+    const initiallyOpen = (isInitiallyCollapsed == undefined) ? true : !isInitiallyCollapsed
+
+    console.log("Initial" + initiallyOpen)
 
     const [showDescription, setShowDescription] = useState<boolean>(false)
-    const [collapsed, setCollapsed] = useState<boolean>(initiallyCollapsed)
+    const [open, setOpen] = useState<boolean>(initiallyOpen)
+    const [isAnimating, setIsAnimating] = useState<boolean>(false)
+    const contentRef = useRef<HTMLDivElement>(null);
+
 
     function toggleDescription() {
         setShowDescription(!showDescription)
@@ -21,10 +28,26 @@ export function MTSectionWithControls({children, mtHeading, mtDescription, isIni
 
     function toggleCollapse() {
         if (!children) return
-        let shouldToggleShowDescription: boolean = !collapsed && showDescription
+        let shouldToggleShowDescription: boolean = open && showDescription
         if (shouldToggleShowDescription) setShowDescription(false)
-        setCollapsed(!collapsed)
+
+        console.log("Toggle to" + !open)
+        setOpen(!open)
+
+
+        setIsAnimating(true)
+
     }
+
+    useEffect(() => {
+        contentRef.current?.addEventListener("animationcancel", () => {
+            setIsAnimating(false);
+        });
+        contentRef.current?.addEventListener("animationend", () => {
+            setIsAnimating(false);
+
+        });
+    }, [contentRef.current]);
 
     return (
         <div className={'MTSectionWithControls'}>
@@ -40,7 +63,7 @@ export function MTSectionWithControls({children, mtHeading, mtDescription, isIni
                         </div>}
                     {children &&
                         <div className={'section-control'}>
-                            <img src={collapseIcon} alt="Collapse Section" onClick={toggleCollapse}/>
+                            <img src={open ? collapseIcon : expandIcon} alt="Collapse Section" onClick={toggleCollapse}/>
                         </div>}
                 </div>
             </div>
@@ -53,12 +76,16 @@ export function MTSectionWithControls({children, mtHeading, mtDescription, isIni
                 </div>
             }
 
-            {!collapsed && children &&
-                <div className={'section-with-controls-content'}>
+
+            {(open || isAnimating) &&
+                <div ref={contentRef}
+                     className={`section-with-controls-content open ${open && isAnimating ? "visible" : (!open ? "hidden" : "")}`}>
                     {children}
                 </div>
             }
         </div>
+
+
     )
 }
 
