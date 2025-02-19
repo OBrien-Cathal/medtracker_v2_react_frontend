@@ -9,6 +9,7 @@ class AuthenticatedService {
         this._token = token;
         this._client = this.createClient(path);
     }
+
     private getConfig(path: string) {
         return {
             baseURL: path,
@@ -25,6 +26,23 @@ class AuthenticatedService {
             this.getConfig(baseUrl() + path)
         );
     }
+
+
+    public createDownloadClient(path: string): AxiosInstance {
+        return axios.create(
+            {
+                baseURL: baseUrl() + path,
+                responseType: 'arraybuffer',
+                headers: {
+                    'Authorization': 'Bearer ' + this._token,
+                    'Content-Type': 'blob',
+                    withCredentials: true,
+                }
+            }
+        )
+    }
+
+
 }
 
 export default AuthenticatedService

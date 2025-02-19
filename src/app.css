@@ -557,11 +557,11 @@ Styling for reusable components
 }
 
 
-/*Uploads*/
-.uploadsContainer {
-}
+/*Data Management*/
 
-.uploadContainer {
+.data-file-manager {
+    display: flex;
+    flex-direction: row;
     margin-bottom: 30px;
     border: 10px #808080;
 }
@@ -575,17 +575,22 @@ Styling for reusable components
     flex-direction: row-reverse;
 }
 
-.uploadContainer-header {
-    height: 40%;
-    width: 100%;
-    background-color: orange;
-    color: white
+.upload-data-file-container {
+
 }
 
-.upload-header {
-    padding: 5px;
-    font-weight: bold;
+.download-data-file-container {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-grow: 1;
+    align-self: end;
 }
+
+
+
+
+
+
 
 /*Account management*/
 

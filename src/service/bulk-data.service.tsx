@@ -1,11 +1,20 @@
 import AuthenticatedService from "./authenticatedService.tsx";
 import {IResponse} from "../types/generic.type.ts";
+import {AxiosInstance} from "axios";
+
 
 export class BulkDataService extends AuthenticatedService {
+    protected _downloadClient: AxiosInstance
+
     constructor(token: string) {
-        super(token, "/bulk-data");
+        super(token, BulkDataService.getPath());
+        this._downloadClient = this.createDownloadClient(BulkDataService.getPath())
     }
 
+
+    private static getPath() {
+        return "/bulk-data";
+    }
 
     uploadDoseFile(file: FormData) {
         return this._client.post<IResponse>(
@@ -33,5 +42,15 @@ export class BulkDataService extends AuthenticatedService {
         );
     }
 
+    downloadBloodPressureFile() {
+        return this._downloadClient.get("/blood-pressure-download")
+    }
 
+    downloadDoseFile() {
+        return this._downloadClient.get("/dose-download")
+    }
+
+    archiveToEmail() {
+        return this._client.get("/archive")
+    }
 }

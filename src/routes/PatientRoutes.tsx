@@ -1,5 +1,5 @@
 import {userRoles as ur} from "../data/userRoles.ts";
-import Upload from "../pages/patient/Upload.tsx";
+import DataManagement from "../pages/patient/DataManagement.tsx";
 import Prescriptions from "../pages/patient/Prescriptions.tsx";
 import DataVis from "../pages/patient/DataVis.tsx";
 import DailyData from "../pages/patient/DailyData.tsx";
@@ -7,10 +7,10 @@ import DailyData from "../pages/patient/DailyData.tsx";
 
 export const patient_routes = [
     {
-        path: "/upload",
-        ele: <Upload/>,
+        path: "/dataManagement",
+        ele: <DataManagement/>,
         availability: [ur.patient],
-        title: "Upload",
+        title: "Data Management",
         showInNav: true
     },
     {

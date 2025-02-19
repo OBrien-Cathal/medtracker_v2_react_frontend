@@ -14,7 +14,7 @@ export function MTSectionWithControls({children, mtHeading, mtDescription, isIni
 
     const initiallyOpen = (isInitiallyCollapsed == undefined) ? true : !isInitiallyCollapsed
 
-    console.log("Initial" + initiallyOpen)
+    // console.log("Initial" + initiallyOpen)
 
     const [showDescription, setShowDescription] = useState<boolean>(false)
     const [open, setOpen] = useState<boolean>(initiallyOpen)
@@ -31,7 +31,7 @@ export function MTSectionWithControls({children, mtHeading, mtDescription, isIni
         let shouldToggleShowDescription: boolean = open && showDescription
         if (shouldToggleShowDescription) setShowDescription(false)
 
-        console.log("Toggle to" + !open)
+        // console.log("Toggle to" + !open)
         setOpen(!open)
 
 
