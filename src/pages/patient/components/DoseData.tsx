@@ -6,6 +6,7 @@ import {IDailyDoseData, IDailyMedicationDoseData} from "../../../types/dose.type
 import MTSectionWithControls from "../../../components/MTSectionWithControls.tsx";
 import {MTSectionDescription, MTSectionHeading} from "../../../components/section/MTSection.tsx";
 import CenteredFlex from "../../../components/layout/CenteredFlex.tsx";
+import {formatTimestamp} from "../../../date-time-utils.ts";
 
 
 type Props = {
@@ -19,7 +20,9 @@ const DoseData = ({readings, saveDailyDoseData}: Props) => {
     const Columns: ColumnDef<IDailyDoseData>[] = [
         {
             header: "Update time",
-            accessorKey: "doseTime",
+            accessorFn: originalRow => {
+                return originalRow.doseTime ? formatTimestamp(originalRow.doseTime) : '-'
+            }
         },
         {
             header: "Day Stage",

@@ -71,7 +71,7 @@ const UserManagement = () => {
 
     const Columns: ColumnDef<IUserModel>[] = [
         {
-            header: "ID",
+            header: "User ID",
             accessorKey: "id",
         },
         {
@@ -102,7 +102,8 @@ const UserManagement = () => {
                     return (
                         <input type={"button"} value="Approve" onClick={() => onClick(found.id)}>
                             Approve
-                        </input>)
+                        </input>
+                    )
                 } else return ''
             }
         }
@@ -115,12 +116,13 @@ const UserManagement = () => {
             <MTSectionWithControls
                 mtHeading={
                     <MTPageHeading>
-                        User management
+                        Role Management
                     </MTPageHeading>
                 }
                 mtDescription={
                     <MTPageDescription>
-                        <p>Admin page for managing users</p>
+                        <p>Role upgrades can be managed here, users with active role requests will display an "Approve"
+                            button</p>
                     </MTPageDescription>}
             >
             </MTSectionWithControls>

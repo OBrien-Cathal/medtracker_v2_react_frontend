@@ -14,7 +14,14 @@ export const dateStringAdjusted = (date: string, days: number) => {
     return dateObj.toISOString().slice(0, 10)
 }
 
-export const todayString = () => {
+export const dateTodayString = () => {
     return new Date().toISOString().slice(0, 10);
 }
+
+
+export const formatTimestamp = (dateTimeString: string) => {
+    let dateObj: Date = new Date(dateTimeString);
+    return dateObj.toDateString() + ' - ' + dateObj.toLocaleTimeString('en-GB')
+}
+
 

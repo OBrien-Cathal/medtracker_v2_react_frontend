@@ -8,9 +8,9 @@ import {
 } from "../../components/section/MTSection.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
+import {formatTimestamp} from "../../date-time-utils.ts";
 
 type Props = {
-
     prescriptionDetails: IPrescriptionDetailsType
 }
 
@@ -32,8 +32,7 @@ const PatientPrescriptionDetails =
 
         function prettyDateString(aDateString: string | undefined| null): string {
             if (!aDateString) return 'Open ended'
-            let date = new Date(aDateString);
-            return aDateString ? date.toDateString() + ' - ' + date.toLocaleTimeString() : '-'
+            return aDateString ? formatTimestamp(aDateString) : '-'
         }
 
 

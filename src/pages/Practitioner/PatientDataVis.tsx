@@ -14,7 +14,7 @@ import {useState} from "react";
 
 import DateRangeWidget from "../../components/date/DateRangeWidget.tsx";
 import {IDateRange} from "../../types/generic.type.ts";
-import {todayString, todayStringAdjusted} from "../../date-utils.ts";
+import {dateTodayString, todayStringAdjusted} from "../../date-time-utils.ts";
 import DiastoleGraph from "../components/graphs/DiastoleGraph.tsx";
 import HeartRateGraph from "../components/graphs/HeartRateGraph.tsx";
 
@@ -27,7 +27,7 @@ const PatientDataVis = ({patientId}: PropsType) => {
     const {token} = useAuth()
     const bloodPressureService = new BloodPressureService(token)
     const dosesService = new DosesService(token)
-    const [dateRange, setDateRange] = useState<IDateRange>({start: todayStringAdjusted(-30), end: todayString()})
+    const [dateRange, setDateRange] = useState<IDateRange>({start: todayStringAdjusted(-30), end: dateTodayString()})
     return (
         <MTSectionWithControls
             mtHeading={

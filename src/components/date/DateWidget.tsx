@@ -1,7 +1,7 @@
 import previous from "../../assets/previous.svg";
 import next from "../../assets/next.svg"
 import {TargetedEvent} from "react";
-import {dateStringAdjusted} from "../../date-utils.ts";
+import {dateStringAdjusted} from "../../date-time-utils.ts";
 
 type Props = {
     date: string

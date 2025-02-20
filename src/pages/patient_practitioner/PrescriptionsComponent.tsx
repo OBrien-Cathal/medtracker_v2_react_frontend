@@ -13,6 +13,7 @@ import {
 } from "../../components/section/MTSection.tsx";
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
+import {formatTimestamp} from "../../date-time-utils.ts";
 
 type Props = {
     token: string
@@ -112,15 +113,14 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
         {
             header: "Start",
             accessorFn: originalRow => {
-                let date = new Date(originalRow.beginTime);
-                return originalRow.beginTime ? date.toDateString() + ' - ' + date.toLocaleTimeString() : '-'
+                return originalRow.beginTime ? formatTimestamp(originalRow.beginTime) : '-'
             },
         },
         {
             header: "End",
             accessorFn: originalRow => {
-                let date = new Date(originalRow.endTime);
-                return originalRow.endTime ? date.toDateString() + ' - ' + date.toLocaleTimeString() : '-'
+
+                return originalRow.endTime ? formatTimestamp(originalRow.endTime) : '-'
             },
         },
 

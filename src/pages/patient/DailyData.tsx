@@ -14,6 +14,7 @@ import {MTPage, MTPageBody, MTPageContent, MTPageDescription, MTPageHeading} fro
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import {MTSectionBody, MTSectionGroupHeading} from "../../components/section/MTSection.tsx";
 import DateWidget from "../../components/date/DateWidget.tsx";
+import {dateTodayString} from "../../date-time-utils.ts";
 
 const DataVis = () => {
     const {token} = useAuth()
@@ -21,7 +22,7 @@ const DataVis = () => {
     const prescriptionService = new PrescriptionService(token)
     const dosesService = new DosesService(token)
 
-    const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10))
+    const [date, setDate] = useState<string>(dateTodayString())
     const [dayStages, setDayStages] = useState<string[]>([])
     const [bloodPressureReadings, setBloodPressureReadings] = useState<ISubmittedBloodPressureData[]>([])
 

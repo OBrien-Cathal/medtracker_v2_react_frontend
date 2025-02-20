@@ -3,6 +3,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import {ReactTable} from "../../../components/table/ReactTable.tsx";
 import {ISubmittedBloodPressureData} from "../../../types/blood-pressure.type.ts";
 import CenteredFlex from "../../../components/layout/CenteredFlex.tsx";
+import {formatTimestamp} from "../../../date-time-utils.ts";
 
 
 type Props = {
@@ -15,7 +16,9 @@ const DailyBloodPressure = ({readings}: Props) => {
     const Columns: ColumnDef<ISubmittedBloodPressureData>[] = [
         {
             header: "Time",
-            accessorKey: "readingTime",
+            accessorFn: originalRow => {
+                return originalRow.readingTime ? formatTimestamp(originalRow.readingTime) : '-'
+            },
         },
         {
             header: "Systole",
