@@ -462,7 +462,7 @@ Styling for reusable components
 
 
 /*PRescriptions*/
-.PrescriptionDetails {
+.PrescriptionDetails, .user-details{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -587,6 +587,7 @@ Styling for reusable components
 }
 
 
+/*Patient info*/
 
 
 

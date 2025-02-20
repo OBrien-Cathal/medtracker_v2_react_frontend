@@ -7,6 +7,7 @@ import MTSectionWithControls from "../components/MTSectionWithControls.tsx";
 import {MTSectionBody, MTSectionDescription, MTSectionHeading} from "../components/section/MTSection.tsx";
 import {MTPage, MTPageBody, MTPageContent, MTPageHeading} from "../components/pages/MTPage.tsx";
 import {RoleChangeService} from "../service/role-change.service.tsx";
+import AccountDetailsComponent from "./AccountDetailsComponent.tsx";
 
 const AccountManagement = () => {
     return (
@@ -41,6 +42,7 @@ const AccountManagement = () => {
                         </MTSectionBody>
                     </MTSectionWithControls>
 
+                    <AccountDetailsComponent></AccountDetailsComponent>
                 </MTPageContent>
             </MTPageBody>
         </MTPage>

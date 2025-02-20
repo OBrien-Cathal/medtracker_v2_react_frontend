@@ -1,6 +1,6 @@
 import {useAuth} from "../../auth/AuthProvider.tsx";
 import {useParams} from "react-router-dom";
-import UserDetails from "../components/UserDetails.tsx";
+import BasicPatientDetails from "../components/BasicPatientDetails.tsx";
 import {IParams} from "../../types/params.type.ts";
 import PatientDataVis from "./PatientDataVis.tsx";
 import PrescriptionsComponent from "../patient_practitioner/PrescriptionsComponent.tsx";
@@ -9,16 +9,34 @@ import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import {
     MTSectionBody,
     MTSectionContent,
-    MTSectionGroupHeading,
-    MTSectionHeading
+    MTSectionGroupHeading
 } from "../../components/section/MTSection.tsx";
+import AccountDetailsService from "../../service/AccountDetailsService.tsx";
+import {useEffect, useState} from "preact/compat";
+import {IAccountDetailsType} from "../../types/account-details.type.ts";
 
 const PatientDetails = () => {
     const {token} = useAuth()
-
-
     const params = useParams<IParams>()
+
     const patientId = Number(params.id)
+    const accountDetailsService = new AccountDetailsService(token);
+    const accountDetailsPlaceholder: IAccountDetailsType = {firstName:'',
+        surname:'',email:'',userModelId:''}
+    const [accountDetails, setAccountDetails] = useState<IAccountDetailsType>(accountDetailsPlaceholder)
+
+    useEffect(() => {
+        getAccountDetails()
+    }, []);
+
+
+    function getAccountDetails() {
+        accountDetailsService.getPatientAccountDetails(params.id ? params.id : "")
+            .then(value => {
+                console.log(value)
+                setAccountDetails(value.data)
+            })
+    }
 
     return (
 
@@ -27,13 +45,17 @@ const PatientDetails = () => {
             <MTSectionWithControls
                 mtHeading={
                     <MTPageHeading>
-                        <div>Patient {patientId}</div>
+                        <div>
+                            {accountDetails?.surname}, {accountDetails?.firstName} </div>
                     </MTPageHeading>}
                 mtDescription={
                     <MTPageDescription>
                         <p>Overview of all records for a patient</p>
                     </MTPageDescription>
-                }/>
+                }>
+
+
+            </MTSectionWithControls>
 
 
             <MTPageBody>
@@ -45,25 +67,10 @@ const PatientDetails = () => {
                         </MTSectionGroupHeading>
                     }>
                         <MTSectionBody>
-                            <UserDetails/>
-                            <MTSectionContent>
-                                <MTSectionWithControls
-                                    mtHeading={
-                                        <MTSectionHeading>
-                                            Medical Records
-                                        </MTSectionHeading>
-                                    }
+                            <BasicPatientDetails accountDetails={accountDetails
+                                }
+                            />
 
-                                    mtDescription={
-                                        <MTPageDescription>
-                                            <p>Details about a patients medical records</p>
-                                        </MTPageDescription>
-                                    }>
-                                    <MTSectionBody>
-                                        Under construction
-                                    </MTSectionBody>
-                                </MTSectionWithControls>
-                            </MTSectionContent>
                         </MTSectionBody>
                     </MTSectionWithControls>
 
