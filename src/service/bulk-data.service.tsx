@@ -50,7 +50,43 @@ export class BulkDataService extends AuthenticatedService {
         return this._downloadClient.get("/dose-download")
     }
 
+
     archiveToEmail() {
         return this._client.get("/archive")
+    }
+
+
+    downloadMedicationsFile() {
+        return this._downloadClient.get("/medications-download")
+    }
+
+    downloadPrescriptionsFile() {
+        return this._downloadClient.get("/prescriptions-download")
+    }
+
+    uploadMedicationsFile(file: FormData) {
+        return this._client.post<IResponse>(
+            "/medications-upload",
+            file,
+            {
+                headers: {
+                    "Authorization": 'Bearer ' + this._token,
+                    "Content-type": "multipart/form-data",
+                },
+            }
+        );
+    }
+
+    uploadPrescriptionsFile(file: FormData) {
+        return this._client.post<IResponse>(
+            "/prescriptions-upload",
+            file,
+            {
+                headers: {
+                    "Authorization": 'Bearer ' + this._token,
+                    "Content-type": "multipart/form-data",
+                },
+            }
+        );
     }
 }

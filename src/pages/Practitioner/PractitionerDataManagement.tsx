@@ -5,22 +5,22 @@ import {MTPage, MTPageHeading, MTPageBody, MTPageContent, MTPageDescription} fro
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import {BulkDataService} from "../../service/bulk-data.service.tsx";
 import {AxiosResponse} from "axios";
-import {handleError, handleResponseAndNotify} from "../utils/response-handler.tsx";
+
 import DataFileComponent from "../components/DataFileComponent.tsx";
 
 
-const DataManagementPage = () => {
+const PractitionerDataManagementPage = () => {
     const {token} = useAuth()
-    const [doseFile, setDoseFile] = useState<File | null>(null);
-    const [bpFile, setBpFile] = useState<File | null>(null);
+    const [prescriptionsFile, setPrescriptionsFile] = useState<File | null>(null);
+    const [medicationsFile, setMedicationsFile] = useState<File | null>(null);
     const bulkDataService = new BulkDataService(token)
 
 
-    function onUploadDoseFileClick(e: Event) {
+    function onUploadPrescriptionsFileClick(e: Event) {
         e.preventDefault();
         let data = new FormData();
-        data.append('dosesFile', doseFile as Blob);
-        bulkDataService.uploadDoseFile(data).then(r => {
+        data.append('prescriptionsFile', prescriptionsFile as Blob);
+        bulkDataService.uploadPrescriptionsFile(data).then(r => {
             if (r.data.responseInfo.successful) {
                 handleSuccessfulUpload(r.data.responseInfo.message);
             } else {
@@ -46,11 +46,11 @@ const DataManagementPage = () => {
 
     }
 
-    function onUploadBpFileClick(e: Event) {
+    function onUploadMedicationsFileClick(e: Event) {
         e.preventDefault();
         let data = new FormData();
-        data.append('bloodPressureFile', bpFile as Blob);
-        bulkDataService.uploadBloodPressureFile(data).then(r => {
+        data.append('medicationsFile', medicationsFile as Blob);
+        bulkDataService.uploadMedicationsFile(data).then(r => {
             if (r.data.responseInfo.successful) {
                 handleSuccessfulUpload(r.data.responseInfo.message);
             } else {
@@ -61,14 +61,14 @@ const DataManagementPage = () => {
 
     }
 
-    function onDownloadBloodPressureFileClicked() {
-        bulkDataService.downloadBloodPressureFile().then(value => {
+    function onDownloadMedicationsFileClicked() {
+        bulkDataService.downloadMedicationsFile().then(value => {
             saveExcelFileData(value)
         })
     }
 
-    function onDownloadDoseFileClicked() {
-        bulkDataService.downloadDoseFile().then(value => {
+    function onDownloadPrescriptionsFileClicked() {
+        bulkDataService.downloadPrescriptionsFile().then(value => {
             saveExcelFileData(value)
         })
     }
@@ -92,13 +92,6 @@ const DataManagementPage = () => {
         link.click();
 
     }
-
-    function archiveToEmail() {
-        bulkDataService.archiveToEmail().then(value => {
-            handleResponseAndNotify(value);
-        }).catch(reason => handleError(reason))
-    }
-
     return (
         <MTPage>
             <MTSectionWithControls
@@ -121,18 +114,11 @@ const DataManagementPage = () => {
             <MTPageBody>
                 <MTPageContent>
 
-                    <DataFileComponent title={"Dose"} file={doseFile} setFile={setDoseFile}
-                                   upload={onUploadDoseFileClick} download={onDownloadDoseFileClicked}/>
+                    <DataFileComponent title={"Prescriptions"} file={prescriptionsFile} setFile={setPrescriptionsFile}
+                                   upload={onUploadPrescriptionsFileClick} download={onDownloadPrescriptionsFileClicked}/>
 
-                    <DataFileComponent title={"Blood Pressure"} file={bpFile} setFile={setBpFile}
-                                   upload={onUploadBpFileClick} download={onDownloadBloodPressureFileClicked}/>
-
-                    <input
-                        type={'button'}
-                        onClick={() => archiveToEmail()}
-                        value={'Send all data to registered email'}
-                    />
-
+                    <DataFileComponent title={"Medications"} file={medicationsFile} setFile={setMedicationsFile}
+                                   upload={onUploadMedicationsFileClick} download={onDownloadMedicationsFileClicked}/>
                 </MTPageContent>
             </MTPageBody>
 
@@ -143,4 +129,5 @@ const DataManagementPage = () => {
 }
 
 
-export default DataManagementPage
+
+export default PractitionerDataManagementPage
