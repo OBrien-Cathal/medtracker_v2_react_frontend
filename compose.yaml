@@ -1,7 +1,6 @@
 services:
   frontend:
-    build:
-      context: .
+    image: cathalobrien/medtracker_v2_react_frontend-frontend
     container_name: medtracker-frontend
     ports:
       - "80:80"
