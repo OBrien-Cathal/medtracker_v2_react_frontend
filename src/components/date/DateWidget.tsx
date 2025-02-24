@@ -37,9 +37,9 @@ const DateWidget = ({date, updateDate}: Props) => {
                 <img src={previous} alt="Collapse Section" onClick={decrementDate}/>
             </div>
             <div className={'current-with-calendar'}>
-                <div className={'date-selector-current'}>
-                    {date}
-                </div>
+                {/*<div className={'date-selector-current'}>*/}
+                {/*    {date}*/}
+                {/*</div>*/}
 
                 <input aria-label="Date"
                        value={

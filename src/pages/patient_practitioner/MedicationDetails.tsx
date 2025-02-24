@@ -14,7 +14,7 @@ const MedicationDetails = () => {
             <MTSectionWithControls
                 mtHeading={
                     <MTPageHeading>
-                        MedicationDetails
+                        Medication Details
                     </MTPageHeading>
                 }
                 mtDescription={

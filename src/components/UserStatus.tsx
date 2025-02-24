@@ -33,13 +33,16 @@ const UserStatus = () => {
                     <NavLink to="/accountManagement" title="Account management">{user}</NavLink>
                 </div>
 
-                <img className={'sign-out-button'} src={logo} alt="Sign out" onClick={logoutClicked}/>
+                <div className={'sign-in-out-container'} onClick={logoutClicked}>
+                    <text>Sign out</text>
+                    <img className={'sign-out-button'} src={logo} alt="Sign out"/>
+                </div>
             </div>
         );
     } else {
         return (
             <div className="UserStatus">
-                <NavLink to="/login">Sign In</NavLink>
+                <div className={'sign-in-out-container'}><NavLink to="/login">Sign In</NavLink></div>
             </div>
         );
     }

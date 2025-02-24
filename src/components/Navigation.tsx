@@ -28,19 +28,20 @@ export default function Navigation() {
 
     return (<div className="Navigation">
             {
-                protectedRoutes.map((e) => {
-                    return (
-                        <RoleAwareNavElement route={e} currentUserRole={currentRole}></RoleAwareNavElement>
-                    );
-                })
-            }
-            {
                 unprotectedRoutes.map((e) => {
                     return (
                         <NavElement route={e}></NavElement>
                     );
                 })
             }
+            {
+                protectedRoutes.map((e) => {
+                    return (
+                        <RoleAwareNavElement route={e} currentUserRole={currentRole}></RoleAwareNavElement>
+                    );
+                })
+            }
+
         </div>
     );
 

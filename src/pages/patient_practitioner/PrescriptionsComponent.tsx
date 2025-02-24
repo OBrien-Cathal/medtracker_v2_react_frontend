@@ -14,6 +14,7 @@ import {
 import MTSectionWithControls from "../../components/MTSectionWithControls.tsx";
 import CenteredFlex from "../../components/layout/CenteredFlex.tsx";
 import {formatTimestamp} from "../../date-time-utils.ts";
+import {useRef} from "react";
 
 type Props = {
     token: string
@@ -23,6 +24,7 @@ type Props = {
 
 const PrescriptionsComponent = ({token, patientId}: Props) => {
     const prescriptionService = new PrescriptionService(token)
+    const detailsRef = useRef<HTMLDivElement| null>(null)
 
     const prescriptionDetailsPlaceholder: IPrescriptionDetailsType = {
         id: null,
@@ -78,6 +80,7 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
             if (r.data.responseInfo.successful) {
                 console.log(r.data.responseInfo.message)
                 setPrescriptionDetails(r.data.prescriptionDetails)
+                detailsRef.current?.scrollIntoView()
             } else {
                 console.log(r.data.responseInfo.message)
                 console.log(r.data.responseInfo.errors)
@@ -147,18 +150,13 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
                 </MTSectionHeading>
             } mtDescription={
                 <MTSectionDescription>
-                    <p>Prescriptions that are currently valid, (Work in progress still includes
-                        old
-                        prescriptions)</p>
+                    <p>Prescriptions that are currently active</p>
                 </MTSectionDescription>
             }>
                 <MTSectionBody>
                     <MTSectionContent>
                         <CenteredFlex>
-
-
                             <ReactTable<IPrescriptionOverviewType> data={prescriptionList} columns={columns}/>
-
                         </CenteredFlex>
                     </MTSectionContent>
                 </MTSectionBody>
@@ -192,19 +190,19 @@ const PrescriptionsComponent = ({token, patientId}: Props) => {
 
             <CenteredFlex>
 
+                <div ref={detailsRef} id={'details'}>
+                    {patientId &&
+                        <PractitionerPrescriptionDetails
+                            token={token}
+                            patientId={patientId}
+                            prescriptionDetails={prescriptionDetails}
+                            getPrescriptionDetails={getPrescriptionDetails}>
+                        </PractitionerPrescriptionDetails>}
 
-                {patientId &&
-                    <PractitionerPrescriptionDetails
-                        token={token}
-                        patientId={patientId}
-                        prescriptionDetails={prescriptionDetails}
-                        getPrescriptionDetails={getPrescriptionDetails}>
-                    </PractitionerPrescriptionDetails>}
 
-
-                {!patientId &&
-                    <PatientPrescriptionDetails
-                        prescriptionDetails={prescriptionDetails}></PatientPrescriptionDetails>}
+                    {!patientId &&
+                        <PatientPrescriptionDetails
+                            prescriptionDetails={prescriptionDetails}></PatientPrescriptionDetails>}</div>
 
             </CenteredFlex>
 

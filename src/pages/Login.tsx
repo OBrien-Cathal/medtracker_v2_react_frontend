@@ -111,7 +111,7 @@ const Login = () => {
                             </div>
                             <br/>
                             <div className={'buttonContainer'}>
-                                <input className={'inputButton'} type='submit' value={'Log in'}/>
+                                <input className={'inputButton'} type='submit' value={'Sign in'}/>
                             </div>
                         </form>
                     </CenteredFlex>
