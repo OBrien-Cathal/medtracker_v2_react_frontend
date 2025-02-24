@@ -13,59 +13,123 @@ html, body {
 
 body {
     height: fit-content;
-    font: normal 14px Verdana, Arial, sans-serif;
+    font: normal 1rem Verdana, Arial, sans-serif;
 }
 
 
-input[type='button'], input[type='submit'] {
-    border: none;
-    background: orange;
-    color: white;
-    padding: 3px 10px 3px 10px;
-    margin: 8px;
-    font-size: 14px;
+/*Buttons*/
+input[type='button'], input[type='submit'], .styled-table input[type='button'], input[type=file]::file-selector-button, .buttonContainer input[type='button'], .buttonContainer input[type='submit'],
+.swal2-confirm {
+
+    border: 1px solid grey;
+    border-radius: 0.5rem;
+    color: black;
+    padding: 0.25rem 0.625rem .25rem 0.625rem;
+    margin: 0.5rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: background .2s ease-in-out;
 }
 
-input[type='button']:hover, input[type='submit']:hover {
-    background-color: #FFAC1C;
-    color: black;
+.styled-table input[type='button']{
+    margin: 0.1rem;
+}
+
+
+
+input[type='button']:hover, input[type='submit']:hover, .styled-table input[type='button']:hover,.buttonContainer input[type='button']:hover, .buttonContainer input[type='submit']:hover,
+.swal2-confirm:hover {
+    background-color: #a8e4a0;
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
-input:disabled[type='button'], input:disabled[type='submit'] {
-    background: #808080;
-    cursor: default;
+/*Background color main theme*/
+input[type='button'], input[type='submit'], .styled-table input[type='button'], .buttonContainer input[type='button'], .buttonContainer input[type='submit'],
+.swal2-confirm, .HeaderContainer {
+    background-color: #5aa950 ;
+}
+
+/*alt button + heading bg*/
+
+ .Navigation, .styled-table thead tr, .MTPageHeading, .MTSectionHeading, .MTSectionGroupHeading1, .heading-and-controls {
+    background-color: #ffffff;
+}
+
+
+
+
+
+input[type=file]::file-selector-button:hover, .NavElement:hover, .styled-table tbody tr:nth-of-type(even) {
+    background-color: #ddd;
+    color: black;
+}
+
+input[type=file]::file-selector-button{
+    background-color: #a8e4a0;
+}
+
+input[type=file]::file-selector-button:hover{
+    background-color: #a5ba93;
 }
 
 input[type=file]:hover {
     cursor: pointer;
 }
 
-input[type=file]::file-selector-button {
-    border: none;
-    background: #808080;
-    color: white;
-    padding: 3px 10px 3px 10px;
-    margin: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background .2s ease-in-out;
+
+/*Disabled*/
+input:disabled[type='button'], input:disabled[type='submit'], .styled-table input:disabled[type='button'] {
+    background-color: #a8e4a0;
+    color: #ddd;
+    box-shadow: none;
+    cursor: default;
 }
 
-input[type=file]::file-selector-button:hover {
-    background-color: #ddd;
-    color: black;
-    cursor: pointer;
+
+/*Text*/
+input[type='date'], .label-with-text text, .read-only-field text, .date-selector-current, .clickable-text:hover {
+    color: #5aa950 ;
 }
+
+
+/*Body Background-Color*/
+.MTSectionBody, .date-selector-widget, .date-range-widget, .MTPageDescription, .MTSectionDescription {
+    background-color: #f3f3f3;
+}
+
+
+.MTPageDescription, .MTSectionDescription {
+    padding: 0.625rem;
+    background-color: #cfdac6;
+}
+
+
+
+
+/*Input fields*/
+
+.inputBox, input[type='text'], input[type='date'] {
+    height: 1.5rem;
+    width: 20rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #a8e4a0;
+    padding-left: 0.5rem;
+}
+
+input[type='date'] {
+    width: 10rem;
+    font-weight: bold;
+}
+
 
 /*Routes*/
 .route-container {
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 0.625rem;
+    margin-right: 0.625rem;
     flex-grow: 1;
 
 }
@@ -78,21 +142,20 @@ input[type=file]::file-selector-button:hover {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: orange;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
 .Header {
-    font-size: 64px;
+    font-size: 4rem;
     font-weight: bolder;
-    margin-left: 20px;
+    margin-left: 1.5rem;
 }
 
 .user-status-container {
     display: flex;
     flex-direction: row-reverse;
-    padding-right: 20px;
-    margin-bottom: 10px;
+    padding-right: 1.5rem;
+    margin-bottom: 0.625rem;
 }
 
 .UserStatus {
@@ -100,14 +163,14 @@ input[type=file]::file-selector-button:hover {
     display: flex;
     justify-self: center;
     align-items: center;
-    gap: 20px;
+    gap: 1.5rem;
 }
 
 .UserStatus a {
     color: black;
     font-weight: bold;
     text-decoration: none;
-    padding: 5px;
+    padding: 0.25rem;
 
 }
 
@@ -120,61 +183,63 @@ input[type=file]::file-selector-button:hover {
 
 .UserStatusName:hover {
     color: black;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 1.5rem rgba(255, 255, 255, 0.3);
 
 }
 
-.sign-out-button {
+.sign-in-out-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+}
+
+
+.section-controls img, .date-selector-widget img {
     justify-self: center;
     cursor: pointer;
 }
 
-.sign-out-button, .section-controls img, .date-selector-widget img {
-    justify-self: center;
-    cursor: pointer;
-}
-
-.sign-out-button img:hover, .section-controls img:hover, .date-selector-widget img {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+.date-selector-widget img, .sign-in-out-container:hover {
+    box-shadow: 0 0 1.5rem rgba(255, 255, 255, 0.3);
 }
 
 .Navigation {
     display: flex;
-    background-color: #808080;
-    border: solid orange;
-    border-width: 0 0 5px 0;
-
+    background-color: #a8e4a0;
 }
 
 
-.NavElement {
-    height: 50px;
+.NavElement, .NavElement a {
+    display: flex;
+    height: 3rem;
 }
 
 .NavElement a {
-    display: block;
-    height: 100%;
-    padding: 10px 50px 0;
-    color: #f2f2f2;
+    padding: 0 2rem 0;
+    align-items: center;
+    justify-items: center;
+    color: #4e8047;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 1rem;
 
 }
 
-.NavElement a:hover {
-    background-color: #ddd;
+.section-controls img:hover, .NavElement:hover {
     color: black;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05), 0 0.8rem 1.2rem rgba(0, 0, 0, 0.2);
 }
 
 
 .FooterContainer {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 3rem;
     align-self: center;
     align-items: center;
-    margin-bottom: 50px;
+    margin-bottom: 3rem;
 }
 
 /*
@@ -184,22 +249,22 @@ Styling for reusable components
 
 .styled-table {
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 1.5rem 0;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.15);
 }
 
 .styled-table thead tr {
-    background-color: #808080;
-    color: #ffffff;
+    color: #5aa950;
     text-align: left;
+    border-bottom: 2px solid #a8e4a0;
 }
 
 .styled-table th,
 .styled-table td {
-    padding: 12px 15px;
+    padding: 0.75rem 1rem;
 }
 
 
@@ -208,11 +273,11 @@ Styling for reusable components
 }
 
 .styled-table tbody tr:nth-of-type(even) {
-    background-color: #ddd;
+
 }
 
 .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #808080;
+    border-bottom: 2px solid #a8e4a0;
 }
 
 
@@ -221,53 +286,38 @@ Styling for reusable components
     color: #009879;
 }
 
-.styled-table input[type='button'] {
-    border: none;
-    background: orange;
-    color: white;
-    padding: 3px 10px 3px 10px;
-    margin: 8px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.styled-table input:disabled[type='button'] {
-    background: #808080;
-    cursor: default;
-}
 
 /*Styles for basic page elements*/
 .titleContainer {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
-    font-size: 44px;
+    font-size: 2rem;
     font-weight: bolder;
     align-items: center;
     justify-content: center;
-    margin-bottom: 50px;
+    margin-bottom: 3rem;
 }
 
 
 .label-with-text {
-    margin-right: 20px;
+    margin-right: 1.5rem;
 }
 
 .label-with-text label {
 }
 
 .label-with-text text {
-    color: orange;
     font-weight: bold;
-    font-size: 20px;
-    margin-left: 10px;
+    font-size: 1.5rem;
+    margin-left: 0.625rem;
 }
 
 .labeled-field {
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin: 10px 0 10px 0;
+    margin: 0.625rem 0 0.625rem 0;
 }
 
 .labeled-field input {
@@ -275,16 +325,15 @@ Styling for reusable components
 }
 
 .labeled-field label {
-    margin-right: 20px;
-    width: 150px;
+    margin-right: 1.5rem;
+    width: 9rem;
 }
 
 .field, .read-only-field {
-    width: 200px
+    width: 22rem
 }
 
 .read-only-field text {
-    color: orange;
     font-weight: bold;
 }
 
@@ -302,8 +351,11 @@ Styling for reusable components
 .MTSectionWithControls {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
     width: 100%;
+    border: 2px solid #5aa950;
+    border-radius: 0.5rem;
+    overflow: hidden;
 }
 
 .heading-and-controls {
@@ -319,13 +371,13 @@ Styling for reusable components
 .section-controls {
     display: flex;
     flex-direction: row;
-    margin-right: 10px;
-    column-gap: 10px;
+    margin-right: 0.625rem;
+    column-gap: 0.625rem;
 }
 
 .section-control {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
 
 }
 
@@ -339,8 +391,7 @@ Styling for reusable components
 .MTPageHeading, .MTSectionHeading, .MTSectionGroupHeading1, .heading-and-controls {
     display: flex;
     flex-direction: row;
-    background-color: #808080;
-    color: white;
+    color: #5aa950;
     justify-content: center;
 
 }
@@ -348,15 +399,15 @@ Styling for reusable components
 .MTSectionHeading, .MTSectionGroupHeading1 {
     flex-direction: column;
     font-weight: bold;
-    padding: 10px 10px 10px 20px;
+    padding: 0.625rem 0.625rem 0.625rem 1.25rem;
 }
 
 .MTSectionGroupHeading1 {
-    font-size: 24px;
+    font-size: 1.5rem;
 }
 
 .MTSectionHeading {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 
 .MTPage {
@@ -364,15 +415,15 @@ Styling for reusable components
 }
 
 .MTPageHeading {
-    font-size: 44px;
+    font-size: 2.75rem;
     font-weight: bolder;
     align-items: center;
-    margin: 10px 0 10px 0;
+    margin: 0.625rem 0 0.625rem 0;
 
 }
 
 .MTPageContent {
-    padding: 10px;
+    padding: 0.625rem;
     align-self: center;
     width: 80%;
 }
@@ -383,7 +434,7 @@ Styling for reusable components
 
 .MTSectionBody {
     background-color: #f3f3f3;
-    padding: 10px;
+    padding: 0.625rem;
 }
 
 .MTSectionContent {
@@ -436,9 +487,7 @@ Styling for reusable components
 
 
 .MTPageDescription, .MTSectionDescription {
-    background-color: #d3d3d3;
-    padding: 10px;
-
+    padding: 0.625rem;
 }
 
 .MTPageDescription {
@@ -462,7 +511,7 @@ Styling for reusable components
 
 
 /*PRescriptions*/
-.PrescriptionDetails, .user-details{
+.PrescriptionDetails, .user-details {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -487,14 +536,13 @@ Styling for reusable components
     flex: 1;
     align-items: center;
     justify-items: center;
-    background-color: #f3f3f3;
-    padding: 5px;
+    padding: 0.25rem;
 }
 
 /*Range*/
 
 .date-range-widget {
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
 }
 
 .date-range-center {
@@ -514,9 +562,8 @@ Styling for reusable components
 }
 
 .date-range-refresh input[type='submit'] {
-
-    margin: 8px;
-    font-size: 20px;
+    margin: 0.5rem;
+    font-size: 1.125rem;
 }
 
 
@@ -532,27 +579,27 @@ Styling for reusable components
     flex-direction: column;
     flex-basis: 60%;
     align-items: center;
-    row-gap: 10px;
+    row-gap: 0.625rem;
 }
 
 .right-date-arrow, .left-date-arrow {
     display: flex;
     flex-basis: 20%;
+
 }
 
 .right-date-arrow {
     flex-direction: row;
-    margin-left: 10px;
+    margin-left: 0.625rem;
 }
 
 .left-date-arrow {
     flex-direction: row-reverse;
-    margin-right: 10px;
+    margin-right: 0.625rem;
 }
 
 .date-selector-current {
-    font-size: 20px;
-    color: orange;
+    font-size: 1.125rem;
     font-weight: bold;
 }
 
@@ -562,8 +609,9 @@ Styling for reusable components
 .data-file-manager {
     display: flex;
     flex-direction: row;
-    margin-bottom: 30px;
-    border: 10px #808080;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border: 0.625rem #a8e4a0;
 }
 
 
@@ -581,16 +629,12 @@ Styling for reusable components
 
 .download-data-file-container {
     display: flex;
-    flex-direction: row-reverse;
-    flex-grow: 1;
-    align-self: end;
+    flex-direction: column;
+    width: 100%;
 }
 
 
 /*Patient info*/
-
-
-
 
 
 /*Account management*/
@@ -608,9 +652,9 @@ Styling for reusable components
 .RoleChange {
     display: flex;
     flex-direction: row;
-    column-gap: 50px;
-    margin-bottom: 50px;
-    margin-right: 20px;
+    column-gap: 3rem;
+    margin-bottom: 3rem;
+    margin-right: 1.5rem;
 }
 
 /*login fields*/
@@ -619,7 +663,7 @@ Styling for reusable components
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 260px;
+
 }
 
 /*Home page*/
@@ -628,14 +672,13 @@ Styling for reusable components
     font-weight: bold;
 }
 
+
 .clickable-text:hover {
-    color: orange;
 }
 
-.buttonContainer input[type='button'], .buttonContainer input[type='submit'] {
-    padding: 12px 24px;
-    margin: 8px;
-    font-size: 24px;
+
+.clickable-text:hover, .right-date-arrow img:hover, .left-date-arrow img:hover {
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.1);
 }
 
 
@@ -648,19 +691,29 @@ Styling for reusable components
 
 .inputContainer > .errorLabel {
     color: red;
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 
-.inputBox {
-    height: 48px;
-    width: 400px;
-    font-size: large;
-    border-radius: 8px;
-    border: 1px solid grey;
-    padding-left: 8px;
+
+@media (max-width: 5048px) {
+    html {
+        font-size: 20px;
+    }
 }
+
+
+@media (max-width: 1600px) {
+    html {
+        font-size: 16px;
+    }
+}
+
 
 @media (max-width: 1024px) {
+    html {
+        font-size: 12px;
+    }
+
     .Navigation {
         flex-direction: column;
     }

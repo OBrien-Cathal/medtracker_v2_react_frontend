@@ -94,6 +94,8 @@ const Home = () => {
 
                             {isLoggedIn ? <div>Signed in successfully as {username}</div> : <div/>}
                         </div>
+                        <br/>
+                        <br/>
                         <div>
                             <p>
                                 Test users are available and can be used to explore functionality. All users have the same

@@ -13,12 +13,21 @@ import * as React from "preact/compat";
 
 import {patient_routes} from "./PatientRoutes.tsx";
 import {practitioner_routes} from "./PractitionerRoutes.tsx";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation} from "react-router-dom";
 import {patient_practitioner_routes} from "./PatientAndPractitionerRoutes.tsx";
 import {user_patient_routes} from "./UserAndPatientRoutes.tsx";
+import {useLayoutEffect} from "preact/compat";
 
 
 const AppRoutes = () => {
+    const location = useLocation();
+
+    useLayoutEffect(() => {
+        // Scroll to the top of the page when the route changes
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, [location.pathname]);
+
+
 
 
     const protectedRoutes = [

@@ -97,8 +97,9 @@ const Medications = () => {
                         <MTSectionBody>
                             <MTSectionContent>
                                 <div className={'labeled-field'}>
-                                    <label>Medication name</label>
+                                    <label>Name</label>
                                     <input
+                                        type={'text'}
                                         value={medName}
                                         placeholder="Enter medication name"
                                         onChange={(ev) => setMedName(ev.currentTarget.value)}

@@ -323,65 +323,65 @@
     "id": "527518ef-64fa-4c1f-a556-2d407a2228d8",
     "name": "LOGIN_PRACTITIONER doc1@medtracker.com",
     "commands": [{
-      "id": "aca84733-23c4-496b-8a17-a04536465858",
+      "id": "7f64a972-b450-4f27-be38-be30798907d0",
       "comment": "",
       "command": "open",
       "target": "/",
       "targets": [],
       "value": ""
     }, {
-      "id": "b0db6a47-c8f8-4b10-bbef-c49c816f0196",
+      "id": "a27f8c97-353b-4349-8774-bcdd689b22b8",
       "comment": "",
       "command": "setWindowSize",
-      "target": "2348x1455",
+      "target": "2358x1492",
       "targets": [],
       "value": ""
     }, {
-      "id": "99121a8a-22bf-41fa-823c-471b550ea151",
+      "id": "5b690c73-01e8-4452-ac54-69455321a873",
       "comment": "",
       "command": "click",
       "target": "css=.inputContainer:nth-child(1) > .inputBox",
       "targets": [
         ["css=.inputContainer:nth-child(1) > .inputBox", "css:finder"],
-        ["xpath=//div[@id='app']/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "6b8704d6-5a80-431c-bc9f-d4ad23e4c9bf",
+      "id": "7d23af1f-eeae-4510-99fb-cdcf96bb52ed",
       "comment": "",
       "command": "type",
       "target": "css=.inputContainer:nth-child(1) > .inputBox",
       "targets": [
         ["css=.inputContainer:nth-child(1) > .inputBox", "css:finder"],
-        ["xpath=//div[@id='app']/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": "doc1@medtracker.com"
     }, {
-      "id": "2c2a171d-d798-4edf-b7f4-6d03aa2a58c9",
+      "id": "57c99b88-d6c1-40d3-9823-f294b09fafe3",
       "comment": "",
       "command": "type",
       "target": "css=.inputContainer:nth-child(3) > .inputBox",
       "targets": [
         ["css=.inputContainer:nth-child(3) > .inputBox", "css:finder"],
         ["xpath=//input[@type='password']", "xpath:attributes"],
-        ["xpath=//div[@id='app']/div[2]/form/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": "abc"
     }, {
-      "id": "78b147a8-1cb7-43f3-8ec9-0bdc125fb5e2",
+      "id": "4b1abfb1-f380-445e-9d79-ade871510453",
       "comment": "",
-      "command": "sendKeys",
-      "target": "css=.inputContainer:nth-child(3) > .inputBox",
+      "command": "click",
+      "target": "css=.inputButton",
       "targets": [
-        ["css=.inputContainer:nth-child(3) > .inputBox", "css:finder"],
-        ["xpath=//input[@type='password']", "xpath:attributes"],
-        ["xpath=//div[@id='app']/div[2]/form/div[2]/input", "xpath:idRelative"],
-        ["xpath=//div[2]/input", "xpath:position"]
+        ["css=.inputButton", "css:finder"],
+        ["xpath=//input[@value='Log in']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
       ],
-      "value": "${KEY_ENTER}"
+      "value": ""
     }]
   }, {
     "id": "c89f6a3e-d249-4338-a26b-d6d8b8f0c330",
@@ -524,6 +524,130 @@
       "value": ""
     }, {
       "id": "e669fba9-3794-45c3-8e17-5019bdb23d66",
+      "comment": "",
+      "command": "click",
+      "target": "css=.swal2-confirm",
+      "targets": [
+        ["css=.swal2-confirm", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[6]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'OK')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "6d09741a-1df5-4e48-858d-0eb872a23752",
+    "name": "Create_medtrackerdemo2025@gmail.com",
+    "commands": [{
+      "id": "9a6cad88-05a9-4f9b-9b7d-161b08877d69",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b9d16d41-cf76-429e-8106-6af183ffbe76",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "2360x1494",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2f250735-5618-4d53-b884-8fbaeb9a20fb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.clickable-text",
+      "targets": [
+        ["css=.clickable-text", "css:finder"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/p/text[2]", "xpath:idRelative"],
+        ["xpath=//text[2]", "xpath:position"],
+        ["xpath=//text[contains(.,'register a new account.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "33a38cb0-b9f0-4b6d-90fb-036c19e1ac73",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputContainer:nth-child(1) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(1) > .inputBox", "css:finder"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "247c5832-7578-4501-b6cc-04fb0cd81886",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputContainer:nth-child(1) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(1) > .inputBox", "css:finder"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "medtrackerdemo2025@gmail.com"
+    }, {
+      "id": "aa490873-2bf5-4d77-8773-58ff58604c91",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputContainer:nth-child(3) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(3) > .inputBox", "css:finder"],
+        ["xpath=//input[@type='password']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a5c7e958-2d45-4e5d-988a-3e47d2202a84",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputContainer:nth-child(3) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(3) > .inputBox", "css:finder"],
+        ["xpath=//input[@type='password']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "abc"
+    }, {
+      "id": "650915a4-395a-4ee5-829e-14dc6a9ce2b3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputContainer:nth-child(5) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(5) > .inputBox", "css:finder"],
+        ["xpath=(//input[@type='password'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6c80ffae-3334-48ce-bff6-69e4a2277ef5",
+      "comment": "",
+      "command": "type",
+      "target": "css=.inputContainer:nth-child(5) > .inputBox",
+      "targets": [
+        ["css=.inputContainer:nth-child(5) > .inputBox", "css:finder"],
+        ["xpath=(//input[@type='password'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "abc"
+    }, {
+      "id": "fa251d25-540a-40d7-b9b6-f21b98ae0ce0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.inputButton",
+      "targets": [
+        ["css=.inputButton", "css:finder"],
+        ["xpath=//input[@value='Register']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/div/div/div[2]/form/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "81873019-2572-4071-8934-a52388c12158",
       "comment": "",
       "command": "click",
       "target": "css=.swal2-confirm",

@@ -24,7 +24,7 @@ export const patient_routes = [
         path: "/data-visualizations",
         ele: <DataVis/>,
         availability: [ur.patient],
-        title: "Data Visualizations",
+        title: "Visualizations",
         showInNav: true
     },
     {
